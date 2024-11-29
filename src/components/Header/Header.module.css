@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Cairo:slnt,wght@-11..11,200..1000&display=swap');
+
+.header {
+    display: flex;
+    justify-content: space-around;
+    height: 70px;
+    align-items: center;
+    background-color: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all 0.3s;
+    color: var(--white);
+}
+
+.headerScrolled {
+    background-color: var(--color-brand--main);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    color: var(--color-white);
+}
+
+.logo {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    color: var(--color-brand--light);
+    padding: 10px 20px;
+
+}
+
+.logo img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+
+}
+
+.logo a {
+    font-size: 2rem;
+    font-family: "Bruno Ace SC", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    text-decoration: none;
+    color: var(--color-brand--light);
+}
+
+.logo a:hover {
+    color: var(--color-white);
+}
+
+
+
+.nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.nav ul {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+
+.nav ul li a {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--color-brand--light);
+}
+
+.nav ul li a:hover {
+    color: var(--color-white);
+}
+
+.menuIcon {
+    width: 1.2rem;
+    height: 1.2rem;
+    vertical-align: -0.125em;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.menuIcon svg {
+    fill: var(--color-brand--light);
+}
+
+.menuIcon:hover svg {
+    fill: var(--color-white);
+}
+
+
+.buttons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--color-brand--light);
+    background-color: transparent;
+    transition: all 0.3s;
+}
+
+.buttons button:hover {
+    background-color: var(--color-brand--main);
+    color: var(--color-white);
+}
+
+.buttonsScrolled button {
+    background-color: var(--color-white);
+    color: var(--color-brand--main);
+}
+
+.buttonsScrolled button:hover {
+    background-color: var(--color-brand--main);
+    color: var(--color-white);
+}
+
+
+@media (max-width: 768px) {}
