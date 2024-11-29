@@ -33,7 +33,7 @@ export default function Header() {
 function Logo() {
     return (
         <div className={styles.logo}>
-            <img src="/logo.gif" alt="Logo" />
+            <img src="/logos/logo.gif" alt="Logo" />
             <a href="#">7erfa</a>
         </div>
     );
