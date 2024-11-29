@@ -23,7 +23,10 @@ function Category({ name, i }) {
     return (
         <div className={styles.category}>
             <img src={`/categories/${i}.jpg`} alt="Category" />
-            <h3>{name}</h3>
+            <div className={styles.label}>
+                <h3>category</h3>
+                <h2>{name}</h2>
+            </div>
         </div>
     );
 }
