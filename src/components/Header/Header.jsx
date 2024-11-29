@@ -108,6 +108,14 @@ function Menu({ isMenuOpen, toggleMenu }) {
                         </a>
                     </li>
                 </ul>
+                <br />
+                <div>
+                    <h1> Join us now </h1>
+                    <div>
+                        <button>Sign Up</button>
+                        <button>Log In</button>
+                    </div>
+                </div>
             </div>
         )
     );

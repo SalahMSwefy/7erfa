@@ -110,8 +110,8 @@
 }
 
 .buttons button:hover {
-    background-color: var(--color-brand--main);
-    color: var(--color-white);
+    background-color: var(--color-white);
+    color: var(--color-brand--main);
 }
 
 .menu {
@@ -146,8 +146,48 @@
     transition: color 0.3s;
 }
 
-.menu ul li a:hover {
-    color: var(--color-brand--light);
+.menu>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 2px solid var(--color-brand--light);
+    align-items: center;
+    padding-left: 10px;
+}
+
+.menu h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-white);
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.menu div>div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+}
+
+.menu button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: var(--color-brand--main);
+    background-color: var(--color-white);
+    transition: all 0.3s;
+}
+
+.menu button:hover {
+    background-color: var(--color-white);
+    color: var(--color-brand--main);
 }
 
 @media (max-width: 1024px) {
@@ -168,24 +208,9 @@
     }
 
     .menu {
-        display: block;
-    }
-}
-
-@media (max-width: 768px) {
-    .header {
+        display: flex;
         justify-content: space-between;
+        gap: 20px;
     }
 
-    .nav {
-        display: none;
-    }
-
-    .menu {
-        display: block;
-    }
-
-    .menu ul li a {
-        font-size: 1rem;
-    }
 }
