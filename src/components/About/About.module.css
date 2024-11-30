@@ -1,7 +1,7 @@
 .about {
   position: relative;
   color: #fff;
-  padding: 60px 40px;
+  padding: 80px 40px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -18,11 +18,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(
-    circle at center,
-    transparent 0%,
-    rgba(0, 0, 0, 0.15) 100%
-  );
+  background: radial-gradient(circle at center,
+      transparent 0%,
+      rgba(0, 0, 0, 0.15) 100%);
   z-index: 1;
 }
 
@@ -88,7 +86,7 @@
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  color: #ff5100;
+  color: #ffa500;
   background-color: #ffffff;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -107,6 +105,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -118,6 +117,7 @@
     transform: translateY(-70px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -129,6 +129,7 @@
     transform: translateX(-70px);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -136,20 +137,24 @@
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-10px);
   }
 }
 
 @keyframes glow {
+
   0%,
   100% {
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
   }
+
   50% {
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
   }
@@ -159,9 +164,11 @@
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.1);
   }
+
   100% {
     transform: scale(1);
   }

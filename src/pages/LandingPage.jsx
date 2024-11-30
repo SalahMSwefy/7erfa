@@ -1,8 +1,9 @@
 import About from "../components/About/About";
-import Categories from "../components/Categories/Categories";
+import SliderGallery from "../components/SliderGallery/SliderGallery";
 import Header from "../components/Header/Header";
 import Hero from "../components/Hero/Hero";
 import Services from "../components/Services-section/Services";
+import Team from "../components/Team/Team";
 
 function LandingPage() {
     return (
@@ -11,7 +12,8 @@ function LandingPage() {
             <Hero />
             <About />
             <Services />
-            <Categories />
+            <SliderGallery />
+            <Team />
         </>
     );
 }

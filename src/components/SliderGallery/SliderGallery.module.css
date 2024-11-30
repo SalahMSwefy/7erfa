@@ -1,0 +1,100 @@
+/* Container for the slider */
+.sliderContainer {
+    position: relative;
+    width: 1000px;
+    margin: 80px auto;
+    overflow: hidden;
+}
+
+.sliderContainer>h2 {
+    text-align: center;
+    color: #ffc71b;
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    font-family: "Bruno Ace SC", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, #ff7b00, #ffa500);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* The slider track */
+.slider {
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Each slide */
+.slide {
+    opacity: 1;
+    min-width: 100%;
+    padding: auto;
+    transition: opacity 0.5s ease-in-out;
+}
+
+
+
+/* Arrow buttons */
+.prevArrow,
+.nextArrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--color-brand--transparent);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.prevArrow {
+    left: 10px;
+}
+
+.nextArrow {
+    right: 10px;
+}
+
+.prevArrow:hover,
+.nextArrow:hover {
+    background-color: var(--color-brand--main);
+    color: white;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--color-brand--transparent);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background-color: var(--color-brand--main);
+}
+
+.dot:hover {
+    background-color: var(--color-brand--500);
+}
