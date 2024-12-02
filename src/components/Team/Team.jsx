@@ -1,5 +1,19 @@
 import styles from "./Team.module.css";
 
+// const team = [
+//     {
+//         name: "Salah Swefy",
+//         jobTitle: "Frontend Developer",
+//         image: "/team/salah.jpg",
+//         social: {
+//             facebook: "https://www.facebook.com/profile.php?id=100005129460945",
+//             twitter: "https://x.com/Salah_Swefy",
+//             linkedin: "https://www.linkedin.com/in/salah-swefy-93ab5a265/",
+//             github: "https://github.com/SalahMSwefy",
+//         },
+//     },
+// ];
+
 function Team() {
     return (
         <>
@@ -26,7 +40,7 @@ function Member() {
                 </div>
                 <ul className={styles.socialIcons}>
                     <li>
-                        <a href="">
+                        <a href="https://www.facebook.com/profile.php?id=100005129460945">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="1em"

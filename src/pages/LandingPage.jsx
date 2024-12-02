@@ -12,7 +12,7 @@ function LandingPage() {
             <Hero />
             <About />
             <Services />
-            {/* <SliderGallery /> */}
+            <SliderGallery />
             <Team />
         </>
     );

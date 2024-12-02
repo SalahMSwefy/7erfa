@@ -1,13 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./SliderGallery.module.css";
 
 const images = [
-    "/categories/1.jpg",
-    "/categories/2.jpg",
-    "/categories/3.jpg",
-    "/categories/4.jpg",
-    "/categories/5.jpg",
-    "/categories/6.jpg",
+    {
+        url: "/categories/1.jpg",
+        title: "Mechanical",
+    },
+    {
+        url: "/categories/2.jpg",
+        title: "Electrical",
+    },
+    {
+        url: "/categories/3.jpg",
+        title: "carpentry",
+    },
+    {
+        url: "/categories/4.jpg",
+        title: "painting",
+    },
+    {
+        url: "/categories/5.jpg",
+        title: "Plumber",
+    },
+    {
+        url: "/categories/6.jpg",
+        title: "Worker",
+    },
 ];
 
 const SliderGallery = () => {
@@ -22,14 +40,23 @@ const SliderGallery = () => {
 
     // Navigate to the next slide
     const nextSlide = () => {
-        setCurrentIndex(prevIndex =>
-            prevIndex === images.length - 1 ? 0 : prevIndex + 1
+        setCurrentIndex(nextIndex =>
+            nextIndex === images.length - 1 ? 0 : nextIndex + 1
         );
     };
 
     const goToSlide = index => {
         setCurrentIndex(index);
     };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentIndex(currentIndex =>
+                currentIndex === images.length - 1 ? 0 : currentIndex + 1
+            );
+        }, 5000);
+        return () => clearInterval(intervalId);
+    }, []);
 
     return (
         <div className={styles.sliderContainer}>
@@ -51,12 +78,19 @@ export default SliderGallery;
 function Slider({ images, currentIndex }) {
     return (
         <div className={styles.slider}>
-            <div key={currentIndex} className={styles.slide}>
-                <img
-                    src={images[currentIndex]}
-                    alt={`Slide ${currentIndex + 1}`}
-                />
-            </div>
+            {images.map((image, index) => (
+                <div
+                    key={index}
+                    className={`${styles.slide} ${
+                        index === currentIndex ? styles.active : ""
+                    }`}>
+                    <img src={image.url} alt={`Slide ${index + 1}`} />
+                    <div className={styles.slideInfo}>
+                        <p>Category</p>
+                        <h3>{image.title}</h3>
+                    </div>
+                </div>
+            ))}
         </div>
     );
 }
