@@ -86,10 +86,15 @@
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  color: #ffa500;
   background-color: #ffffff;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.about button a {
+  color: #ffa500;
+  text-transform: uppercase;
+  text-decoration: none;
 }
 
 .about button:hover {
@@ -97,6 +102,10 @@
   color: #ffffff;
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.about button:hover a {
+  color: white;
 }
 
 /* Enhanced Animations */
