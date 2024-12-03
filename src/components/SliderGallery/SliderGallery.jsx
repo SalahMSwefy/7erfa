@@ -59,7 +59,7 @@ const SliderGallery = () => {
     }, []);
 
     return (
-        <div className={styles.sliderContainer}>
+        <div className={styles.sliderContainer} id="categories">
             <h2>Categories</h2>
             <Slider images={images} currentIndex={currentIndex} />
             <PrevArrow onClick={prevSlide} />

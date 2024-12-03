@@ -1,46 +1,75 @@
 import styles from "./Team.module.css";
 
-// const team = [
-//     {
-//         name: "Salah Swefy",
-//         jobTitle: "Frontend Developer",
-//         image: "/team/salah.jpg",
-//         social: {
-//             facebook: "https://www.facebook.com/profile.php?id=100005129460945",
-//             twitter: "https://x.com/Salah_Swefy",
-//             linkedin: "https://www.linkedin.com/in/salah-swefy-93ab5a265/",
-//             github: "https://github.com/SalahMSwefy",
-//         },
-//     },
-// ];
+const team = [
+    {
+        name: "Salah Swefy",
+        jobTitle: "Frontend Developer",
+        image: "/team/salah.jpg",
+        social: {
+            facebook: "https://www.facebook.com/profile.php?id=100005129460945",
+            twitter: "https://x.com/Salah_Swefy",
+            linkedin: "https://www.linkedin.com/in/salah-swefy-93ab5a265/",
+            github: "https://github.com/SalahMSwefy",
+        },
+    },
+    {
+        name: "Saad samir",
+        jobTitle: "Frontend Developer",
+        image: "/team/saad.jpg",
+        social: {
+            facebook: "https://www.facebook.com/profile.php?id=100010070029056",
+            twitter: "https://www.linkedin.com/in/saad-samir-b61724296/",
+            linkedin: "https://www.linkedin.com/in/saad-samir-b61724296/",
+            github: "https://github.com/SaadSamir7",
+        },
+    },
+    {
+        name: "Youssef Megahed",
+        jobTitle: "Backend Developer",
+        image: "/team/youssef.jpg",
+        social: {
+            facebook: "https://www.facebook.com/bor33y?mibextid=ZbWKwL",
+            twitter: "https://x.com/Bor3yLOL",
+            linkedin: "https://www.linkedin.com/in/youssef-megahed",
+            github: "https://github.com/Bor3y9",
+        },
+    },
+    {
+        name: "mohamed khalil",
+        jobTitle: "Backend Developer",
+        image: "/team/khalil.jpg",
+        social: {
+            facebook: "https://www.facebook.com/profile.php?id=100045007060763",
+            twitter: "https://x.com/Mohamme67235952",
+            linkedin: "https://www.linkedin.com/in/mohammed-khalil-08565321b/",
+            github: "https://github.com/Bigkhil",
+        },
+    },
+];
 
 function Team() {
     return (
-        <>
+        <div id="team">
             <h2 className={styles.mainTitle}>Our Team</h2>
             <div className={styles.team}>
-                <Member />
-                <Member />
-                <Member />
-                <Member />
+                {team.map((member, index) => (
+                    <Member key={index} {...member} />
+                ))}
             </div>
-        </>
+        </div>
     );
 }
 
-function Member() {
+function Member({ name, jobTitle, image, social }) {
     return (
         <div className={styles.cardWrapper}>
             <div className={styles.card}>
                 <div className={styles.cardImage}>
-                    <img
-                        src="https://image.ibb.co/dUTfmJ/profile_img.jpg"
-                        alt="profile "
-                    />
+                    <img src={image} alt={name} />
                 </div>
                 <ul className={styles.socialIcons}>
                     <li>
-                        <a href="https://www.facebook.com/profile.php?id=100005129460945">
+                        <a href={social.facebook}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="1em"
@@ -54,7 +83,7 @@ function Member() {
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href={social.twitter}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="1em"
@@ -68,7 +97,7 @@ function Member() {
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href={social.linkedin}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="1em"
@@ -82,7 +111,7 @@ function Member() {
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href={social.github}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="1em"
@@ -97,11 +126,8 @@ function Member() {
                     </li>
                 </ul>
                 <div className={styles.details}>
-                    <h2>
-                        John Smith
-                        <br />
-                        <span className={styles.jobTitle}>UI Developer</span>
-                    </h2>
+                    <h2>{name} </h2>
+                    <p className={styles.jobTitle}>{jobTitle}</p>
                 </div>
             </div>
         </div>

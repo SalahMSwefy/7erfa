@@ -21,6 +21,13 @@
     -webkit-text-fill-color: transparent;
 }
 
+@media (max-width: 768px) {
+    .sliderContainer>h2 {
+        font-size: 2rem;
+    }
+
+}
+
 /* The slider track */
 .slider {
     display: flex;

@@ -8,7 +8,9 @@ function Hero() {
                 Connecting customers with the right workers seamlessly and
                 efficiently.
             </p>
-            <button>find out more</button>
+            <button>
+                <a href="#about">find out more</a>
+            </button>
         </div>
     );
 }

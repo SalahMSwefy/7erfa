@@ -71,8 +71,16 @@
     transition: all 0.3s;
 }
 
+.hero button a {
+    color: var(--color-brand--light);
+    text-decoration: none;
+}
+
 .hero button:hover {
     background-color: var(--color-white);
+}
+
+.hero button:hover a {
     color: var(--color-brand--main);
 }
 

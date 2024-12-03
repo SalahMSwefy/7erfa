@@ -47,10 +47,10 @@ function Navbar({ isMenuOpen }) {
                     <a href="#about">About</a>
                 </li>
                 <li>
-                    <a href="#contact">Contact</a>
+                    <a href="#services">Services</a>
                 </li>
                 <li>
-                    <a href="#services">Services</a>
+                    <a href="#categories">Categories</a>
                 </li>
                 <li>
                     <a href="#team">Team</a>
@@ -93,13 +93,13 @@ function Menu({ isMenuOpen, toggleMenu }) {
                         </a>
                     </li>
                     <li>
-                        <a href="#contact" onClick={toggleMenu}>
-                            Contact
+                        <a href="#services" onClick={toggleMenu}>
+                            Services
                         </a>
                     </li>
                     <li>
-                        <a href="#services" onClick={toggleMenu}>
-                            Services
+                        <a href="#categories" onClick={toggleMenu}>
+                            Categories
                         </a>
                     </li>
                     <li>
