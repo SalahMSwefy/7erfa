@@ -10,8 +10,8 @@ function About() {
                     At <span>7erfa</span>, we aim to bridge the gap between
                     customers and skilled workers. Our platform ensures a
                     seamless connection that saves time, enhances reliability,
-                    and drives satisfaction. Whether you're a customer looking
-                    for assistance or a worker seeking opportunities,{" "}
+                    and drives satisfaction. Whether you&apos;re a customer
+                    looking for assistance or a worker seeking opportunities,{" "}
                     <span>7erfa</span> has you covered.
                 </p>
                 <button>

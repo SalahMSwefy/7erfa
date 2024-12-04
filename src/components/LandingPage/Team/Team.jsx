@@ -49,7 +49,7 @@ const team = [
 
 function Team() {
     return (
-        <div id="team">
+        <div id="team" className={styles.container}>
             <h2 className={styles.mainTitle}>Our Team</h2>
             <div className={styles.team}>
                 {team.map((member, index) => (

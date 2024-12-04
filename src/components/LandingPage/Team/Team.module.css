@@ -13,6 +13,13 @@
     margin-top: 80px;
 }
 
+.container {
+    display: block;
+    margin: 60px auto 0;
+    background-color: #ecedee;
+    overflow: hidden;
+}
+
 .team {
     max-width: 1200px;
     display: grid;
@@ -23,6 +30,7 @@
     padding: 20px;
     overflow: hidden;
 }
+
 
 .cardWrapper {
     width: 100%;
