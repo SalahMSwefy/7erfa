@@ -1,8 +1,9 @@
 @import "https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap";
+@import url("https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Cairo:slnt,wght@-11..11,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
-@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Cairo:slnt,wght@-11..11,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
     --color-brand--main: #e27c00;
     --color-brand--500: #ffa500;
@@ -12,7 +13,7 @@
     --color-brand--light: rgb(255, 252, 234, 0.7);
 
     --color-black: #242a2e;
-    --color-white: #fff
+    --color-white: #fff;
 }
 
 * {
@@ -63,7 +64,6 @@ body {
         width: 1170px;
     }
 }
-
 
 .landingPage {
     overflow: auto;
