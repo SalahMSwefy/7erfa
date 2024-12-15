@@ -2,7 +2,7 @@ import { Form, Link } from 'react-router-dom'
 
 const ForgotPassword = () => {
     return (
-        <div className="mx-auto flex flex-col rounded-lg bg-white pt-12">
+        <div className="mx-auto flex h-screen flex-col rounded-lg bg-orange-50 pt-12">
             <div className="my-auto flex h-full w-full justify-center md:gap-5 lg:justify-normal xl:gap-14">
                 <div className="flex w-full items-center justify-center lg:p-12">
                     <div className="flex items-center px-4 xl:p-10">

@@ -110,6 +110,7 @@ export async function action({ request }) {
 
     // if all ok
     // const newOrder = await createOrder(order)
-    return redirect(`/dashboard`)
+    if (data.role === 'worker') return redirect(`/worker-dashboard`)
+    else return redirect(`/customer-dashboard`)
 }
 export default Login

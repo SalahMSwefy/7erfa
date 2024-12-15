@@ -2,13 +2,13 @@ import { Form } from 'react-router-dom'
 
 const ResetPassword = () => {
     return (
-        <div className="mx-auto flex flex-col rounded-lg bg-white pt-12">
+        <div className="mx-auto flex h-screen flex-col rounded-lg bg-orange-50 pt-12">
             <div className="my-auto flex h-full w-full justify-center md:gap-5 lg:justify-normal xl:gap-14">
                 <div className="flex w-full items-center justify-center lg:p-12">
                     <div className="flex items-center px-4 xl:p-10">
                         <Form
                             method="POST"
-                            className="flex h-full w-full flex-col rounded-3xl bg-white pb-6 text-center"
+                            className="flex h-full w-full flex-col rounded-3xl bg-orange-50 pb-6 text-center"
                         >
                             <h3 className="mb-3 w-[511px] font-brand text-4xl font-extrabold text-stone-900">
                                 Reset Password

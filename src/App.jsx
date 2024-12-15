@@ -5,6 +5,8 @@ import Register, { action as registerAction } from './pages/Register'
 import Error from './ui/Error'
 import ForgotPassword from './pages/ForgetPassword'
 import ResetPassword from './pages/ResetPassword'
+import WorkerDashboard from './pages/WorkerDashboard'
+import CustomerDashboard from './pages/CustomerDashboard'
 
 const router = createBrowserRouter([
     {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
         path: '/resetPassword',
         element: <ResetPassword />,
         errorElement: <Error />,
+    },
+    {
+        path: '/worker-dashboard',
+        element: <WorkerDashboard />,
+    },
+    {
+        path: '/customer-dashboard',
+        element: <CustomerDashboard />,
     },
 ])
 
