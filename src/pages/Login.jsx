@@ -1,4 +1,5 @@
 import { Form, Link, redirect } from 'react-router-dom'
+import { login } from '../services/apis'
 
 const Login = () => {
     return (
@@ -96,21 +97,14 @@ export async function action({ request }) {
     const formData = await request.formData()
     const data = Object.fromEntries(formData)
     console.log(data)
-
-    // const order = {
-    //     ...data,
-    //     cart: JSON.parse(data.cart),
-    //     priority: data.priority === 'on',
-    // }
-
-    // const errors = {}
-    // if (!isValidPhone(data.phone))
-    //     errors.phone = 'please type a correct phone number to contact you'
-    // if (Object.keys(errors).length > 0) return errors
-
-    // if all ok
-    // const newOrder = await createOrder(order)
-    if (data.role === 'worker') return redirect(`/worker-dashboard`)
-    else return redirect(`/customer-dashboard`)
+    try {
+        const response = await login(data)
+        console.log(response)
+        if (response.data.user.role === 'worker')
+            return redirect(`/worker-dashboard`)
+        else return redirect(`/customer-dashboard`)
+    } catch (e) {
+        console.log(e)
+    }
 }
 export default Login

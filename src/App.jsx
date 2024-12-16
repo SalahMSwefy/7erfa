@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import LandingPage from './pages/LandingPage'
 import Login, { action as LoginAction } from './pages/Login'
-import Register, { action as registerAction } from './pages/Register'
+import Register from './pages/Register'
 import Error from './ui/Error'
 import ForgotPassword from './pages/ForgetPassword'
 import ResetPassword from './pages/ResetPassword'
@@ -22,7 +22,6 @@ const router = createBrowserRouter([
     {
         path: '/register',
         element: <Register />,
-        action: registerAction,
         errorElement: <Error />,
     },
     {
