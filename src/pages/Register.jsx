@@ -27,7 +27,6 @@ const Register = () => {
                 const customers = await getCustomers()
                 const response = [...workers.data.data, ...customers.data.data]
                 setUsers(response)
-                console.log(response)
             } catch (error) {
                 console.error('Error fetching data:', error)
             }
