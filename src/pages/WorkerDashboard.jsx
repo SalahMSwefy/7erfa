@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react'
 import {
     Bell,
@@ -843,6 +844,18 @@ function WorkerDashboard() {
                     <div className="p-6">{renderPage()}</div>
                 </main>
             </div>
+=======
+import { useAuth } from '../context/AuthContext'
+
+function WorkerDashboard() {
+    const { logout, user } = useAuth()
+    return (
+        <div>
+            hi, {user?.name}
+            <button onClick={logout} className="mx-5 bg-stone-600 p-4">
+                logout
+            </button>
+>>>>>>> 20f1df7eaeaa51f6896894198eb58ff15bafc01c
         </div>
     )
 }

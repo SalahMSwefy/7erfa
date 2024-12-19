@@ -22,12 +22,22 @@ export async function createCustomer(data) {
 }
 
 export async function login(data) {
-    const response = await fetch(`${API_URL}/login`, {
+    const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
         },
     })
+    return response.json()
+}
+
+export async function getWorkers() {
+    const response = await fetch(`${API_URL}/workers`)
+    return response.json()
+}
+
+export async function getCustomers() {
+    const response = await fetch(`${API_URL}/customers`)
     return response.json()
 }
