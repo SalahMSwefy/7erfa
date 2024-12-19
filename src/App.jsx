@@ -1,12 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import LandingPage from './pages/LandingPage'
-import Login, { action as LoginAction } from './pages/Login'
+import Login from './pages/Login'
 import Register from './pages/Register'
 import Error from './ui/Error'
 import ForgotPassword from './pages/ForgetPassword'
-import ResetPassword from './pages/ResetPassword'
+// import ResetPassword from './pages/ResetPassword'
 import WorkerDashboard from './pages/WorkerDashboard'
 import CustomerDashboard from './pages/CustomerDashboard'
+import ProtectedRoute from './context/ProtectedRoute'
 
 const router = createBrowserRouter([
     {
@@ -16,7 +17,6 @@ const router = createBrowserRouter([
     {
         path: '/login',
         element: <Login />,
-        action: LoginAction,
         errorElement: <Error />,
     },
     {
@@ -29,18 +29,26 @@ const router = createBrowserRouter([
         element: <ForgotPassword />,
         errorElement: <Error />,
     },
-    {
-        path: '/resetPassword',
-        element: <ResetPassword />,
-        errorElement: <Error />,
-    },
+    // {
+    //     path: '/resetPassword',
+    //     element: <ResetPassword />,
+    //     errorElement: <Error />,
+    // },
     {
         path: '/worker-dashboard',
-        element: <WorkerDashboard />,
+        element: (
+            <ProtectedRoute>
+                <WorkerDashboard />,
+            </ProtectedRoute>
+        ),
     },
     {
         path: '/customer-dashboard',
-        element: <CustomerDashboard />,
+        element: (
+            <ProtectedRoute>
+                <CustomerDashboard />,
+            </ProtectedRoute>
+        ),
     },
 ])
 

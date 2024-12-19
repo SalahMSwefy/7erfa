@@ -1,7 +1,56 @@
-import { Form, Link, redirect } from 'react-router-dom'
+import { Form, Link, useNavigate } from 'react-router-dom'
 import { login } from '../services/apis'
+import { useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
+import { useAuth } from '../context/AuthContext' // Import AuthContext
 
 const Login = () => {
+    const { login: loginContext } = useAuth() // Use context
+    const navigate = useNavigate()
+    const [error, setError] = useState({})
+
+    const mutation = useMutation({
+        mutationFn: async (formData) => {
+            return await login(formData)
+        },
+        onSuccess: (data) => {
+            if (data?.error) {
+                setError({ general: data.error })
+            } else {
+                // Save token and user data using AuthContext
+                const {
+                    token,
+                    data: { user },
+                } = data
+                loginContext(token, user)
+
+                // Navigate based on role
+                if (user.role === 'worker') navigate('/worker-dashboard')
+                else navigate('/customer-dashboard')
+            }
+        },
+        onError: (error) => {
+            const backendErrors = error.response?.data?.errors || {}
+            const generalError =
+                error.response?.data?.message || // Backend error message
+                error.message || // Network or general error message
+                'Something went wrong. Please try again.' // Default fallback
+
+            setError({
+                ...backendErrors,
+                general: generalError, // Ensure it's always a string
+            })
+        },
+    })
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const data = Object.fromEntries(formData)
+        mutation.mutate(data)
+        setError({})
+    }
+
     return (
         <div className="mx-auto flex h-screen flex-col rounded-lg bg-orange-50 pt-12">
             <div className="draggable my-auto flex h-full w-full justify-center md:gap-5 lg:justify-normal xl:gap-14">
@@ -11,6 +60,7 @@ const Login = () => {
                             className="flex h-full w-full flex-col rounded-3xl pb-6 text-center"
                             aria-label="Login Form"
                             method="post"
+                            onSubmit={handleSubmit}
                         >
                             <h3 className="text-dark-grey-900 mb-3 font-brand text-4xl font-extrabold">
                                 Login
@@ -48,6 +98,13 @@ const Login = () => {
                                 required
                                 aria-label="Password"
                             />
+                            {error.general && (
+                                <span className="-mt-4 mb-4 text-center text-base text-red-500">
+                                    {typeof error.general === 'string'
+                                        ? error.general
+                                        : 'Invalid email or password, please try again.'}
+                                </span>
+                            )}
 
                             <div className="mb-4 flex flex-col items-baseline justify-center gap-4 sm:flex-row sm:justify-between">
                                 <label className="inline-flex items-center">
@@ -71,7 +128,7 @@ const Login = () => {
                             </div>
                             <button
                                 type="submit"
-                                className="mb-5 w-full rounded-2xl bg-orange-500 px-6 py-5 text-base font-bold leading-none text-white transition duration-300 hover:bg-orange-600 focus:ring-4 focus:ring-orange-600 md:w-96"
+                                className="mb-5 w-full rounded-2xl bg-orange-500 px-5 py-4 text-base font-bold leading-none text-white transition duration-300 hover:bg-orange-600 focus:ring-4 focus:ring-orange-600 md:w-96"
                                 aria-label="Sign In"
                             >
                                 Sign In
@@ -93,18 +150,4 @@ const Login = () => {
     )
 }
 
-export async function action({ request }) {
-    const formData = await request.formData()
-    const data = Object.fromEntries(formData)
-    console.log(data)
-    try {
-        const response = await login(data)
-        console.log(response)
-        if (response.data.user.role === 'worker')
-            return redirect(`/worker-dashboard`)
-        else return redirect(`/customer-dashboard`)
-    } catch (e) {
-        console.log(e)
-    }
-}
 export default Login

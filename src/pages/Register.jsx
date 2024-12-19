@@ -43,8 +43,6 @@ const Register = () => {
             }
         },
         onSuccess: (data) => {
-            console.log('Mutation success:', data)
-            console.log(errors)
             if (data?.error) {
                 setErrors({ general: data.error })
             } else {
@@ -176,8 +174,8 @@ const Register = () => {
                             {errors.email}
                         </span>
                     )}
-                    <div className="flex flex-col items-center justify-between sm:flex-row">
-                        <div className="flex w-full flex-col sm:w-auto">
+                    <div className="flex flex-col items-center space-x-4 sm:flex-row">
+                        <div className="flex w-full flex-1 flex-col sm:w-auto">
                             <label
                                 htmlFor="password"
                                 className="text-start text-sm font-semibold text-stone-950"
@@ -193,12 +191,12 @@ const Register = () => {
                                 required
                             />
                             {errors?.password && (
-                                <p className="-mt-4 text-center text-sm text-red-500">
+                                <p className="-mt-4 text-center text-xs text-red-500">
                                     {errors.password}
                                 </p>
                             )}
                         </div>
-                        <div className="flex w-full flex-col sm:w-auto">
+                        <div className="flex w-full flex-1 flex-col sm:w-auto">
                             <label
                                 htmlFor="passwordConfirm"
                                 className="text-start text-sm font-semibold text-stone-950"
