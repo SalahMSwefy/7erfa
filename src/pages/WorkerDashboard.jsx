@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
     Bell,
     Search,
@@ -383,7 +382,8 @@ function WorkerDashboard() {
                             Welcome back, John! 👋
                         </h1>
                         <p className="mt-1 text-gray-600">
-                            Here's what's happening with your tasks today.
+                            Here&apos;s what&apos;s happening with your tasks
+                            today.
                         </p>
                     </div>
                     <button className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white transition-all duration-200 hover:bg-blue-700">
@@ -844,18 +844,6 @@ function WorkerDashboard() {
                     <div className="p-6">{renderPage()}</div>
                 </main>
             </div>
-=======
-import { useAuth } from '../context/AuthContext'
-
-function WorkerDashboard() {
-    const { logout, user } = useAuth()
-    return (
-        <div>
-            hi, {user?.name}
-            <button onClick={logout} className="mx-5 bg-stone-600 p-4">
-                logout
-            </button>
->>>>>>> 20f1df7eaeaa51f6896894198eb58ff15bafc01c
         </div>
     )
 }

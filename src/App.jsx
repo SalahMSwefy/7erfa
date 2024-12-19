@@ -36,21 +36,11 @@ const router = createBrowserRouter([
     // },
     {
         path: '/worker-dashboard',
-        element:
-            // <ProtectedRoute>
-            ((<WorkerDashboard />),
-            {
-                /* </ProtectedRoute> */
-            }),
+        element: <WorkerDashboard />,
     },
     {
         path: '/customer-dashboard',
-        element:
-            // <ProtectedRoute>
-            ((<CustomerDashboard />),
-            {
-                /* </ProtectedRoute> */
-            }),
+        element: <CustomerDashboard />,
     },
 ])
 
@@ -59,3 +49,9 @@ function App() {
 }
 
 export default App
+
+{
+    /* <ProtectedRoute>
+(<WorkerDashboard />
+</ProtectedRoute> */
+}
