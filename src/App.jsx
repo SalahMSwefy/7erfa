@@ -7,7 +7,7 @@ import ForgotPassword from './pages/ForgetPassword'
 // import ResetPassword from './pages/ResetPassword'
 import WorkerDashboard from './pages/WorkerDashboard'
 import CustomerDashboard from './pages/CustomerDashboard'
-import ProtectedRoute from './context/ProtectedRoute'
+// import ProtectedRoute from './context/ProtectedRoute'
 
 const router = createBrowserRouter([
     {
@@ -36,19 +36,21 @@ const router = createBrowserRouter([
     // },
     {
         path: '/worker-dashboard',
-        element: (
-            <ProtectedRoute>
-                <WorkerDashboard />,
-            </ProtectedRoute>
-        ),
+        element:
+            // <ProtectedRoute>
+            ((<WorkerDashboard />),
+            {
+                /* </ProtectedRoute> */
+            }),
     },
     {
         path: '/customer-dashboard',
-        element: (
-            <ProtectedRoute>
-                <CustomerDashboard />,
-            </ProtectedRoute>
-        ),
+        element:
+            // <ProtectedRoute>
+            ((<CustomerDashboard />),
+            {
+                /* </ProtectedRoute> */
+            }),
     },
 ])
 
@@ -57,35 +59,3 @@ function App() {
 }
 
 export default App
-
-// {
-//     element: <AppLayout />,
-//     errorElement: <Error />,
-//     children: [
-//         {
-//             path: "/",
-//             element: <Home />,
-//         },
-//         {
-//             path: "/menu",
-//             element: <Menu />,
-//             loader: menuLoader,
-//             errorElement: <Error />,
-//         },
-//         {
-//             path: "/cart",
-//             element: <Cart />,
-//         },
-//         {
-//             path: "/order/new",
-//             element: <CreateOrder />,
-//             action: createOrderAction,
-//         },
-//         {
-//             path: "/order/:orderId",
-//             element: <Order />,
-//             loader: orderLoader,
-//             errorElement: <Error />,
-//         },
-//     ],
-// },
