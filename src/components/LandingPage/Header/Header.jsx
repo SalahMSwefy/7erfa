@@ -32,7 +32,7 @@ export default function Header() {
     )
 }
 
-function Logo() {
+export function Logo() {
     return (
         <div className={styles.logo}>
             <img src="/logos/logo.gif" alt="Logo" />

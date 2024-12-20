@@ -12,7 +12,7 @@ export function isValidPhoneNumber(phoneNumber, users) {
 }
 
 export function isValidPassword(password) {
-    return password.length > 8
+    return password.length >= 8
 }
 
 export function isValidEmail(email, users) {

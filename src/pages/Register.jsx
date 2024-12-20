@@ -1,38 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Form, Link, useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
-import {
-    createCustomer,
-    createWorker,
-    getCustomers,
-    getWorkers,
-    // getUsers,
-} from '../services/apis'
+import { createCustomer, createWorker } from '../services/apis'
 import {
     isValidEmail,
     isValidPassword,
     isValidPhoneNumber,
 } from '../services/helper'
+import { useAuth } from '../context/AuthContext'
 
 const Register = () => {
     const navigate = useNavigate()
     const [role, setRole] = useState('worker')
     const [errors, setErrors] = useState({})
-    const [users, setUsers] = useState([])
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const workers = await getWorkers()
-                const customers = await getCustomers()
-                const response = [...workers.data.data, ...customers.data.data]
-                setUsers(response)
-            } catch (error) {
-                console.error('Error fetching data:', error)
-            }
-        }
-        fetchData()
-    }, [])
+    const { allUsers: users } = useAuth()
 
     const mutation = useMutation({
         mutationFn: async (formData) => {

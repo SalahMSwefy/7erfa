@@ -32,6 +32,18 @@ export async function login(data) {
     return response.json()
 }
 
+export async function updateMe(data) {
+    const response = await fetch(`${API_URL}/auth/updateMe`, {
+        method: 'PATCH',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+    })
+    return response.json()
+}
+
 export async function getWorkers() {
     const response = await fetch(`${API_URL}/workers`)
     return response.json()

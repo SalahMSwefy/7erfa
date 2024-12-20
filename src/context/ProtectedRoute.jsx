@@ -4,23 +4,22 @@ import { useEffect, useState } from 'react'
 
 // Make sure you're using this format when rendering children
 const ProtectedRoute = ({ children }) => {
-    const { token, isTokenExpired } = useAuth()
+    const { token } = useAuth()
     const [isAuthenticated, setIsAuthenticated] = useState(null) // State initialized as null
 
     useEffect(() => {
-        if (token && !isTokenExpired()) {
+        if (token) {
             setIsAuthenticated(true)
         } else {
             setIsAuthenticated(false)
         }
-    }, [token, isTokenExpired])
+    }, [token])
 
     if (isAuthenticated === null) {
         return <div>Loading...</div> // Show a loading message while determining authentication
     }
 
     if (!isAuthenticated) {
-        alert('You must be logged in to access this page')
         return <Navigate to="/login" replace />
     }
 

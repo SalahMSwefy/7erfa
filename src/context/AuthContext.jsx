@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { getCustomers, getWorkers } from '../services/apis'
 
 // Create AuthContext
 const AuthContext = createContext()
@@ -7,43 +8,57 @@ const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [token, setToken] = useState(null)
+    const [allUsers, setAllUsers] = useState([])
 
     useEffect(() => {
-        const storedToken = sessionStorage.getItem('token')
-        if (storedToken) {
-            setToken(storedToken)
-            // Optionally, fetch user data here using the token if needed
-            // For example, you can make an API call to get the user's data based on the token
-            // setUser(fetchedUserData)
+        async function fetchData() {
+            try {
+                const workers = await getWorkers()
+                const customers = await getCustomers()
+                const response = [...workers.data.data, ...customers.data.data]
+                setAllUsers(response)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            }
         }
+        fetchData()
+    }, [])
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token')
+        const storedUser = JSON.parse(localStorage.getItem('user'))
+        if (storedToken) setToken(storedToken)
+        if (storedUser) setUser(storedUser)
     }, [])
 
     // Save token and user data on login
     const login = (token, userData) => {
+        // console.log(token, userData)
         setToken(token)
         setUser(userData)
-        sessionStorage.setItem('token', token) // Persist token in sessionStorage
+        localStorage.setItem('token', token)
+        userData = JSON.stringify(userData)
+        localStorage.setItem('user', userData)
     }
 
     // Clear data on logout
     const logout = () => {
         setToken(null)
         setUser(null)
-        sessionStorage.removeItem('token') // Remove token from sessionStorage
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+    }
+
+    const updateUser = (userData) => {
+        setUser(userData)
+        localStorage.setItem('user', JSON.stringify(userData))
     }
 
     // Check token expiration
-    const isTokenExpired = () => {
-        if (!token) return true
-
-        const decodedToken = JSON.parse(atob(token.split('.')[1])) // Decode the token to check expiry
-        const currentTime = Math.floor(Date.now() / 1000) // Current time in seconds
-        return decodedToken.exp < currentTime // Check if the token is expired
-    }
 
     return (
         <AuthContext.Provider
-            value={{ user, token, login, logout, isTokenExpired }}
+            value={{ updateUser, allUsers, user, token, login, logout }}
         >
             {children}
         </AuthContext.Provider>

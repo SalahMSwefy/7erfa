@@ -7,7 +7,7 @@ import ForgotPassword from './pages/ForgetPassword'
 // import ResetPassword from './pages/ResetPassword'
 import WorkerDashboard from './pages/WorkerDashboard'
 import CustomerDashboard from './pages/CustomerDashboard'
-// import ProtectedRoute from './context/ProtectedRoute'
+import ProtectedRoute from './context/ProtectedRoute'
 
 const router = createBrowserRouter([
     {
@@ -36,7 +36,11 @@ const router = createBrowserRouter([
     // },
     {
         path: '/worker-dashboard',
-        element: <WorkerDashboard />,
+        element: (
+            <ProtectedRoute>
+                (<WorkerDashboard />
+            </ProtectedRoute>
+        ),
     },
     {
         path: '/customer-dashboard',

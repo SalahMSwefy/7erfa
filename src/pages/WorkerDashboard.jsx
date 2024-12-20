@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
-    Bell,
     Search,
-    Menu,
     LayoutDashboard,
     ShoppingCart,
     UserCircle,
@@ -11,16 +9,21 @@ import {
     DollarSign,
     Star,
     Calendar,
-    BarChart2,
-    Activity,
+    LogOut,
 } from 'lucide-react'
 // First need to install framer-motion:
 // npm install framer-motion
 import { motion, AnimatePresence } from 'framer-motion'
+import { useAuth } from '../context/AuthContext'
+import TestimonialCard from '../ui/TestimonialCard'
+import { Form } from 'react-router-dom'
+import { isValidEmail, isValidPhoneNumber } from '../services/helper'
+import { updateMe } from '../services/apis'
 
 function WorkerDashboard() {
     const [currentPage, setCurrentPage] = useState('dashboard')
     const [loading, setLoading] = useState(true)
+    const { user, logout } = useAuth()
 
     useEffect(() => {
         // Simulate loading data
@@ -28,25 +31,25 @@ function WorkerDashboard() {
     }, [])
 
     // Animation variants
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                duration: 0.5,
-                when: 'beforeChildren',
-                staggerChildren: 0.1,
-            },
-        },
-    }
+    // const containerVariants = {
+    //     hidden: { opacity: 0 },
+    //     visible: {
+    //         opacity: 1,
+    //         transition: {
+    //             duration: 0.5,
+    //             when: 'beforeChildren',
+    //             staggerChildren: 0.1,
+    //         },
+    //     },
+    // }
 
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-        },
-    }
+    // const itemVariants = {
+    //     hidden: { y: 20, opacity: 0 },
+    //     visible: {
+    //         y: 0,
+    //         opacity: 1,
+    //     },
+    // }
 
     // Sidebar Component
     const Sidebar = () => {
@@ -75,15 +78,28 @@ function WorkerDashboard() {
                 transition={{ type: 'spring', stiffness: 100 }}
                 className="fixed left-0 top-0 h-screen w-64 border-r border-gray-200 bg-white"
             >
-                <div className="border-b border-gray-200 p-4">
+                <div className="border-b border-gray-200 px-4 py-2">
                     <motion.div
                         whileHover={{ scale: 1.05 }}
                         className="flex items-center gap-2"
                     >
-                        <Menu className="text-blue-600" size={24} />
+                        {/* <Menu className="text-blue-600" size={24} />
                         <span className="text-xl font-bold text-blue-600">
                             7erfa
-                        </span>
+                        </span> */}
+                        <div className="text-brand-light flex items-center gap-2.5">
+                            <img
+                                src="/logos/logo.gif"
+                                alt="Logo"
+                                className="h-12 w-12 rounded-full object-cover object-center"
+                            />
+                            <button
+                                className="text-brand-light font-brand text-3xl no-underline transition-colors duration-200 hover:text-orange-500"
+                                onClick={() => setCurrentPage('dashboard')}
+                            >
+                                7erfa
+                            </button>
+                        </div>
                     </motion.div>
                 </div>
                 <nav className="p-4">
@@ -131,26 +147,21 @@ function WorkerDashboard() {
                         />
                     </div>
                     <div className="flex items-center gap-4">
-                        <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                            className="relative rounded-full p-2 transition-all duration-200 hover:bg-gray-100"
-                        >
-                            <Bell size={20} className="text-gray-600" />
-                            <motion.span
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white"
-                            >
-                                3
-                            </motion.span>
-                        </motion.button>
                         <motion.img
                             whileHover={{ scale: 1.1 }}
                             src="https://via.placeholder.com/40"
                             alt="Profile"
                             className="h-8 w-8 rounded-full border-2 border-blue-500"
                         />
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            src="https://via.placeholder.com/40"
+                            alt="Profile"
+                            className="bg-s flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-500"
+                            onClick={logout}
+                        >
+                            <LogOut className="text-stone-500" />
+                        </motion.button>
                     </div>
                 </div>
             </motion.header>
@@ -252,7 +263,10 @@ function WorkerDashboard() {
                     <h2 className="text-lg font-bold text-gray-800">
                         Active Tasks
                     </h2>
-                    <button className="text-sm font-medium text-blue-600 hover:text-blue-700">
+                    <button
+                        className="text-sm font-medium text-blue-600 hover:text-blue-700"
+                        onClick={() => setCurrentPage('orders')}
+                    >
                         View All
                     </button>
                 </div>
@@ -260,7 +274,7 @@ function WorkerDashboard() {
                     {tasks.map((task) => (
                         <div
                             key={task.id}
-                            className="rounded-lg border border-gray-100 p-4 transition-all duration-200 hover:shadow-md"
+                            className="rounded-lg border border-gray-300 p-4 transition-all duration-200 hover:shadow-md"
                         >
                             <div className="mb-2 flex items-start justify-between">
                                 <div>
@@ -272,7 +286,7 @@ function WorkerDashboard() {
                                     </p>
                                 </div>
                                 <span
-                                    className={`rounded-full px-2 py-1 text-xs font-medium ${
+                                    className={`rounded-full px-2 py-1 text-sm font-medium ${
                                         task.priority === 'High'
                                             ? 'bg-red-100 text-red-800'
                                             : task.priority === 'Medium'
@@ -283,25 +297,9 @@ function WorkerDashboard() {
                                     {task.priority}
                                 </span>
                             </div>
-                            <div className="mb-3 flex items-center gap-2 text-sm text-gray-500">
+                            <div className="mb-2 flex items-center gap-2 text-sm text-gray-500">
                                 <Calendar size={16} />
                                 <span>Due: {task.deadline}</span>
-                            </div>
-                            <div>
-                                <div className="mb-1 flex items-center justify-between">
-                                    <span className="text-sm text-gray-600">
-                                        Progress
-                                    </span>
-                                    <span className="text-sm font-medium text-gray-700">
-                                        {task.progress}%
-                                    </span>
-                                </div>
-                                <div className="h-2 w-full rounded-full bg-gray-200">
-                                    <div
-                                        className="h-2 rounded-full bg-blue-600 transition-all duration-300"
-                                        style={{ width: `${task.progress}%` }}
-                                    ></div>
-                                </div>
                             </div>
                         </div>
                     ))}
@@ -310,56 +308,58 @@ function WorkerDashboard() {
         )
     }
 
-    const WorkerAnalytics = () => {
+    const TestimonialList = () => {
+        // Dummy data for testimonials as objects
+        const testimonials = [
+            {
+                id: 1,
+                name: 'Tania Andrew',
+                role: 'Frontend Lead @ Google',
+                imageUrl: 'https://via.placeholder.com/50',
+                testimonialText:
+                    'I found solutions to all my design needs from Creative Tim. I use them as a freelancer in my hobby projects for fun! And it’s really affordable, very humble guys!!',
+                rating: 5,
+            },
+            {
+                id: 2,
+                name: 'John Doe',
+                role: 'Backend Developer @ Facebook',
+                imageUrl: 'https://via.placeholder.com/50',
+                testimonialText:
+                    'Amazing service and great support. They helped me scale my project in no time!',
+                rating: 4,
+            },
+            {
+                id: 3,
+                name: 'Sarah Smith',
+                role: 'UX Designer @ Apple',
+                imageUrl: 'https://via.placeholder.com/50',
+                testimonialText:
+                    'The best tools and resources for designers. Highly recommend to anyone working on projects!',
+                rating: 4,
+            },
+        ]
+
         return (
             <div className="rounded-xl bg-white p-6 shadow-sm">
                 <div className="mb-6 flex items-center justify-between">
                     <h2 className="text-lg font-bold text-gray-800">
-                        Performance Analytics
+                        Latest reviews
                     </h2>
-                    <select className="rounded-lg border border-gray-200 px-3 py-1 text-sm">
-                        <option>Last 7 days</option>
-                        <option>Last 30 days</option>
-                        <option>Last 3 months</option>
-                    </select>
+                    <button
+                        className="text-sm font-medium text-blue-600 hover:text-blue-700"
+                        onClick={() => setCurrentPage('orders')}
+                    >
+                        View All
+                    </button>
                 </div>
                 <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                        <div className="rounded-lg bg-blue-100 p-3">
-                            <BarChart2 className="text-blue-600" size={24} />
-                        </div>
-                        <div>
-                            <h3 className="font-medium text-gray-800">
-                                Task Completion Rate
-                            </h3>
-                            <div className="flex items-center gap-2">
-                                <span className="text-2xl font-bold text-gray-900">
-                                    92%
-                                </span>
-                                <span className="text-sm text-green-600">
-                                    +5.2%
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div className="rounded-lg bg-green-100 p-3">
-                            <Activity className="text-green-600" size={24} />
-                        </div>
-                        <div>
-                            <h3 className="font-medium text-gray-800">
-                                Customer Satisfaction
-                            </h3>
-                            <div className="flex items-center gap-2">
-                                <span className="text-2xl font-bold text-gray-900">
-                                    4.8/5
-                                </span>
-                                <span className="text-sm text-green-600">
-                                    +0.3
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    {testimonials.map((testimonial) => (
+                        <TestimonialCard
+                            key={testimonial.id}
+                            testimonial={testimonial} // Passing the entire testimonial object as a prop
+                        />
+                    ))}
                 </div>
             </div>
         )
@@ -369,7 +369,11 @@ function WorkerDashboard() {
         if (loading) {
             return (
                 <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
-                    <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
+                    <img
+                        src="/logos/logo.gif"
+                        alt="Logo"
+                        className="h-28 w-28 rounded-full object-cover object-center"
+                    />
                 </div>
             )
         }
@@ -394,7 +398,7 @@ function WorkerDashboard() {
                 <WorkerStats />
                 <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
                     <WorkerTasks />
-                    <WorkerAnalytics />
+                    <TestimonialList />
                 </div>
             </div>
         )
@@ -595,35 +599,83 @@ function WorkerDashboard() {
     }
 
     const ProfilePage = () => {
-        const [profileData, setProfileData] = useState({
-            name: 'John Smith',
-            email: 'john.smith@example.com',
-            phone: '+1 234 567 890',
-            address: '123 Worker Street, City, Country',
-            skills: ['Plumbing', 'Electrical', 'Carpentry'],
-            experience: '5 years',
-            hourlyRate: '$45',
-            bio: 'Professional handyman with extensive experience in residential and commercial repairs.',
-            availability: 'Weekdays 9AM-5PM',
-        })
-
         const [isEditing, setIsEditing] = useState(false)
-        const [formData, setFormData] = useState(profileData)
+        const fileInputRef = useRef(null)
+        const [newData, setNewData] = useState({})
+        const [errors, setErrors] = useState({})
+        const { allUsers: users, updateUser } = useAuth()
 
-        const handleInputChange = (e) => {
-            const { name, value } = e.target
-            setFormData((prev) => ({
-                ...prev,
+        useEffect(() => {
+            const initialData = {
+                name: user.name,
+                email: user.email,
+                phoneNumber: user.phoneNumber,
+                city: user.city,
+                hourlyRate: user.hourlyRate,
+                yearsOfExperience: user.yearsOfExperience,
+                bio: user.bio,
+            }
+            if (!isEditing) setNewData(initialData)
+        }, [isEditing])
+
+        const handleInputChange = (event) => {
+            const { name, value } = event.target
+            setNewData((prevUser) => ({
+                ...prevUser,
                 [name]: value,
             }))
         }
 
         const handleSubmit = (e) => {
             e.preventDefault()
-            setProfileData(formData)
-            setIsEditing(false)
+            console.log('Form data:', newData)
+            const validationErrors = {}
+            console.log(validationErrors)
+
+            if (
+                !isValidEmail(newData.email, users) &&
+                newData.email !== user.email
+            ) {
+                validationErrors.email = 'Invalid email or email already exists'
+            }
+
+            if (
+                !isValidPhoneNumber(newData.phoneNumber, users) &&
+                newData.phoneNumber !== user.phoneNumber
+            ) {
+                validationErrors.phoneNumber =
+                    'Invalid phone number or phone number already exists'
+            }
+
+            if (Object.keys(validationErrors).length > 0) {
+                setErrors(validationErrors)
+                return
+            }
+
+            updateMe(newData)
+                .then((data) => {
+                    console.log(data.data.user)
+                    updateUser(data.data.user)
+                    setIsEditing(false)
+                })
+                .catch((e) => {
+                    console.log(e)
+                    validationErrors.general = e.message
+                })
         }
 
+        const handleFileChange = (event) => {
+            const file = event.target.files[0]
+            if (file) {
+                // Perform validation or upload the file to a server
+                console.log('Selected file:', file)
+            }
+        }
+        const handleButtonClick = () => {
+            if (fileInputRef.current) {
+                fileInputRef.current.click() // Programmatically click the file input
+            }
+        }
         return (
             <div className="mx-auto max-w-4xl space-y-6">
                 <div className="flex items-center justify-between">
@@ -647,105 +699,158 @@ function WorkerDashboard() {
                                 className="h-32 w-32 rounded-full"
                             />
                             {isEditing && (
-                                <button className="absolute bottom-0 right-0 rounded-full bg-blue-600 p-2 text-white hover:bg-blue-700">
+                                <button
+                                    className="absolute bottom-0 right-0 rounded-full bg-blue-600 p-2 text-white hover:bg-blue-700"
+                                    onClick={handleButtonClick}
+                                >
                                     <UserCircle size={20} />
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        ref={fileInputRef}
+                                        className="hidden"
+                                        onChange={handleFileChange}
+                                    />
                                 </button>
                             )}
                         </div>
                         <div>
                             <h2 className="text-2xl font-bold text-gray-800">
-                                {profileData.name}
+                                {user.name}
                             </h2>
-                            <p className="text-gray-600">{profileData.email}</p>
+                            <p className="text-gray-600">{user.email}</p>
                             <div className="mt-2 flex gap-2">
-                                {profileData.skills.map((skill, index) => (
-                                    <span
-                                        key={index}
-                                        className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800"
-                                    >
-                                        {skill}
-                                    </span>
-                                ))}
+                                <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
+                                    {user.skill}
+                                </span>
                             </div>
                         </div>
                     </div>
 
                     {isEditing ? (
-                        <form onSubmit={handleSubmit} className="space-y-4">
+                        <Form
+                            onSubmit={handleSubmit}
+                            method="patch"
+                            className="space-y-4"
+                        >
                             <div className="grid grid-cols-2 gap-4">
+                                {/* Full Name */}
                                 <div>
                                     <label className="mb-1 block text-sm font-medium text-gray-700">
                                         Full Name
                                     </label>
                                     <input
+                                        id="name"
                                         type="text"
                                         name="name"
-                                        value={formData.name}
+                                        value={newData.name}
                                         onChange={handleInputChange}
                                         className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
                                     />
                                 </div>
+
+                                {/* City */}
                                 <div>
+                                    <label className="mb-1 block text-sm font-medium text-gray-700">
+                                        City
+                                    </label>
+                                    <input
+                                        id="city"
+                                        type="text"
+                                        name="city"
+                                        value={newData.city}
+                                        onChange={handleInputChange}
+                                        className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                                    />
+                                </div>
+
+                                {/* Email */}
+                                <div className="flex flex-col">
                                     <label className="mb-1 block text-sm font-medium text-gray-700">
                                         Email
                                     </label>
                                     <input
+                                        id="email"
                                         type="email"
                                         name="email"
-                                        value={formData.email}
+                                        value={newData.email}
                                         onChange={handleInputChange}
-                                        className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                                        className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.email ? 'border border-red-500' : ''}`}
                                     />
+                                    {errors?.email && (
+                                        <span className="mt-2 text-center text-sm text-red-500">
+                                            {errors.email}
+                                        </span>
+                                    )}
                                 </div>
-                                <div>
+
+                                {/* Phone */}
+                                <div className="flex flex-col">
                                     <label className="mb-1 block text-sm font-medium text-gray-700">
                                         Phone
                                     </label>
                                     <input
+                                        id="phone"
                                         type="tel"
-                                        name="phone"
-                                        value={formData.phone}
+                                        name="phoneNumber"
+                                        value={newData.phoneNumber}
                                         onChange={handleInputChange}
-                                        className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                                        className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.phoneNumber ? 'border border-red-500' : ''}`}
                                     />
+                                    {errors?.phoneNumber && (
+                                        <p className="mt-2 text-center text-sm text-red-500">
+                                            {errors.phoneNumber}
+                                        </p>
+                                    )}
                                 </div>
+
+                                {/* Hourly Rate */}
                                 <div>
                                     <label className="mb-1 block text-sm font-medium text-gray-700">
                                         Hourly Rate
                                     </label>
                                     <input
-                                        type="text"
+                                        id="hourlyRate"
+                                        type="number"
                                         name="hourlyRate"
-                                        value={formData.hourlyRate}
+                                        value={newData.hourlyRate}
+                                        onChange={handleInputChange}
+                                        className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                                    />
+                                </div>
+
+                                {/* Years of Experience */}
+                                <div>
+                                    <label className="mb-1 block text-sm font-medium text-gray-700">
+                                        Years of Experience
+                                    </label>
+                                    <input
+                                        id="yearsOfExperience"
+                                        type="number"
+                                        name="yearsOfExperience"
+                                        value={newData.yearsOfExperience}
                                         onChange={handleInputChange}
                                         className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
                                     />
                                 </div>
                             </div>
-                            <div>
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
-                                    Address
-                                </label>
-                                <input
-                                    type="text"
-                                    name="address"
-                                    value={formData.address}
-                                    onChange={handleInputChange}
-                                    className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
-                                />
-                            </div>
+
+                            {/* Bio */}
                             <div>
                                 <label className="mb-1 block text-sm font-medium text-gray-700">
                                     Bio
                                 </label>
                                 <textarea
+                                    id="bio"
                                     name="bio"
-                                    value={formData.bio}
+                                    value={newData.bio}
                                     onChange={handleInputChange}
-                                    rows="4"
+                                    rows="2"
                                     className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
                                 />
                             </div>
+
+                            {/* Save Button */}
                             <div className="flex justify-end space-x-4">
                                 <button
                                     type="submit"
@@ -754,7 +859,7 @@ function WorkerDashboard() {
                                     Save Changes
                                 </button>
                             </div>
-                        </form>
+                        </Form>
                     ) : (
                         <div className="space-y-6">
                             <div className="grid grid-cols-2 gap-6">
@@ -764,13 +869,13 @@ function WorkerDashboard() {
                                     </h3>
                                     <div className="mt-2 space-y-2">
                                         <p className="text-gray-800">
-                                            Phone: {profileData.phone}
+                                            Phone: {user.phoneNumber}
                                         </p>
                                         <p className="text-gray-800">
-                                            Email: {profileData.email}
+                                            Email: {user.email}
                                         </p>
                                         <p className="text-gray-800">
-                                            Address: {profileData.address}
+                                            City: {user.city}
                                         </p>
                                     </div>
                                 </div>
@@ -780,15 +885,11 @@ function WorkerDashboard() {
                                     </h3>
                                     <div className="mt-2 space-y-2">
                                         <p className="text-gray-800">
-                                            Experience: {profileData.experience}
+                                            Experience: {user.yearsOfExperience}{' '}
+                                            Years
                                         </p>
                                         <p className="text-gray-800">
-                                            Hourly Rate:{' '}
-                                            {profileData.hourlyRate}
-                                        </p>
-                                        <p className="text-gray-800">
-                                            Availability:{' '}
-                                            {profileData.availability}
+                                            Hourly Rate: {user.hourlyRate} $
                                         </p>
                                     </div>
                                 </div>
@@ -797,9 +898,7 @@ function WorkerDashboard() {
                                 <h3 className="text-sm font-medium text-gray-500">
                                     About
                                 </h3>
-                                <p className="mt-2 text-gray-800">
-                                    {profileData.bio}
-                                </p>
+                                <p className="mt-2 text-gray-800">{user.bio}</p>
                             </div>
                         </div>
                     )}
