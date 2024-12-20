@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
 import LandingPage from './pages/LandingPage'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -7,7 +8,12 @@ import ForgotPassword from './pages/ForgetPassword'
 // import ResetPassword from './pages/ResetPassword'
 import WorkerDashboard from './pages/WorkerDashboard'
 import CustomerDashboard from './pages/CustomerDashboard'
-import ProtectedRoute from './context/ProtectedRoute'
+import PrivateRoute from './context/PrivateRoute'
+
+const isAuthenticated = () => {
+    // Replace this with your actual authentication logic
+    return Boolean(localStorage.getItem('token'))
+}
 
 const router = createBrowserRouter([
     {
@@ -37,9 +43,9 @@ const router = createBrowserRouter([
     {
         path: '/worker-dashboard',
         element: (
-            <ProtectedRoute>
-                (<WorkerDashboard />
-            </ProtectedRoute>
+            <PrivateRoute isAuthenticated={isAuthenticated()}>
+                <WorkerDashboard />
+            </PrivateRoute>
         ),
     },
     {
@@ -49,13 +55,11 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-    return <RouterProvider router={router} />
+    return (
+        <AuthProvider>
+            <RouterProvider router={router} />
+        </AuthProvider>
+    )
 }
 
 export default App
-
-{
-    /* <ProtectedRoute>
-(<WorkerDashboard />
-</ProtectedRoute> */
-}

@@ -1,13 +1,22 @@
 import { Form, Link, useNavigate } from 'react-router-dom'
 import { login } from '../services/apis'
 import { useMutation } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext' // Import AuthContext
 
 const Login = () => {
     const { login: loginContext } = useAuth() // Use context
     const navigate = useNavigate()
     const [error, setError] = useState({})
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        const user = JSON.parse(localStorage.getItem('user'))
+        if (token) {
+            if (user.role === 'worker') navigate('/worker-dashboard')
+            else navigate('/customer-dashboard')
+        }
+    }, [navigate])
 
     const mutation = useMutation({
         mutationFn: async (formData) => {

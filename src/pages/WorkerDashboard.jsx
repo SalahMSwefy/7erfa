@@ -16,7 +16,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import TestimonialCard from '../ui/TestimonialCard'
-import { Form } from 'react-router-dom'
+import { Form, useNavigate } from 'react-router-dom'
 import { isValidEmail, isValidPhoneNumber } from '../services/helper'
 import { updateMe } from '../services/apis'
 
@@ -24,35 +24,21 @@ function WorkerDashboard() {
     const [currentPage, setCurrentPage] = useState('dashboard')
     const [loading, setLoading] = useState(true)
     const { user, logout } = useAuth()
+    const navigate = useNavigate()
 
     useEffect(() => {
         // Simulate loading data
         setTimeout(() => setLoading(false), 1000)
     }, [])
 
-    // Animation variants
-    // const containerVariants = {
-    //     hidden: { opacity: 0 },
-    //     visible: {
-    //         opacity: 1,
-    //         transition: {
-    //             duration: 0.5,
-    //             when: 'beforeChildren',
-    //             staggerChildren: 0.1,
-    //         },
-    //     },
-    // }
-
-    // const itemVariants = {
-    //     hidden: { y: 20, opacity: 0 },
-    //     visible: {
-    //         y: 0,
-    //         opacity: 1,
-    //     },
-    // }
-
     // Sidebar Component
     const Sidebar = () => {
+        useEffect(() => {
+            const storedToken = localStorage.getItem('token')
+            const storedUser = JSON.parse(localStorage.getItem('user'))
+            if (storedToken === null || storedUser === null) navigate('/login')
+        }, [])
+
         const menuItems = [
             {
                 title: 'Dashboard',
@@ -126,6 +112,10 @@ function WorkerDashboard() {
 
     // Header Component
     const Header = () => {
+        function handleLogout() {
+            logout()
+            navigate('/login')
+        }
         return (
             <motion.header
                 initial={{ y: -50 }}
@@ -158,7 +148,7 @@ function WorkerDashboard() {
                             src="https://via.placeholder.com/40"
                             alt="Profile"
                             className="bg-s flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-500"
-                            onClick={logout}
+                            onClick={handleLogout}
                         >
                             <LogOut className="text-stone-500" />
                         </motion.button>
@@ -656,6 +646,7 @@ function WorkerDashboard() {
                 .then((data) => {
                     console.log(data.data.user)
                     updateUser(data.data.user)
+                    setErrors({})
                     setIsEditing(false)
                 })
                 .catch((e) => {
