@@ -10,6 +10,8 @@ import {
     Star,
     Calendar,
     LogOut,
+    ImageUp,
+    BookHeart,
 } from 'lucide-react'
 // First need to install framer-motion:
 // npm install framer-motion
@@ -49,6 +51,11 @@ function WorkerDashboard() {
                 title: 'Orders',
                 icon: <ShoppingCart size={20} />,
                 page: 'orders',
+            },
+            {
+                title: 'Reviews',
+                icon: <BookHeart size={20} />,
+                page: 'reviews',
             },
             {
                 title: 'Profile',
@@ -436,6 +443,8 @@ function WorkerDashboard() {
                     return 'bg-blue-100 text-blue-800'
                 case 'Pending':
                     return 'bg-yellow-100 text-yellow-800'
+                case 'Canceled':
+                    return 'bg-red-100 text-red-800'
                 default:
                     return 'bg-gray-100 text-gray-800'
             }
@@ -452,6 +461,14 @@ function WorkerDashboard() {
                 default:
                     return 'bg-gray-100 text-gray-800'
             }
+        }
+
+        const handleStatusChange = (id, newStatus) => {
+            setOrders((prevOrders) =>
+                prevOrders.map((order) =>
+                    order.id === id ? { ...order, status: newStatus } : order,
+                ),
+            )
         }
 
         const filteredOrders = orders.filter((order) => {
@@ -483,10 +500,6 @@ function WorkerDashboard() {
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        <Search
-                            className="absolute left-3 top-2.5 text-gray-400"
-                            size={20}
-                        />
                     </div>
                     <select
                         className="rounded-lg border border-gray-200 px-4 py-2 focus:border-blue-500 focus:outline-none"
@@ -497,6 +510,7 @@ function WorkerDashboard() {
                         <option value="Pending">Pending</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Completed">Completed</option>
+                        <option value="Canceled">Canceled</option>
                     </select>
                 </div>
 
@@ -547,13 +561,31 @@ function WorkerDashboard() {
                                             {order.service}
                                         </td>
                                         <td className="whitespace-nowrap px-6 py-4">
-                                            <span
-                                                className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${getStatusColor(
+                                            <select
+                                                className={`rounded-lg border px-2 py-1 text-sm font-semibold ${getStatusColor(
                                                     order.status,
                                                 )}`}
+                                                value={order.status}
+                                                onChange={(e) =>
+                                                    handleStatusChange(
+                                                        order.id,
+                                                        e.target.value,
+                                                    )
+                                                }
                                             >
-                                                {order.status}
-                                            </span>
+                                                <option value="Pending">
+                                                    Pending
+                                                </option>
+                                                <option value="In Progress">
+                                                    In Progress
+                                                </option>
+                                                <option value="Completed">
+                                                    Completed
+                                                </option>
+                                                <option value="Canceled">
+                                                    Canceled
+                                                </option>
+                                            </select>
                                         </td>
                                         <td className="whitespace-nowrap px-6 py-4">
                                             <span
@@ -694,7 +726,7 @@ function WorkerDashboard() {
                                     className="absolute bottom-0 right-0 rounded-full bg-blue-600 p-2 text-white hover:bg-blue-700"
                                     onClick={handleButtonClick}
                                 >
-                                    <UserCircle size={20} />
+                                    <ImageUp size={20} />
                                     <input
                                         type="file"
                                         accept="image/*"
@@ -898,6 +930,172 @@ function WorkerDashboard() {
         )
     }
 
+    const TestimonialPage = () => {
+        const [testimonials, setTestimonials] = useState([
+            {
+                id: 1,
+                name: 'John Doe',
+                role: 'Customer',
+                testimonialText: 'Excellent service and very professional!',
+                rating: 5,
+                date: '2024-01-15',
+            },
+            {
+                id: 2,
+                name: 'Jane Smith',
+                role: 'Worker',
+                testimonialText: 'Great experience working with this platform.',
+                rating: 4,
+                date: '2024-01-14',
+            },
+            {
+                id: 3,
+                name: 'Mike Johnson',
+                role: 'Customer',
+                testimonialText: 'The service was okay, but could improve.',
+                rating: 3,
+                date: '2024-01-13',
+            },
+        ])
+
+        const [searchTerm, setSearchTerm] = useState('')
+        const [filterRating, setFilterRating] = useState('all')
+
+        const filteredTestimonials = testimonials.filter((testimonial) => {
+            const matchesSearch =
+                testimonial.name
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                testimonial.testimonialText
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+
+            const matchesRating =
+                filterRating === 'all' ||
+                testimonial.rating === Number(filterRating)
+
+            return matchesSearch && matchesRating
+        })
+
+        const renderStars = (rating) => {
+            const fullStars = Array(rating).fill(
+                <Star className="fill-yellow-500 text-yellow-500" size={16} />,
+            )
+            const emptyStars = Array(5 - rating).fill(
+                <Star className="fill-gray-300 text-gray-300" size={16} />,
+            )
+            return [...fullStars, ...emptyStars]
+        }
+
+        return (
+            <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                    <h1 className="text-2xl font-bold text-gray-800">
+                        Testimonials
+                    </h1>
+                    <button className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700">
+                        + New Testimonial
+                    </button>
+                </div>
+
+                <div className="flex items-center gap-4">
+                    <div className="relative flex-1">
+                        <input
+                            type="text"
+                            placeholder="Search testimonials..."
+                            className="w-full rounded-lg border border-gray-200 py-2 pl-10 pr-4 focus:border-blue-500 focus:outline-none"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
+                    <select
+                        className="rounded-lg border border-gray-200 px-4 py-2 focus:border-blue-500 focus:outline-none"
+                        value={filterRating}
+                        onChange={(e) => setFilterRating(e.target.value)}
+                    >
+                        <option value="all">All Ratings</option>
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select>
+                </div>
+
+                <div className="rounded-xl bg-white shadow-sm">
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        Testimonial ID
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        Name
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        Role
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        Rating
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        Testimonial
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        Date
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-200 bg-white">
+                                {filteredTestimonials.map((testimonial) => (
+                                    <tr
+                                        key={testimonial.id}
+                                        className="hover:bg-gray-50"
+                                    >
+                                        <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                                            #{testimonial.id}
+                                        </td>
+                                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                            {testimonial.name}
+                                        </td>
+                                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                            {testimonial.role}
+                                        </td>
+                                        <td className="whitespace-nowrap px-6 py-4">
+                                            <div className="flex items-center gap-1">
+                                                {renderStars(
+                                                    testimonial.rating,
+                                                )}
+                                            </div>
+                                        </td>
+                                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                            {testimonial.testimonialText}
+                                        </td>
+                                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                            {testimonial.date}
+                                        </td>
+                                        <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
+                                            <button className="mr-3 text-blue-600 hover:text-blue-900">
+                                                Edit
+                                            </button>
+                                            <button className="text-red-600 hover:text-red-900">
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     const renderPage = () => {
         return (
             <AnimatePresence mode="wait">
@@ -916,6 +1114,8 @@ function WorkerDashboard() {
                                 return <OrdersPage />
                             case 'profile':
                                 return <ProfilePage />
+                            case 'reviews':
+                                return <TestimonialPage />
                             default:
                                 return <DashboardPage />
                         }
