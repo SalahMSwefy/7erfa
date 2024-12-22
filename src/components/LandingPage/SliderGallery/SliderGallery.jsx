@@ -12,11 +12,11 @@ const images = [
     },
     {
         url: '/categories/3.jpg',
-        title: 'carpentry',
+        title: 'Carpentry',
     },
     {
         url: '/categories/4.jpg',
-        title: 'painting',
+        title: 'Painting',
     },
     {
         url: '/categories/5.jpg',

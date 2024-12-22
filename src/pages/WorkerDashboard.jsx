@@ -170,28 +170,24 @@ function WorkerDashboard() {
             {
                 title: 'Completed Tasks',
                 value: '45',
-                change: '+8% this week',
                 icon: <TrendingUp size={20} />,
                 color: 'bg-gradient-to-r from-blue-500 to-blue-600',
             },
             {
                 title: 'Active Tasks',
                 value: '12',
-                change: '+2 from yesterday',
                 icon: <Clock size={20} />,
                 color: 'bg-gradient-to-r from-purple-500 to-purple-600',
             },
             {
                 title: 'Total Earnings',
                 value: '$1,240',
-                change: '+15% this month',
                 icon: <DollarSign size={20} />,
                 color: 'bg-gradient-to-r from-green-500 to-green-600',
             },
             {
                 title: 'Rating',
                 value: '4.8',
-                change: '+0.2 this week',
                 icon: <Star size={20} />,
                 color: 'bg-gradient-to-r from-orange-500 to-orange-600',
             },
@@ -216,9 +212,6 @@ function WorkerDashboard() {
                             <p className="text-3xl font-bold text-white">
                                 {stat.value}
                             </p>
-                            <span className="rounded-full bg-white/20 px-2 py-1 text-sm text-white/80">
-                                {stat.change}
-                            </span>
                         </div>
                     </div>
                 ))}
@@ -233,24 +226,21 @@ function WorkerDashboard() {
                 title: 'Kitchen Renovation',
                 client: 'Sarah Johnson',
                 deadline: '2024-01-20',
-                progress: 75,
-                priority: 'High',
+                state: 'In Progress',
             },
             {
                 id: 2,
                 title: 'Bathroom Plumbing',
                 client: 'Mike Smith',
                 deadline: '2024-01-22',
-                progress: 30,
-                priority: 'Medium',
+                state: 'Completed',
             },
             {
                 id: 3,
                 title: 'Electrical Wiring',
                 client: 'Emma Davis',
                 deadline: '2024-01-25',
-                progress: 50,
-                priority: 'Low',
+                state: 'Pending',
             },
         ]
 
@@ -284,14 +274,14 @@ function WorkerDashboard() {
                                 </div>
                                 <span
                                     className={`rounded-full px-2 py-1 text-sm font-medium ${
-                                        task.priority === 'High'
-                                            ? 'bg-red-100 text-red-800'
-                                            : task.priority === 'Medium'
+                                        task.state === 'In Progress'
+                                            ? 'bg-blue-100 text-blue-800'
+                                            : task.state === 'Pending'
                                               ? 'bg-yellow-100 text-yellow-800'
                                               : 'bg-green-100 text-green-800'
                                     }`}
                                 >
-                                    {task.priority}
+                                    {task.state}
                                 </span>
                             </div>
                             <div className="mb-2 flex items-center gap-2 text-sm text-gray-500">
@@ -380,7 +370,7 @@ function WorkerDashboard() {
                 <div className="mb-6 flex items-center justify-between">
                     <div>
                         <h1 className="text-2xl font-bold text-gray-800">
-                            Welcome back, John! 👋
+                            Welcome back, {user.name}! 👋
                         </h1>
                         <p className="mt-1 text-gray-600">
                             Here&apos;s what&apos;s happening with your tasks
@@ -445,19 +435,6 @@ function WorkerDashboard() {
                     return 'bg-yellow-100 text-yellow-800'
                 case 'Canceled':
                     return 'bg-red-100 text-red-800'
-                default:
-                    return 'bg-gray-100 text-gray-800'
-            }
-        }
-
-        const getPriorityColor = (priority) => {
-            switch (priority) {
-                case 'High':
-                    return 'bg-red-100 text-red-800'
-                case 'Medium':
-                    return 'bg-orange-100 text-orange-800'
-                case 'Low':
-                    return 'bg-green-100 text-green-800'
                 default:
                     return 'bg-gray-100 text-gray-800'
             }
@@ -532,9 +509,6 @@ function WorkerDashboard() {
                                         Status
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                        Priority
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                         Date
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
@@ -587,15 +561,6 @@ function WorkerDashboard() {
                                                 </option>
                                             </select>
                                         </td>
-                                        <td className="whitespace-nowrap px-6 py-4">
-                                            <span
-                                                className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${getPriorityColor(
-                                                    order.priority,
-                                                )}`}
-                                            >
-                                                {order.priority}
-                                            </span>
-                                        </td>
                                         <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                             {order.date}
                                         </td>
@@ -637,7 +602,10 @@ function WorkerDashboard() {
                 yearsOfExperience: user.yearsOfExperience,
                 bio: user.bio,
             }
-            if (!isEditing) setNewData(initialData)
+            if (!isEditing) {
+                setErrors({})
+                setNewData(initialData)
+            }
         }, [isEditing])
 
         const handleInputChange = (event) => {
@@ -652,7 +620,7 @@ function WorkerDashboard() {
             e.preventDefault()
             console.log('Form data:', newData)
             const validationErrors = {}
-            console.log(validationErrors)
+            console.log('validationErrors', validationErrors)
 
             if (
                 !isValidEmail(newData.email, users) &&
