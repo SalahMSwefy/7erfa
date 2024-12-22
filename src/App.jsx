@@ -50,7 +50,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/customer-dashboard',
-        element: <CustomerDashboard />,
+        element: (
+            <PrivateRoute isAuthenticated={isAuthenticated()}>
+                <CustomerDashboard />
+            </PrivateRoute>
+        ),
     },
 ])
 

@@ -39,6 +39,7 @@ function WorkerDashboard() {
             const storedToken = localStorage.getItem('token')
             const storedUser = JSON.parse(localStorage.getItem('user'))
             if (storedToken === null || storedUser === null) navigate('/login')
+            if (storedUser.role === 'customer') navigate('/customer-dashboard')
         }, [])
 
         const menuItems = [
@@ -76,10 +77,6 @@ function WorkerDashboard() {
                         whileHover={{ scale: 1.05 }}
                         className="flex items-center gap-2"
                     >
-                        {/* <Menu className="text-blue-600" size={24} />
-                        <span className="text-xl font-bold text-blue-600">
-                            7erfa
-                        </span> */}
                         <div className="text-brand-light flex items-center gap-2.5">
                             <img
                                 src="/logos/logo.gif"

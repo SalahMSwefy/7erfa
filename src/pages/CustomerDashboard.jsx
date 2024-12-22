@@ -8,7 +8,6 @@ import {
     LogOut,
     SquareX,
     SquareCheck,
-    ClipboardList,
     CheckCircle,
     Clock,
     List,
@@ -37,6 +36,7 @@ function CustomerDashboard() {
             const storedToken = localStorage.getItem('token')
             const storedUser = JSON.parse(localStorage.getItem('user'))
             if (storedToken === null || storedUser === null) navigate('/login')
+            if (storedUser.role === 'worker') navigate('/worker-dashboard')
         }, [])
         const menuItems = [
             {
@@ -503,42 +503,6 @@ function CustomerDashboard() {
                         </motion.div>
                     ))}
                 </div>
-                <div className="space-y-6">
-                    <div className="flex items-center rounded-lg bg-blue-100 p-6 shadow-md">
-                        <ClipboardList className="mr-4 text-3xl text-blue-600" />
-                        <div>
-                            <h2 className="text-2xl font-semibold text-gray-800">
-                                Recent Orders
-                            </h2>
-                            <ul className="mt-4 space-y-2">
-                                <li className="border-b border-gray-200 pb-2">
-                                    <p className="text-gray-600">
-                                        Order #1: Plumbing in New York
-                                    </p>
-                                    <span className="text-sm text-gray-500">
-                                        Completed
-                                    </span>
-                                </li>
-                                <li className="border-b border-gray-200 pb-2">
-                                    <p className="text-gray-600">
-                                        Order #2: Electrical work in Los Angeles
-                                    </p>
-                                    <span className="text-sm text-gray-500">
-                                        Pending
-                                    </span>
-                                </li>
-                                <li>
-                                    <p className="text-gray-600">
-                                        Order #3: Carpentry in Chicago
-                                    </p>
-                                    <span className="text-sm text-gray-500">
-                                        Cancelled
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
         )
     }
@@ -561,12 +525,12 @@ function CustomerDashboard() {
                 <div className="mb-8 flex gap-4">
                     <input
                         type="text"
-                        placeholder="Enter skills"
+                        placeholder="Enter Worker Name"
                         className="flex-1 rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <input
                         type="text"
-                        placeholder="Enter city"
+                        placeholder="Enter City"
                         className="flex-1 rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <button className="rounded-lg bg-blue-600 px-6 py-3 text-white transition hover:bg-blue-700">
@@ -583,16 +547,39 @@ function CustomerDashboard() {
                             key={index}
                             className="rounded-lg bg-white p-6 shadow-md"
                         >
-                            <h3 className="text-lg font-bold text-gray-800">
+                            <h3 className="text-xl font-bold text-gray-800">
                                 {category}
                             </h3>
                             <p className="text-sm text-gray-500">
                                 Find the best workers for{' '}
                                 {category.toLowerCase()}.
                             </p>
-                            <button className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700">
+                            {/* <button className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700">
                                 View Workers
-                            </button>
+                            </button> */}
+                            <div className="mt-2 flex -space-x-4 rtl:space-x-reverse">
+                                <img
+                                    className="h-12 w-12 rounded-full border-2 border-white dark:border-gray-800"
+                                    src="/docs/images/people/profile-picture-5.jpg"
+                                    alt=""
+                                />
+                                <img
+                                    className="h-12 w-12 rounded-full border-2 border-white dark:border-gray-800"
+                                    src="/docs/images/people/profile-picture-2.jpg"
+                                    alt=""
+                                />
+                                <img
+                                    className="h-12 w-12 rounded-full border-2 border-white dark:border-gray-800"
+                                    src="/docs/images/people/profile-picture-3.jpg"
+                                    alt=""
+                                />
+                                <a
+                                    className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-gray-700 text-xs font-medium text-white hover:bg-gray-600 dark:border-gray-800"
+                                    href="#"
+                                >
+                                    +99
+                                </a>
+                            </div>
                         </div>
                     ))}
                 </div>
