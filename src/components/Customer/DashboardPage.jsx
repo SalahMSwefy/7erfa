@@ -1,0 +1,155 @@
+import { motion } from 'framer-motion'
+import { useAuth } from '../../context/AuthContext'
+import { CheckCircle, Clock, List, XCircle } from 'lucide-react'
+
+const DashboardPage = () => {
+    const { user, workers } = useAuth()
+
+    const skills = [
+        'Mechanical',
+        'Electrical',
+        'Carpentry',
+        'Painting',
+        'Plumber',
+        'Worker',
+    ]
+
+    // Group workers by skill
+    const groupedWorkers = skills.reduce((acc, skill) => {
+        const workersForSkill = workers.filter(
+            (worker) => worker.skill === skill,
+        )
+        // Find the worker with the maximum years of experience for each skill
+        const topWorker = workersForSkill.reduce((maxWorker, worker) => {
+            return worker.yearsOfExperience > maxWorker.yearsOfExperience
+                ? worker
+                : maxWorker
+        }, workersForSkill[0])
+
+        acc[skill] = topWorker
+        return acc
+    }, {}) // Starting with an empty object
+
+    return (
+        <div className="space-y-8">
+            <motion.div
+                className="mb-8 flex items-center justify-between"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+            >
+                <div>
+                    <h1 className="text-4xl font-extrabold text-gray-800">
+                        Welcome back, {user.name} 👋
+                    </h1>
+                    <p className="mt-2 text-lg text-gray-600">
+                        Here&apos;s an overview of your recent activities.
+                    </p>
+                </div>
+            </motion.div>
+            <OrderStats />
+            <h3 className="block text-2xl font-semibold text-gray-800">
+                Most Experience Workers
+            </h3>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {skills.map((skill) => (
+                    <motion.div
+                        key={skill}
+                        className="flex items-center rounded-lg bg-white p-4 shadow-md transition-shadow duration-200 hover:shadow-lg"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <img
+                            src={groupedWorkers[skill]?.image || ''}
+                            alt={skill}
+                            className="mr-4 h-16 w-16 rounded-full border border-gray-300 object-cover"
+                        />
+                        <div className="flex-1">
+                            <h3 className="flex items-center justify-between text-lg font-semibold text-gray-800">
+                                {groupedWorkers[skill]?.name || 'No Worker'}
+                                <p className="text-sm text-yellow-500">
+                                    {groupedWorkers[skill]?.ratingsAverage ||
+                                        'N/A'}{' '}
+                                    ⭐
+                                </p>
+                            </h3>
+                            <p className="text-sm text-gray-500">{skill}</p>
+                            <p className="text-sm text-gray-500">
+                                City: {groupedWorkers[skill]?.city || 'N/A'}{' '}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                                Phone Num:{' '}
+                                {groupedWorkers[skill]?.phoneNumber || 'N/A'}{' '}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                                Experience:{' '}
+                                {groupedWorkers[skill]?.yearsOfExperience ||
+                                    'N/A'}
+                                {' Years'}
+                            </p>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+const OrderStats = () => {
+    const stats = [
+        {
+            title: 'Total Orders',
+            value: '200',
+            icon: <List size={20} />,
+            color: 'bg-gradient-to-r from-blue-500 to-blue-600',
+        },
+        {
+            title: 'Completed Orders',
+            value: '120',
+            icon: <CheckCircle size={20} />,
+            color: 'bg-gradient-to-r from-green-500 to-green-600',
+        },
+        {
+            title: 'Pending Orders',
+            value: '35',
+            icon: <Clock size={20} />,
+            color: 'bg-gradient-to-r from-yellow-500 to-yellow-600',
+        },
+        {
+            title: 'Canceled Orders',
+            value: '15',
+            icon: <XCircle size={20} />,
+            color: 'bg-gradient-to-r from-red-500 to-red-600',
+        },
+    ]
+
+    return (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {stats.map((stat, index) => (
+                <div
+                    key={index}
+                    className={`rounded-xl p-6 ${stat.color} transform shadow-lg transition-all duration-200 hover:scale-105`}
+                >
+                    <div className="mb-4 flex items-center justify-between">
+                        <h3 className="text-sm font-medium text-white">
+                            {stat.title}
+                        </h3>
+                        <div className="rounded-lg bg-white/20 p-2">
+                            {stat.icon}
+                        </div>
+                    </div>
+                    <div className="flex items-end justify-between">
+                        <p className="text-3xl font-bold text-white">
+                            {stat.value}
+                        </p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
+}
+
+export default DashboardPage

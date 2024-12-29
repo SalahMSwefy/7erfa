@@ -8,15 +8,17 @@ const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [token, setToken] = useState(null)
-    const [allUsers, setAllUsers] = useState([])
+    const [workers, setWorkers] = useState([])
+    const [customers, setCustomers] = useState([])
+    const allUsers = [...workers, ...customers]
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const workers = await getWorkers()
                 const customers = await getCustomers()
-                const response = [...workers.data.data, ...customers.data.data]
-                setAllUsers(response)
+                setWorkers(workers.data.data)
+                setCustomers(customers.data.data)
             } catch (error) {
                 console.error('Error fetching data:', error)
             }
@@ -58,7 +60,15 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ token, updateUser, allUsers, user, login, logout }}
+            value={{
+                token,
+                updateUser,
+                workers,
+                allUsers,
+                user,
+                login,
+                logout,
+            }}
         >
             {children}
         </AuthContext.Provider>

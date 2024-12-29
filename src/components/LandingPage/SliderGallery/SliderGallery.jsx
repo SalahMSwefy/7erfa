@@ -27,6 +27,7 @@ const images = [
         title: 'Worker',
     },
 ]
+// [Mechanical, Electrical, Carpentry, Painting, Plumber, Worker]
 
 const SliderGallery = () => {
     const [currentIndex, setCurrentIndex] = useState(0)
