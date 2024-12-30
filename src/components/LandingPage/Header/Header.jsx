@@ -119,8 +119,12 @@ function Menu({ isMenuOpen, toggleMenu }) {
                 <div>
                     <h1> Join us now </h1>
                     <div>
-                        <button>Sign Up</button>
-                        <button>Log In</button>
+                        <Link to="/login">
+                            <button>Log In</button>
+                        </Link>
+                        <Link to="/register">
+                            <button>Sign Up</button>
+                        </Link>
                     </div>
                 </div>
             </div>

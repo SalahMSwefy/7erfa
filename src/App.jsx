@@ -15,30 +15,17 @@ const ForgotPassword = lazy(() => import('./pages/ForgetPassword'))
 const WorkerDashboard = lazy(() => import('./pages/WorkerDashboard'))
 const CustomerDashboard = lazy(() => import('./pages/CustomerDashboard'))
 
-// Lazy-loaded worker components
-const WorkerDashboardPage = lazy(
-    () => import('./components/Worker/DashboardPage'),
-)
-const TestimonialPage = lazy(
-    () => import('./components/Worker/TestimonialPage'),
-)
-const WorkerProfilePage = lazy(() => import('./components/Worker/ProfilePage'))
-const WorkerOrdersPage = lazy(() => import('./components/Worker/OrdersPage'))
-
-// Lazy-loaded customer components
-const CustomerDashboardPage = lazy(
-    () => import('./components/Customer/DashboardPage'),
-)
-const CustomerOrders = lazy(
-    () => import('./components/Customer/CustomerOrders'),
-)
-const CustomerProfilePage = lazy(
-    () => import('./components/Customer/ProfilePage'),
-)
-const SearchWorkersPage = lazy(
-    () => import('./components/Customer/SearchWorkersPage'),
-)
-const WorkerPage = lazy(() => import('./components/Customer/WorkerPage'))
+// worker components
+import WorkerDashboardPage from './components/Worker/DashboardPage'
+import TestimonialPage from './components/Worker/TestimonialPage'
+import WorkerProfilePage from './components/Worker/ProfilePage'
+import WorkerOrdersPage from './components/Worker/OrdersPage'
+// customer components
+import CustomerDashboardPage from './components/Customer/DashboardPage'
+import CustomerOrders from './components/Customer/CustomerOrders'
+import CustomerProfilePage from './components/Customer/ProfilePage'
+import SearchWorkersPage from './components/Customer/SearchWorkersPage'
+import WorkerPage from './components/Customer/WorkerPage'
 
 const isAuthenticated = () => {
     return Boolean(localStorage.getItem('token'))
@@ -104,43 +91,23 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: (
-                    <Suspense fallback={<FullScreenLoader />}>
-                        <WorkerDashboardPage />
-                    </Suspense>
-                ),
+                element: <WorkerDashboardPage />,
             },
             {
                 path: 'orders',
-                element: (
-                    <Suspense fallback={<FullScreenLoader />}>
-                        <WorkerOrdersPage />
-                    </Suspense>
-                ),
+                element: <WorkerOrdersPage />,
             },
             {
                 path: 'profile',
-                element: (
-                    <Suspense fallback={<FullScreenLoader />}>
-                        <WorkerProfilePage />
-                    </Suspense>
-                ),
+                element: <WorkerProfilePage />,
             },
             {
                 path: 'reviews',
-                element: (
-                    <Suspense fallback={<FullScreenLoader />}>
-                        <TestimonialPage />
-                    </Suspense>
-                ),
+                element: <TestimonialPage />,
             },
             {
                 path: '*',
-                element: (
-                    <Suspense fallback={<FullScreenLoader />}>
-                        <WorkerDashboardPage />
-                    </Suspense>
-                ),
+                element: <WorkerDashboardPage />,
             },
         ],
     },
@@ -156,43 +123,23 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: (
-                    <Suspense fallback={<FullScreenLoader />}>
-                        <CustomerDashboardPage />
-                    </Suspense>
-                ),
+                element: <CustomerDashboardPage />,
             },
             {
                 path: 'orders',
-                element: (
-                    <Suspense fallback={<FullScreenLoader />}>
-                        <CustomerOrders />
-                    </Suspense>
-                ),
+                element: <CustomerOrders />,
             },
             {
                 path: 'profile',
-                element: (
-                    <Suspense fallback={<FullScreenLoader />}>
-                        <CustomerProfilePage />
-                    </Suspense>
-                ),
+                element: <CustomerProfilePage />,
             },
             {
                 path: 'search',
-                element: (
-                    <Suspense fallback={<FullScreenLoader />}>
-                        <SearchWorkersPage />
-                    </Suspense>
-                ),
+                element: <SearchWorkersPage />,
             },
             {
                 path: 'worker/:workerId',
-                element: (
-                    <Suspense fallback={<FullScreenLoader />}>
-                        <WorkerPage />
-                    </Suspense>
-                ),
+                element: <WorkerPage />,
             },
         ],
     },
