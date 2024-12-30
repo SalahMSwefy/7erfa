@@ -1,27 +1,44 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
-///////////////////////
-import LandingPage from './pages/LandingPage'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Error from './ui/Error'
-import ForgotPassword from './pages/ForgetPassword'
-// import ResetPassword from './pages/ResetPassword'
-///////////////////////////////
-import WorkerDashboard from './pages/WorkerDashboard'
-import CustomerDashboard from './pages/CustomerDashboard'
 import PrivateRoute from './context/PrivateRoute'
-// worker pages
-import WorkerDashboardPage from './components/Worker/DashboardPage'
-import TestimonialPage from './components/Worker/TestimonialPage'
-import WorkerProfilePage from './components/Worker/ProfilePage'
-import WorkerOrdersPage from './components/Worker/OrdersPage'
-// customer pages
-import CustomerDashboardPage from './components/Customer/DashboardPage'
-import CustomerOrders from './components/Customer/CustomerOrders'
-import CustomerProfilePage from './components/Customer/ProfilePage'
-import SearchWorkersPage from './components/Customer/SearchWorkersPage'
-import WorkerPage from './components/Worker/WorkerPage'
+import { Suspense, lazy } from 'react'
+import FullScreenLoader from './ui/FullScreenLoader'
+
+// Lazy-loaded pages
+const LandingPage = lazy(() => import('./pages/LandingPage'))
+const Login = lazy(() => import('./pages/Login'))
+const Register = lazy(() => import('./pages/Register'))
+const Error = lazy(() => import('./ui/Error'))
+const ForgotPassword = lazy(() => import('./pages/ForgetPassword'))
+
+// Lazy-loaded main dashboard pages
+const WorkerDashboard = lazy(() => import('./pages/WorkerDashboard'))
+const CustomerDashboard = lazy(() => import('./pages/CustomerDashboard'))
+
+// Lazy-loaded worker components
+const WorkerDashboardPage = lazy(
+    () => import('./components/Worker/DashboardPage'),
+)
+const TestimonialPage = lazy(
+    () => import('./components/Worker/TestimonialPage'),
+)
+const WorkerProfilePage = lazy(() => import('./components/Worker/ProfilePage'))
+const WorkerOrdersPage = lazy(() => import('./components/Worker/OrdersPage'))
+
+// Lazy-loaded customer components
+const CustomerDashboardPage = lazy(
+    () => import('./components/Customer/DashboardPage'),
+)
+const CustomerOrders = lazy(
+    () => import('./components/Customer/CustomerOrders'),
+)
+const CustomerProfilePage = lazy(
+    () => import('./components/Customer/ProfilePage'),
+)
+const SearchWorkersPage = lazy(
+    () => import('./components/Customer/SearchWorkersPage'),
+)
+const WorkerPage = lazy(() => import('./components/Customer/WorkerPage'))
 
 const isAuthenticated = () => {
     return Boolean(localStorage.getItem('token'))
@@ -30,55 +47,100 @@ const isAuthenticated = () => {
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <LandingPage />,
+        element: (
+            <Suspense fallback={<FullScreenLoader />}>
+                <LandingPage />
+            </Suspense>
+        ),
     },
     {
         path: '/login',
-        element: <Login />,
-        errorElement: <Error />,
+        element: (
+            <Suspense fallback={<FullScreenLoader />}>
+                <Login />
+            </Suspense>
+        ),
+        errorElement: (
+            <Suspense fallback={<FullScreenLoader />}>
+                <Error />
+            </Suspense>
+        ),
     },
     {
         path: '/register',
-        element: <Register />,
-        errorElement: <Error />,
+        element: (
+            <Suspense fallback={<FullScreenLoader />}>
+                <Register />
+            </Suspense>
+        ),
+        errorElement: (
+            <Suspense fallback={<FullScreenLoader />}>
+                <Error />
+            </Suspense>
+        ),
     },
     {
         path: '/forgetPassword',
-        element: <ForgotPassword />,
-        errorElement: <Error />,
+        element: (
+            <Suspense fallback={<FullScreenLoader />}>
+                <ForgotPassword />
+            </Suspense>
+        ),
+        errorElement: (
+            <Suspense fallback={<FullScreenLoader />}>
+                <Error />
+            </Suspense>
+        ),
     },
-    // {
-    //     path: '/resetPassword',
-    //     element: <ResetPassword />,
-    //     errorElement: <Error />,
-    // },
     {
         path: '/worker-dashboard',
         element: (
             <PrivateRoute isAuthenticated={isAuthenticated()}>
-                <WorkerDashboard />
+                <Suspense fallback={<FullScreenLoader />}>
+                    <WorkerDashboard />
+                </Suspense>
             </PrivateRoute>
         ),
         children: [
             {
                 index: true,
-                element: <WorkerDashboardPage />,
+                element: (
+                    <Suspense fallback={<FullScreenLoader />}>
+                        <WorkerDashboardPage />
+                    </Suspense>
+                ),
             },
             {
                 path: 'orders',
-                element: <WorkerOrdersPage />,
+                element: (
+                    <Suspense fallback={<FullScreenLoader />}>
+                        <WorkerOrdersPage />
+                    </Suspense>
+                ),
             },
             {
                 path: 'profile',
-                element: <WorkerProfilePage />,
+                element: (
+                    <Suspense fallback={<FullScreenLoader />}>
+                        <WorkerProfilePage />
+                    </Suspense>
+                ),
             },
             {
                 path: 'reviews',
-                element: <TestimonialPage />,
+                element: (
+                    <Suspense fallback={<FullScreenLoader />}>
+                        <TestimonialPage />
+                    </Suspense>
+                ),
             },
             {
                 path: '*',
-                element: <WorkerDashboardPage />,
+                element: (
+                    <Suspense fallback={<FullScreenLoader />}>
+                        <WorkerDashboardPage />
+                    </Suspense>
+                ),
             },
         ],
     },
@@ -86,29 +148,51 @@ const router = createBrowserRouter([
         path: '/customer-dashboard',
         element: (
             <PrivateRoute isAuthenticated={isAuthenticated()}>
-                <CustomerDashboard />
+                <Suspense fallback={<FullScreenLoader />}>
+                    <CustomerDashboard />
+                </Suspense>
             </PrivateRoute>
         ),
         children: [
             {
                 index: true,
-                element: <CustomerDashboardPage />,
+                element: (
+                    <Suspense fallback={<FullScreenLoader />}>
+                        <CustomerDashboardPage />
+                    </Suspense>
+                ),
             },
             {
                 path: 'orders',
-                element: <CustomerOrders />,
+                element: (
+                    <Suspense fallback={<FullScreenLoader />}>
+                        <CustomerOrders />
+                    </Suspense>
+                ),
             },
             {
                 path: 'profile',
-                element: <CustomerProfilePage />,
+                element: (
+                    <Suspense fallback={<FullScreenLoader />}>
+                        <CustomerProfilePage />
+                    </Suspense>
+                ),
             },
             {
                 path: 'search',
-                element: <SearchWorkersPage />,
+                element: (
+                    <Suspense fallback={<FullScreenLoader />}>
+                        <SearchWorkersPage />
+                    </Suspense>
+                ),
             },
             {
                 path: 'worker/:workerId',
-                element: <WorkerPage />,
+                element: (
+                    <Suspense fallback={<FullScreenLoader />}>
+                        <WorkerPage />
+                    </Suspense>
+                ),
             },
         ],
     },

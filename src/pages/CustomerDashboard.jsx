@@ -126,6 +126,9 @@ function CustomerDashboard() {
                             src="https://via.placeholder.com/40"
                             alt="Profile"
                             className="h-8 w-8 rounded-full border-2 border-blue-500"
+                            onClick={() =>
+                                navigate('/customer-dashboard/profile')
+                            }
                         />
                         <motion.button
                             whileHover={{ scale: 1.1 }}

@@ -1,17 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { isValidEmail, isValidPhoneNumber } from '../../services/helper'
-import { updateMe } from '../../services/apis'
+import { updateMe, uploadPictureCustomer } from '../../services/apis'
 import { Form } from 'react-router-dom'
-import { ImageUp } from 'lucide-react'
 import { motion } from 'framer-motion'
+
+const VITE_API_URL = import.meta.env.VITE_API_URL
 
 const ProfilePage = () => {
     const [isEditing, setIsEditing] = useState(false)
-    const fileInputRef = useRef(null)
     const [newData, setNewData] = useState({})
     const [errors, setErrors] = useState({})
     const { allUsers: users, updateUser, user } = useAuth()
+    const fileInputRef = useRef(null)
 
     useEffect(() => {
         const initialData = {
@@ -24,7 +25,7 @@ const ProfilePage = () => {
             setErrors({})
             setNewData(initialData)
         }
-    }, [isEditing])
+    }, [isEditing, user])
 
     const handleInputChange = (event) => {
         const { name, value } = event.target
@@ -34,12 +35,26 @@ const ProfilePage = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log('Form data:', newData)
-        const validationErrors = {}
-        console.log('validationErrors', validationErrors)
+    const handlePhotoUpload = async (file) => {
+        try {
+            const formData = new FormData()
+            formData.append('photo', file)
 
+            const response = await uploadPictureCustomer(formData)
+            console.log(response.data.updated_user)
+            updateUser({ ...user, image: response.data.updated_user.image })
+        } catch (error) {
+            setErrors((prev) => ({
+                ...prev,
+                general:
+                    'Photo upload failed. Please try again.' + error.message,
+            }))
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const validationErrors = {}
         if (
             !isValidEmail(newData.email, users) &&
             newData.email !== user.email
@@ -60,29 +75,20 @@ const ProfilePage = () => {
             return
         }
 
-        updateMe(newData)
-            .then((data) => {
-                console.log(data.data.user)
+        try {
+            await updateMe(newData).then((data) => {
                 updateUser(data.data.user)
                 setErrors({})
                 setIsEditing(false)
             })
-            .catch((e) => {
-                console.log(e)
-                validationErrors.general = e.message
-            })
-    }
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0]
-        if (file) {
-            // Perform validation or upload the file to a server
-            console.log('Selected file:', file)
-        }
-    }
-    const handleButtonClick = () => {
-        if (fileInputRef.current) {
-            fileInputRef.current.click() // Programmatically click the file input
+            const file = fileInputRef.current?.files[0]
+            if (file) await handlePhotoUpload(file)
+        } catch (error) {
+            setErrors((prev) => ({
+                ...prev,
+                general: 'Update failed. Please try again.' + error.message,
+            }))
         }
     }
 
@@ -106,27 +112,12 @@ const ProfilePage = () => {
 
             <div className="rounded-xl bg-white p-6 shadow-sm">
                 <div className="mb-6 flex items-center space-x-6">
-                    <div className="relative">
+                    <div className="relative space-x-6">
                         <img
-                            src="https://via.placeholder.com/150"
+                            src={`${VITE_API_URL}/public/${user.image}`}
                             alt="Profile"
                             className="h-32 w-32 rounded-full"
                         />
-                        {isEditing && (
-                            <button
-                                className="absolute bottom-0 right-0 rounded-full bg-blue-600 p-2 text-white hover:bg-blue-700"
-                                onClick={handleButtonClick}
-                            >
-                                <ImageUp size={20} />
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    ref={fileInputRef}
-                                    className="hidden"
-                                    onChange={handleFileChange}
-                                />
-                            </button>
-                        )}
                     </div>
                     <div>
                         <h2 className="text-2xl font-bold text-gray-800">
@@ -140,15 +131,14 @@ const ProfilePage = () => {
                         </div>
                     </div>
                 </div>
-
                 {isEditing ? (
                     <Form
                         onSubmit={handleSubmit}
                         method="patch"
                         className="space-y-4"
+                        encType="multipart/form-data"
                     >
                         <div className="grid grid-cols-2 gap-4">
-                            {/* Full Name */}
                             <div>
                                 <label className="mb-1 block text-sm font-medium text-gray-700">
                                     Full Name
@@ -163,7 +153,6 @@ const ProfilePage = () => {
                                 />
                             </div>
 
-                            {/* City */}
                             <div>
                                 <label className="mb-1 block text-sm font-medium text-gray-700">
                                     City
@@ -178,7 +167,6 @@ const ProfilePage = () => {
                                 />
                             </div>
 
-                            {/* Email */}
                             <div className="flex flex-col">
                                 <label className="mb-1 block text-sm font-medium text-gray-700">
                                     Email
@@ -189,7 +177,11 @@ const ProfilePage = () => {
                                     name="email"
                                     value={newData.email}
                                     onChange={handleInputChange}
-                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.email ? 'border border-red-500' : ''}`}
+                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${
+                                        errors.email
+                                            ? 'border border-red-500'
+                                            : ''
+                                    }`}
                                 />
                                 {errors?.email && (
                                     <span className="mt-2 text-center text-sm text-red-500">
@@ -198,7 +190,6 @@ const ProfilePage = () => {
                                 )}
                             </div>
 
-                            {/* Phone */}
                             <div className="flex flex-col">
                                 <label className="mb-1 block text-sm font-medium text-gray-700">
                                     Phone
@@ -209,7 +200,11 @@ const ProfilePage = () => {
                                     name="phoneNumber"
                                     value={newData.phoneNumber}
                                     onChange={handleInputChange}
-                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.phoneNumber ? 'border border-red-500' : ''}`}
+                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${
+                                        errors.phoneNumber
+                                            ? 'border border-red-500'
+                                            : ''
+                                    }`}
                                 />
                                 {errors?.phoneNumber && (
                                     <p className="mt-2 text-center text-sm text-red-500">
@@ -217,9 +212,22 @@ const ProfilePage = () => {
                                     </p>
                                 )}
                             </div>
+
+                            <div>
+                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                    Profile Picture
+                                </label>
+                                <input
+                                    ref={fileInputRef}
+                                    id="photo"
+                                    type="file"
+                                    name="photo"
+                                    accept="image/*"
+                                    className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                                />
+                            </div>
                         </div>
 
-                        {/* Save Button */}
                         <div className="flex justify-end space-x-4">
                             <button
                                 type="submit"
@@ -230,7 +238,7 @@ const ProfilePage = () => {
                         </div>
                     </Form>
                 ) : (
-                    <div className="space-y-6">
+                    <div>
                         <div className="grid grid-cols-2 gap-6">
                             <div>
                                 <h3 className="text-sm font-medium text-gray-500">

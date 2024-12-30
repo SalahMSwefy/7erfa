@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { isValidEmail, isValidPhoneNumber } from '../../services/helper'
-import { updateMe } from '../../services/apis'
-import { ImageUp } from 'lucide-react'
+import { updateMe, uploadPictureWorker } from '../../services/apis'
+
 import { Form } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
+const VITE_API_URL = import.meta.env.VITE_API_URL
+
 const ProfilePage = () => {
     const [isEditing, setIsEditing] = useState(false)
-    const fileInputRef = useRef(null)
     const [newData, setNewData] = useState({})
     const [errors, setErrors] = useState({})
     const { allUsers: users, updateUser, user } = useAuth()
+    const fileInputRef = useRef(null)
 
     useEffect(() => {
         const initialData = {
@@ -37,11 +39,26 @@ const ProfilePage = () => {
         }))
     }
 
-    const handleSubmit = (e) => {
+    const handlePhotoUpload = async (file) => {
+        try {
+            const formData = new FormData()
+            formData.append('photo', file)
+
+            const response = await uploadPictureWorker(formData)
+            console.log(response.data.updated_user)
+            updateUser({ ...user, image: response.data.updated_user.image })
+        } catch (error) {
+            setErrors((prev) => ({
+                ...prev,
+                general:
+                    'Photo upload failed. Please try again.' + error.message,
+            }))
+        }
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log('Form data:', newData)
         const validationErrors = {}
-        console.log('validationErrors', validationErrors)
 
         if (
             !isValidEmail(newData.email, users) &&
@@ -63,31 +80,23 @@ const ProfilePage = () => {
             return
         }
 
-        updateMe(newData)
-            .then((data) => {
-                console.log(data.data.user)
+        try {
+            await updateMe(newData).then((data) => {
                 updateUser(data.data.user)
                 setErrors({})
                 setIsEditing(false)
             })
-            .catch((e) => {
-                console.log(e)
-                validationErrors.general = e.message
-            })
+
+            const file = fileInputRef.current?.files[0]
+            if (file) await handlePhotoUpload(file)
+        } catch (error) {
+            setErrors((prev) => ({
+                ...prev,
+                general: 'Update failed. Please try again.' + error.message,
+            }))
+        }
     }
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0]
-        if (file) {
-            // Perform validation or upload the file to a server
-            console.log('Selected file:', file)
-        }
-    }
-    const handleButtonClick = () => {
-        if (fileInputRef.current) {
-            fileInputRef.current.click() // Programmatically click the file input
-        }
-    }
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -110,25 +119,10 @@ const ProfilePage = () => {
                 <div className="mb-6 flex items-center space-x-6">
                     <div className="relative">
                         <img
-                            src="https://via.placeholder.com/150"
+                            src={`${VITE_API_URL}/public/${user.image}`}
                             alt="Profile"
                             className="h-32 w-32 rounded-full"
                         />
-                        {isEditing && (
-                            <button
-                                className="absolute bottom-0 right-0 rounded-full bg-blue-600 p-2 text-white hover:bg-blue-700"
-                                onClick={handleButtonClick}
-                            >
-                                <ImageUp size={20} />
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    ref={fileInputRef}
-                                    className="hidden"
-                                    onChange={handleFileChange}
-                                />
-                            </button>
-                        )}
                     </div>
                     <div>
                         <h2 className="text-2xl font-bold text-gray-800">
@@ -148,6 +142,7 @@ const ProfilePage = () => {
                         onSubmit={handleSubmit}
                         method="patch"
                         className="space-y-4"
+                        encType="multipart/form-data"
                     >
                         <div className="grid grid-cols-2 gap-4">
                             {/* Full Name */}
@@ -262,6 +257,19 @@ const ProfilePage = () => {
                                 value={newData.bio}
                                 onChange={handleInputChange}
                                 rows="2"
+                                className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                            />
+                        </div>
+                        <div>
+                            <label className="mb-1 block text-sm font-medium text-gray-700">
+                                Profile Picture
+                            </label>
+                            <input
+                                ref={fileInputRef}
+                                id="photo"
+                                type="file"
+                                name="photo"
+                                accept="image/*"
                                 className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
                             />
                         </div>

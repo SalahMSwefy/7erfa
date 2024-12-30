@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { getOrders } from '../../services/apis'
+import { getOrders, updateOrderStatus } from '../../services/apis'
 
 const OrdersPage = () => {
     const [orders, setOrders] = useState([])
@@ -20,13 +20,13 @@ const OrdersPage = () => {
 
     const getStatusColor = (status) => {
         switch (status) {
-            case 'Completed':
+            case 'completed':
                 return 'bg-green-100 text-green-800'
-            case 'In Progress':
-                return 'bg-blue-100 text-blue-800'
-            case 'Pending':
+            case 'in Progress':
+                return 'bg-blue-200 text-blue-700'
+            case 'pending':
                 return 'bg-yellow-100 text-yellow-800'
-            case 'Canceled':
+            case 'canceled':
                 return 'bg-red-100 text-red-800'
             default:
                 return 'bg-gray-100 text-gray-800'
@@ -39,13 +39,17 @@ const OrdersPage = () => {
                 order.id === id ? { ...order, status: newStatus } : order,
             ),
         )
+        updateOrderStatus(id, newStatus)
     }
 
     const filteredOrders = orders.filter((order) => {
         const matchesStatus =
-            filterStatus === 'all' || order.status === filterStatus
+            filterStatus === 'all' ||
+            order.status === filterStatus.toLowerCase()
         const matchesSearch =
-            order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            order.customer.name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
             order.service.toLowerCase().includes(searchTerm.toLowerCase())
         return matchesStatus && matchesSearch
     })
@@ -60,9 +64,6 @@ const OrdersPage = () => {
         >
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-bold text-gray-800">Orders</h1>
-                <button className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700">
-                    + New Order
-                </button>
             </div>
 
             <div className="flex items-center gap-4">
@@ -103,16 +104,13 @@ const OrdersPage = () => {
                                     Service
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                    Details
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Status
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Date
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Price
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Actions
                                 </th>
                             </tr>
                         </thead>
@@ -122,11 +120,14 @@ const OrdersPage = () => {
                                     <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                                         #{i + 1}
                                     </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {order.customer}
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500">
+                                        {order.customer.name}
+                                    </td>
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500">
+                                        {order.service}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {order.service}
+                                        {order.details}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4">
                                         <select
@@ -141,33 +142,50 @@ const OrdersPage = () => {
                                                 )
                                             }
                                         >
-                                            <option value="Pending">
-                                                Pending
-                                            </option>
-                                            <option value="In Progress">
-                                                In Progress
-                                            </option>
-                                            <option value="Completed">
-                                                Completed
-                                            </option>
-                                            <option value="Canceled">
-                                                Canceled
-                                            </option>
+                                            {order.status === 'pending' ? (
+                                                <>
+                                                    <option value="pending">
+                                                        Pending
+                                                    </option>
+                                                    <option value="in progress">
+                                                        In Progress
+                                                    </option>
+                                                    <option value="completed">
+                                                        Completed
+                                                    </option>
+                                                    <option value="canceled">
+                                                        Canceled
+                                                    </option>
+                                                </>
+                                            ) : order.status ===
+                                              'in progress' ? (
+                                                <>
+                                                    <option value="in progress">
+                                                        In Progress
+                                                    </option>
+                                                    <option value="completed">
+                                                        Completed
+                                                    </option>
+                                                </>
+                                            ) : order.status === 'completed' ? (
+                                                <>
+                                                    <option value="completed">
+                                                        Completed
+                                                    </option>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <option value="canceled">
+                                                        Canceled
+                                                    </option>
+                                                </>
+                                            )}
                                         </select>
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {order.createdAt}
-                                    </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {order.price}
-                                    </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
-                                        <button className="mr-3 text-blue-600 hover:text-blue-900">
-                                            Edit
-                                        </button>
-                                        <button className="text-red-600 hover:text-red-900">
-                                            Delete
-                                        </button>
+                                        {new Date(
+                                            order.createdAt,
+                                        ).toLocaleString('en-EG')}
                                     </td>
                                 </tr>
                             ))}

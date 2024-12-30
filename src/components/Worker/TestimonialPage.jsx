@@ -1,41 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-
 import { Star } from 'lucide-react'
+import { getReviews } from '../../services/apis'
+import { useAuth } from '../../context/AuthContext'
+
 const TestimonialPage = () => {
-    const [testimonials, setTestimonials] = useState([
-        {
-            id: 1,
-            name: 'John Doe',
-            role: 'Customer',
-            testimonialText: 'Excellent service and very professional!',
-            rating: 5,
-            date: '2024-01-15',
-        },
-        {
-            id: 2,
-            name: 'Jane Smith',
-            role: 'Worker',
-            testimonialText: 'Great experience working with this platform.',
-            rating: 4,
-            date: '2024-01-14',
-        },
-        {
-            id: 3,
-            name: 'Mike Johnson',
-            role: 'Customer',
-            testimonialText: 'The service was okay, but could improve.',
-            rating: 3,
-            date: '2024-01-13',
-        },
-    ])
+    const { user } = useAuth()
+    const [reviews, setReview] = useState([])
+
+    useEffect(() => {
+        getReviews(user.id)
+            .then((data) => {
+                setReview(data.data.data)
+            })
+            .catch((error) => console.error('Error fetching reviews:', error))
+    }, [user.id])
 
     const [searchTerm, setSearchTerm] = useState('')
     const [filterRating, setFilterRating] = useState('all')
 
-    const filteredTestimonials = testimonials.filter((testimonial) => {
+    const filteredTestimonials = reviews.filter((testimonial) => {
         const matchesSearch =
-            testimonial.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            testimonial.customer.name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
             testimonial.testimonialText
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase())
@@ -66,19 +54,14 @@ const TestimonialPage = () => {
             className="space-y-6"
         >
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-800">
-                    Testimonials
-                </h1>
-                <button className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700">
-                    + New Testimonial
-                </button>
+                <h1 className="text-2xl font-bold text-gray-800">Reviews</h1>
             </div>
 
             <div className="flex items-center gap-4">
                 <div className="relative flex-1">
                     <input
                         type="text"
-                        placeholder="Search testimonials..."
+                        placeholder="Search Reviews..."
                         className="w-full rounded-lg border border-gray-200 py-2 pl-10 pr-4 focus:border-blue-500 focus:outline-none"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -104,42 +87,39 @@ const TestimonialPage = () => {
                         <thead className="bg-gray-50">
                             <tr>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Testimonial ID
+                                    Reviews ID
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Name
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Role
+                                    City
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Rating
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Testimonial
+                                    Review
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Date
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Actions
-                                </th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                            {filteredTestimonials.map((testimonial) => (
+                            {filteredTestimonials.map((testimonial, i) => (
                                 <tr
                                     key={testimonial.id}
                                     className="hover:bg-gray-50"
                                 >
                                     <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-                                        #{testimonial.id}
+                                        #{i + 1}
+                                    </td>
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500">
+                                        {testimonial.customer.name}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {testimonial.name}
-                                    </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {testimonial.role}
+                                        {testimonial.customer.city}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4">
                                         <div className="flex items-center gap-1">
@@ -147,18 +127,12 @@ const TestimonialPage = () => {
                                         </div>
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {testimonial.testimonialText}
+                                        {testimonial.review}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {testimonial.date}
-                                    </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
-                                        <button className="mr-3 text-blue-600 hover:text-blue-900">
-                                            Edit
-                                        </button>
-                                        <button className="text-red-600 hover:text-red-900">
-                                            Delete
-                                        </button>
+                                        {new Date(
+                                            testimonial.createdAt,
+                                        ).toLocaleString('en-EG')}
                                     </td>
                                 </tr>
                             ))}

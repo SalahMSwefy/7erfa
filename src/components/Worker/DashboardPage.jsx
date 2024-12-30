@@ -1,10 +1,44 @@
+import { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import TestimonialCard from '../../ui/TestimonialCard'
 import { motion } from 'framer-motion'
+import { Clock, CircleCheck, Star, Calendar, X } from 'lucide-react'
+import { getOrders, getReviews } from '../../services/apis'
+import { useNavigate } from 'react-router-dom'
 
-import { TrendingUp, Clock, DollarSign, Star, Calendar } from 'lucide-react'
 const DashboardPage = () => {
     const { user } = useAuth()
+    const navigate = useNavigate()
+    const [reviews, setReview] = useState([])
+    const [orders, setOrders] = useState([])
+    const [allOrders, setAllOrders] = useState([])
+
+    useEffect(() => {
+        getOrders().then((data) => {
+            setOrders([
+                data.data.orders[0],
+                data.data.orders[1],
+                data.data.orders[2],
+            ])
+            setAllOrders(data.data.orders)
+        })
+    }, [])
+
+    useEffect(() => {
+        getReviews(user.id)
+            .then((data) => {
+                if (data.data.data.length < 3) {
+                    setReview(data.data.data)
+                } else {
+                    setReview([
+                        data.data.data[0],
+                        data.data.data[1],
+                        data.data.data[2],
+                    ])
+                }
+            })
+            .catch((error) => console.error('Error fetching reviews:', error))
+    }, [user.id])
 
     return (
         <motion.div
@@ -22,43 +56,53 @@ const DashboardPage = () => {
                         Here&apos;s what&apos;s happening with your tasks today.
                     </p>
                 </div>
-                <button className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white transition-all duration-200 hover:bg-blue-700">
-                    <Calendar size={18} />
-                    View Schedule
-                </button>
             </div>
-            <WorkerStats />
+            <WorkerStats user={user} orders={allOrders} />
             <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-                <WorkerTasks />
-                <TestimonialList />
+                <WorkerTasks navigate={navigate} orders={orders} />
+                <TestimonialList reviews={reviews} navigate={navigate} />
             </div>
         </motion.div>
     )
 }
-const WorkerStats = () => {
+
+const WorkerStats = ({ user, orders }) => {
+    const completedOrders = orders.filter(
+        (order) => order.status === 'completed',
+    ).length
+
+    const activeOrders = orders.filter(
+        (order) => order.status === 'in progress' || order.status === 'pending',
+    ).length
+
+    const canceledOrders = orders.filter(
+        (order) => order.status === 'canceled',
+    ).length
+
     const stats = [
         {
-            title: 'Completed Tasks',
-            value: '45',
-            icon: <TrendingUp size={20} />,
-            color: 'bg-gradient-to-r from-blue-500 to-blue-600',
-        },
-        {
-            title: 'Active Tasks',
-            value: '12',
-            icon: <Clock size={20} />,
-            color: 'bg-gradient-to-r from-purple-500 to-purple-600',
-        },
-        {
-            title: 'Total Earnings',
-            value: '$1,240',
-            icon: <DollarSign size={20} />,
+            title: 'Completed Orders',
+            value: completedOrders,
+            icon: <CircleCheck size={20} />,
             color: 'bg-gradient-to-r from-green-500 to-green-600',
         },
         {
+            title: 'Active Orders',
+            value: activeOrders,
+            icon: <Clock size={20} />,
+            color: 'bg-gradient-to-r from-blue-500 to-blue-600',
+        },
+        {
+            title: 'Canceled Orders',
+            value: canceledOrders,
+            icon: <X size={20} />,
+            color: 'bg-gradient-to-r from-red-500 to-red-600',
+        },
+
+        {
             title: 'Rating',
-            value: '4.8',
-            icon: <Star size={20} />,
+            value: user.ratingsAverage,
+            icon: <Star size={20} className="fill-yellow-500" />,
             color: 'bg-gradient-to-r from-orange-500 to-orange-600',
         },
     ]
@@ -89,74 +133,57 @@ const WorkerStats = () => {
     )
 }
 
-const WorkerTasks = () => {
-    const tasks = [
-        {
-            id: 1,
-            title: 'Kitchen Renovation',
-            client: 'Sarah Johnson',
-            deadline: '2024-01-20',
-            state: 'In Progress',
-        },
-        {
-            id: 2,
-            title: 'Bathroom Plumbing',
-            client: 'Mike Smith',
-            deadline: '2024-01-22',
-            state: 'Completed',
-        },
-        {
-            id: 3,
-            title: 'Electrical Wiring',
-            client: 'Emma Davis',
-            deadline: '2024-01-25',
-            state: 'Pending',
-        },
-    ]
-
+const WorkerTasks = ({ navigate, orders }) => {
     return (
         <div className="rounded-xl bg-white p-6 shadow-sm">
             <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-lg font-bold text-gray-800">
-                    Active Tasks
+                    Active Orders
                 </h2>
-                {/* <button
+                <button
                     className="text-sm font-medium text-blue-600 hover:text-blue-700"
-                    onClick={() => setCurrentPage('orders')}
+                    onClick={() => navigate('/worker-dashboard/orders')}
                 >
                     View All
-                </button> */}
+                </button>
             </div>
             <div className="space-y-4">
-                {tasks.map((task) => (
+                {orders.map((task) => (
                     <div
                         key={task.id}
                         className="rounded-lg border border-gray-300 p-4 transition-all duration-200 hover:shadow-md"
                     >
                         <div className="mb-2 flex items-start justify-between">
                             <div>
-                                <h3 className="font-medium text-gray-800">
-                                    {task.title}
+                                <h3 className="font-medium capitalize text-gray-800">
+                                    {task.service}
                                 </h3>
-                                <p className="text-sm text-gray-500">
-                                    Client: {task.client}
+                                <p className="text-sm capitalize text-gray-500">
+                                    Client: {task.customer.name}
                                 </p>
                             </div>
                             <span
-                                className={`rounded-full px-2 py-1 text-sm font-medium ${
-                                    task.state === 'In Progress'
+                                className={`rounded-full px-2 py-1 text-sm font-medium capitalize ${
+                                    task.status === 'in progress'
                                         ? 'bg-blue-100 text-blue-800'
-                                        : task.state === 'Pending'
+                                        : task.status === 'pending'
                                           ? 'bg-yellow-100 text-yellow-800'
-                                          : 'bg-green-100 text-green-800'
+                                          : task.status === 'completed'
+                                            ? 'bg-green-100 text-green-800'
+                                            : 'bg-red-100 text-red-800'
                                 }`}
                             >
-                                {task.state}
+                                {task.status}
                             </span>
                         </div>
                         <div className="mb-2 flex items-center gap-2 text-sm text-gray-500">
                             <Calendar size={16} />
-                            <span>Due: {task.deadline}</span>
+                            <span>
+                                Due:{' '}
+                                {new Date(task.createdAt).toLocaleString(
+                                    'en-EG',
+                                )}
+                            </span>
                         </div>
                     </div>
                 ))}
@@ -165,53 +192,22 @@ const WorkerTasks = () => {
     )
 }
 
-const TestimonialList = () => {
-    // Dummy data for testimonials as objects
-    const testimonials = [
-        {
-            id: 1,
-            name: 'Tania Andrew',
-            role: 'Frontend Lead @ Google',
-            imageUrl: 'https://via.placeholder.com/50',
-            testimonialText:
-                'I found solutions to all my design needs from Creative Tim. I use them as a freelancer in my hobby projects for fun! And it’s really affordable, very humble guys!!',
-            rating: 5,
-        },
-        {
-            id: 2,
-            name: 'John Doe',
-            role: 'Backend Developer @ Facebook',
-            imageUrl: 'https://via.placeholder.com/50',
-            testimonialText:
-                'Amazing service and great support. They helped me scale my project in no time!',
-            rating: 4,
-        },
-        {
-            id: 3,
-            name: 'Sarah Smith',
-            role: 'UX Designer @ Apple',
-            imageUrl: 'https://via.placeholder.com/50',
-            testimonialText:
-                'The best tools and resources for designers. Highly recommend to anyone working on projects!',
-            rating: 4,
-        },
-    ]
-
+const TestimonialList = ({ reviews, navigate }) => {
     return (
         <div className="rounded-xl bg-white p-6 shadow-sm">
             <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-lg font-bold text-gray-800">
-                    Latest reviews
+                    Latest Reviews
                 </h2>
-                {/* <button
+                <button
                     className="text-sm font-medium text-blue-600 hover:text-blue-700"
-                    onClick={() => setCurrentPage('orders')}
+                    onClick={() => navigate('/worker-dashboard/reviews')}
                 >
                     View All
-                </button> */}
+                </button>
             </div>
             <div className="space-y-4">
-                {testimonials.map((testimonial) => (
+                {reviews.map((testimonial) => (
                     <TestimonialCard
                         key={testimonial.id}
                         testimonial={testimonial} // Passing the entire testimonial object as a prop

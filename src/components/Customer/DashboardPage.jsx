@@ -1,9 +1,20 @@
 import { motion } from 'framer-motion'
 import { useAuth } from '../../context/AuthContext'
 import { CheckCircle, Clock, List, XCircle } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { getOrders } from '../../services/apis'
+import { Link } from 'react-router-dom'
+import { encrypt } from '../../services/cryptoUtils'
 
 const DashboardPage = () => {
     const { user, workers } = useAuth()
+    const [orders, setOrders] = useState([])
+
+    useEffect(() => {
+        getOrders().then((data) => {
+            setOrders(data.data.orders)
+        })
+    }, [])
 
     const skills = [
         'Mechanical',
@@ -48,7 +59,7 @@ const DashboardPage = () => {
                     </p>
                 </div>
             </motion.div>
-            <OrderStats />
+            <OrderStats orders={orders} />
             <h3 className="block text-2xl font-semibold text-gray-800">
                 Most Experience Workers
             </h3>
@@ -56,41 +67,48 @@ const DashboardPage = () => {
                 {skills.map((skill) => (
                     <motion.div
                         key={skill}
-                        className="flex items-center rounded-lg bg-white p-4 shadow-md transition-shadow duration-200 hover:shadow-lg"
+                        className="flex items-center rounded-lg shadow-md transition-shadow duration-200 hover:shadow-lg"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <img
-                            src={groupedWorkers[skill]?.image || ''}
-                            alt={skill}
-                            className="mr-4 h-16 w-16 rounded-full border border-gray-300 object-cover"
-                        />
-                        <div className="flex-1">
-                            <h3 className="flex items-center justify-between text-lg font-semibold text-gray-800">
-                                {groupedWorkers[skill]?.name || 'No Worker'}
-                                <p className="text-sm text-yellow-500">
-                                    {groupedWorkers[skill]?.ratingsAverage ||
-                                        'N/A'}{' '}
-                                    ⭐
+                        <Link
+                            key={skill}
+                            to={`/customer-dashboard/worker/${encodeURIComponent(encrypt(groupedWorkers[skill].id))}`}
+                            className="flex w-full items-center justify-between gap-4 rounded-lg bg-white p-6 shadow-md hover:shadow-lg"
+                        >
+                            <img
+                                src={groupedWorkers[skill]?.image || ''}
+                                alt={skill}
+                                className="mr-4 h-16 w-16 rounded-full border border-gray-300 object-cover"
+                            />
+                            <div className="flex-1">
+                                <h3 className="flex items-center justify-between text-lg font-semibold text-gray-800">
+                                    {groupedWorkers[skill]?.name || 'No Worker'}
+                                    <p className="text-sm text-yellow-500">
+                                        {groupedWorkers[skill]
+                                            ?.ratingsAverage || 'N/A'}{' '}
+                                        ⭐
+                                    </p>
+                                </h3>
+                                <p className="text-sm text-gray-500">{skill}</p>
+                                <p className="text-sm text-gray-500">
+                                    City: {groupedWorkers[skill]?.city || 'N/A'}{' '}
                                 </p>
-                            </h3>
-                            <p className="text-sm text-gray-500">{skill}</p>
-                            <p className="text-sm text-gray-500">
-                                City: {groupedWorkers[skill]?.city || 'N/A'}{' '}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                                Phone Num:{' '}
-                                {groupedWorkers[skill]?.phoneNumber || 'N/A'}{' '}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                                Experience:{' '}
-                                {groupedWorkers[skill]?.yearsOfExperience ||
-                                    'N/A'}
-                                {' Years'}
-                            </p>
-                        </div>
+                                <p className="text-sm text-gray-500">
+                                    Phone Num:{' '}
+                                    {groupedWorkers[skill]?.phoneNumber ||
+                                        'N/A'}{' '}
+                                </p>
+                                <p className="text-sm text-gray-500">
+                                    Experience:{' '}
+                                    {groupedWorkers[skill]?.yearsOfExperience ||
+                                        'N/A'}
+                                    {' Years'}
+                                </p>
+                            </div>
+                        </Link>
                     </motion.div>
                 ))}
             </div>
@@ -98,29 +116,40 @@ const DashboardPage = () => {
     )
 }
 
-const OrderStats = () => {
+const OrderStats = ({ orders }) => {
+    const completedOrders = orders.filter(
+        (order) => order.status === 'completed',
+    ).length
+
+    const activeOrders = orders.filter(
+        (order) => order.status === 'in progress' || order.status === 'pending',
+    ).length
+
+    const canceledOrders = orders.filter(
+        (order) => order.status === 'canceled',
+    ).length
     const stats = [
         {
             title: 'Total Orders',
-            value: '200',
+            value: orders.length,
             icon: <List size={20} />,
             color: 'bg-gradient-to-r from-blue-500 to-blue-600',
         },
         {
             title: 'Completed Orders',
-            value: '120',
+            value: completedOrders,
             icon: <CheckCircle size={20} />,
             color: 'bg-gradient-to-r from-green-500 to-green-600',
         },
         {
-            title: 'Pending Orders',
-            value: '35',
+            title: 'Active Orders',
+            value: activeOrders,
             icon: <Clock size={20} />,
             color: 'bg-gradient-to-r from-yellow-500 to-yellow-600',
         },
         {
             title: 'Canceled Orders',
-            value: '15',
+            value: canceledOrders,
             icon: <XCircle size={20} />,
             color: 'bg-gradient-to-r from-red-500 to-red-600',
         },

@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react'
-import { SquareX, SquareCheck } from 'lucide-react'
+import { SquareX, SquareCheck, Star, ArchiveX } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { getOrders } from '../../services/apis'
+import { getOrders, updateOrderStatus } from '../../services/apis'
 
 const CustomerOrders = () => {
     const [orders, setOrders] = useState([])
+    const [filterStatus, setFilterStatus] = useState('all')
+    const [searchTerm, setSearchTerm] = useState('')
+    const [showModal, setShowModal] = useState(false)
+    const [orderToCancel, setOrderToCancel] = useState(null)
+
     useEffect(() => {
         async function fetchData() {
             try {
@@ -16,18 +21,15 @@ const CustomerOrders = () => {
         fetchData()
     }, [])
 
-    const [filterStatus, setFilterStatus] = useState('all')
-    const [searchTerm, setSearchTerm] = useState('')
-
     const getStatusColor = (status) => {
         switch (status) {
-            case 'Completed':
+            case 'completed':
                 return 'bg-green-100 text-green-800'
-            case 'In Progress':
+            case 'in progress':
                 return 'bg-blue-100 text-blue-800'
             case 'pending':
                 return 'bg-yellow-100 text-yellow-800'
-            case 'Canceled':
+            case 'canceled':
                 return 'bg-red-100 text-red-800'
             default:
                 return 'bg-gray-100 text-gray-800'
@@ -36,12 +38,37 @@ const CustomerOrders = () => {
 
     const filteredOrders = orders.filter((order) => {
         const matchesStatus =
-            filterStatus === 'all' || order.status === filterStatus
+            filterStatus === 'all' ||
+            order.status === filterStatus.toLowerCase()
         const matchesSearch =
-            order.worker.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            order.issue.toLowerCase().includes(searchTerm.toLowerCase())
+            order.worker.name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
+            order.service.toLowerCase().includes(searchTerm.toLowerCase())
         return matchesStatus && matchesSearch
     })
+
+    const handleCancelOrder = (id) => {
+        setOrderToCancel(id)
+        setShowModal(true)
+    }
+
+    const confirmCancelOrder = async () => {
+        if (orderToCancel) {
+            await updateOrderStatus(orderToCancel, 'canceled')
+            setOrders((prevOrders) =>
+                prevOrders.map((order) =>
+                    order.id === orderToCancel
+                        ? { ...order, status: 'canceled' }
+                        : order,
+                ),
+            )
+            setOrderToCancel(null)
+            setShowModal(false)
+        }
+    }
+
+    const handleMakeReview = () => {}
 
     return (
         <motion.div
@@ -90,16 +117,16 @@ const CustomerOrders = () => {
                                     Worker
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Issue
+                                    Service
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                    Details
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Status
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Date
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Price
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Actions
@@ -113,12 +140,15 @@ const CustomerOrders = () => {
                                         #{i + 1}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {order.worker}
+                                        {order.worker.name}
+                                    </td>
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500">
+                                        {order.service}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {order.issue}
+                                        {order.details}
                                     </td>
-                                    <td className="whitespace-nowrap px-6 py-4">
+                                    <td className="whitespace-nowrap px-6 py-4 capitalize">
                                         <span
                                             className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${getStatusColor(
                                                 order.status,
@@ -128,24 +158,45 @@ const CustomerOrders = () => {
                                         </span>
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {order.date}
-                                    </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {order.price}
+                                        {new Date(
+                                            order.createdAt,
+                                        ).toLocaleString('en-EG')}
                                     </td>
                                     <td className="flex whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                         {order.status === 'pending' ? (
-                                            <button className="flex items-center justify-center gap-2 text-red-600">
+                                            <button
+                                                className="flex items-center justify-center gap-2 text-red-600"
+                                                onClick={() =>
+                                                    handleCancelOrder(order.id)
+                                                }
+                                            >
                                                 <SquareX size={20} />
                                                 <span className="font-semibold">
-                                                    Cancel Order
+                                                    Cancel Order ?
                                                 </span>
                                             </button>
-                                        ) : (
+                                        ) : order.status === 'in progress' ? (
                                             <span className="flex items-center justify-center gap-2 font-semibold text-green-500">
                                                 <SquareCheck size={20} />
                                                 Accepted Order
                                             </span>
+                                        ) : order.status === 'canceled' ? (
+                                            <span className="flex items-center justify-center gap-2 font-medium text-red-600">
+                                                <ArchiveX size={20} />
+                                                Canceled Order
+                                            </span>
+                                        ) : (
+                                            <button
+                                                className="flex items-center justify-center gap-2 text-blue-600"
+                                                onClick={() =>
+                                                    handleMakeReview(order.id)
+                                                }
+                                            >
+                                                <Star size={20} />
+                                                <span className="font-semibold">
+                                                    Make Review
+                                                </span>
+                                            </button>
                                         )}
                                     </td>
                                 </tr>
@@ -154,6 +205,34 @@ const CustomerOrders = () => {
                     </table>
                 </div>
             </div>
+
+            {/* Confirmation Modal */}
+            {showModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="w-1/3 rounded-lg bg-white p-6">
+                        <h2 className="text-lg font-bold text-gray-800">
+                            Confirm Cancelation
+                        </h2>
+                        <p className="mt-2 text-gray-600">
+                            Are you sure you want to cancel this order?
+                        </p>
+                        <div className="mt-4 flex justify-end space-x-4">
+                            <button
+                                className="rounded bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300"
+                                onClick={() => setShowModal(false)}
+                            >
+                                No
+                            </button>
+                            <button
+                                className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+                                onClick={confirmCancelOrder}
+                            >
+                                Yes, Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </motion.div>
     )
 }
