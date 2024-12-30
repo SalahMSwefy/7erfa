@@ -5,8 +5,6 @@ import { updateMe, uploadPictureCustomer } from '../../services/apis'
 import { Form } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
-const VITE_API_URL = import.meta.env.VITE_API_URL
-
 const ProfilePage = () => {
     const [isEditing, setIsEditing] = useState(false)
     const [newData, setNewData] = useState({})
@@ -114,7 +112,7 @@ const ProfilePage = () => {
                 <div className="mb-6 flex items-center space-x-6">
                     <div className="relative space-x-6">
                         <img
-                            src={`${VITE_API_URL}/Herfa_back/public/uploads/${user.image}`}
+                            src={`~/Herfa_back/public/uploads/${user.image}`}
                             alt="Profile"
                             className="h-32 w-32 rounded-full"
                         />
