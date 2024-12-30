@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import {
-    Search,
     LayoutDashboard,
     UserCircle,
     LogOut,
@@ -130,18 +129,6 @@ function WorkerDashboard() {
                 className="fixed left-64 right-0 top-0 z-10 h-16 border-b border-gray-200 bg-white"
             >
                 <div className="flex h-full items-center justify-between px-4">
-                    <div className="relative w-96">
-                        <motion.input
-                            whileFocus={{ scale: 1.02 }}
-                            type="text"
-                            placeholder="Search..."
-                            className="w-full rounded-lg border border-gray-200 py-2 pl-10 pr-4 transition-all duration-200 focus:border-blue-500 focus:outline-none"
-                        />
-                        <Search
-                            className="absolute left-3 top-2.5 text-gray-400"
-                            size={20}
-                        />
-                    </div>
                     <div className="flex items-center gap-4">
                         <motion.img
                             whileHover={{ scale: 1.1 }}
