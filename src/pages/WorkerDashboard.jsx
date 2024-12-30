@@ -129,7 +129,7 @@ function WorkerDashboard() {
                 className="fixed left-64 right-0 top-0 z-10 h-16 border-b border-gray-200 bg-white"
             >
                 <div className="flex h-full items-center justify-between px-4">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center justify-end gap-4">
                         <motion.img
                             whileHover={{ scale: 1.1 }}
                             src="https://via.placeholder.com/40"
