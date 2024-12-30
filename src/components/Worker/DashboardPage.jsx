@@ -67,15 +67,15 @@ const DashboardPage = () => {
 }
 
 const WorkerStats = ({ user, orders }) => {
-    const completedOrders = orders.filter(
+    const completedOrders = orders?.filter(
         (order) => order.status === 'completed',
     ).length
 
-    const activeOrders = orders.filter(
+    const activeOrders = orders?.filter(
         (order) => order.status === 'in progress' || order.status === 'pending',
     ).length
 
-    const canceledOrders = orders.filter(
+    const canceledOrders = orders?.filter(
         (order) => order.status === 'canceled',
     ).length
 
@@ -148,7 +148,7 @@ const WorkerTasks = ({ navigate, orders }) => {
                 </button>
             </div>
             <div className="space-y-4">
-                {orders.map((task) => (
+                {orders?.map((task) => (
                     <div
                         key={task.id}
                         className="rounded-lg border border-gray-300 p-4 transition-all duration-200 hover:shadow-md"
@@ -159,7 +159,7 @@ const WorkerTasks = ({ navigate, orders }) => {
                                     {task.service}
                                 </h3>
                                 <p className="text-sm capitalize text-gray-500">
-                                    Client: {task.customer.name}
+                                    Client: {task.customer?.name}
                                 </p>
                             </div>
                             <span
@@ -207,7 +207,7 @@ const TestimonialList = ({ reviews, navigate }) => {
                 </button>
             </div>
             <div className="space-y-4">
-                {reviews.map((testimonial) => (
+                {reviews?.map((testimonial) => (
                     <TestimonialCard
                         key={testimonial.id}
                         testimonial={testimonial} // Passing the entire testimonial object as a prop
