@@ -117,21 +117,21 @@ const DashboardPage = () => {
 }
 
 const OrderStats = ({ orders }) => {
-    const completedOrders = orders.filter(
+    const completedOrders = orders?.filter(
         (order) => order.status === 'completed',
     ).length
 
-    const activeOrders = orders.filter(
+    const activeOrders = orders?.filter(
         (order) => order.status === 'in progress' || order.status === 'pending',
     ).length
 
-    const canceledOrders = orders.filter(
+    const canceledOrders = orders?.filter(
         (order) => order.status === 'canceled',
     ).length
     const stats = [
         {
             title: 'Total Orders',
-            value: orders.length,
+            value: orders?.length || '0',
             icon: <List size={20} />,
             color: 'bg-gradient-to-r from-blue-500 to-blue-600',
         },

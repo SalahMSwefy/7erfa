@@ -36,7 +36,7 @@ const CustomerOrders = () => {
         }
     }
 
-    const filteredOrders = orders.filter((order) => {
+    const filteredOrders = orders?.filter((order) => {
         const matchesStatus =
             filterStatus === 'all' ||
             order.status === filterStatus.toLowerCase()
@@ -134,7 +134,7 @@ const CustomerOrders = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200 bg-white">
-                            {filteredOrders.map((order, i) => (
+                            {filteredOrders?.map((order, i) => (
                                 <tr key={order.id} className="hover:bg-gray-50">
                                     <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                                         #{i + 1}

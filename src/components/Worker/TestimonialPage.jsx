@@ -19,7 +19,7 @@ const TestimonialPage = () => {
     const [searchTerm, setSearchTerm] = useState('')
     const [filterRating, setFilterRating] = useState('all')
 
-    const filteredTestimonials = reviews.filter((testimonial) => {
+    const filteredTestimonials = reviews?.filter((testimonial) => {
         const matchesSearch =
             testimonial.customer.name
                 .toLowerCase()

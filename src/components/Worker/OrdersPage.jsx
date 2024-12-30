@@ -42,7 +42,7 @@ const OrdersPage = () => {
         updateOrderStatus(id, newStatus)
     }
 
-    const filteredOrders = orders.filter((order) => {
+    const filteredOrders = orders?.filter((order) => {
         const matchesStatus =
             filterStatus === 'all' ||
             order.status === filterStatus.toLowerCase()
