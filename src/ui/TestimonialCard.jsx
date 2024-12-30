@@ -2,7 +2,7 @@ import { Star } from 'lucide-react'
 
 const TestimonialCard = ({ testimonial }) => {
     // Destructure the testimonial object
-    const { customer, review, rating } = testimonial
+    const { customer = {}, review, rating } = testimonial
 
     // Generate the number of full stars and empty stars with unique keys
     const fullStars = Array(rating)
@@ -29,8 +29,8 @@ const TestimonialCard = ({ testimonial }) => {
                 {/* Profile Image */}
                 <img
                     src={
-                        customer.image
-                            ? `/${customer.image}`
+                        customer?.image
+                            ? `/${customer?.image}`
                             : 'https://via.placeholder.com/50'
                     }
                     alt="Profile"
@@ -39,9 +39,9 @@ const TestimonialCard = ({ testimonial }) => {
                 {/* Name and Role */}
                 <div className="flex-1">
                     <h3 className="text-lg font-bold capitalize">
-                        {customer.name}
+                        {customer?.name}
                     </h3>
-                    <p className="text-sm text-gray-500">{customer.city}</p>
+                    <p className="text-sm text-gray-500">{customer?.city}</p>
                 </div>
                 {/* Star Ratings */}
                 <div className="flex text-lg">

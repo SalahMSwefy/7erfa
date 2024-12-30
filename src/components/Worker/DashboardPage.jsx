@@ -15,11 +15,11 @@ const DashboardPage = () => {
 
     useEffect(() => {
         getOrders().then((data) => {
-            setOrders([
-                data.data.orders[0],
-                data.data.orders[1],
-                data.data.orders[2],
-            ])
+            if (data.data.orders && data.data.orders.length > 0) {
+                setOrders(data.data.orders.slice(0, 3)) // Get the first three orders
+            } else {
+                setOrders([]) // Set an empty array if there are no orders
+            }
             setAllOrders(data.data.orders)
         })
     }, [])
@@ -148,45 +148,47 @@ const WorkerTasks = ({ navigate, orders }) => {
                 </button>
             </div>
             <div className="space-y-4">
-                {orders?.map((task) => (
-                    <div
-                        key={task.id}
-                        className="rounded-lg border border-gray-300 p-4 transition-all duration-200 hover:shadow-md"
-                    >
-                        <div className="mb-2 flex items-start justify-between">
-                            <div>
-                                <h3 className="font-medium capitalize text-gray-800">
-                                    {task.service}
-                                </h3>
-                                <p className="text-sm capitalize text-gray-500">
-                                    Client: {task.customer?.name}
-                                </p>
-                            </div>
-                            <span
-                                className={`rounded-full px-2 py-1 text-sm font-medium capitalize ${
-                                    task.status === 'in progress'
-                                        ? 'bg-blue-100 text-blue-800'
-                                        : task.status === 'pending'
-                                          ? 'bg-yellow-100 text-yellow-800'
-                                          : task.status === 'completed'
-                                            ? 'bg-green-100 text-green-800'
-                                            : 'bg-red-100 text-red-800'
-                                }`}
-                            >
-                                {task.status}
-                            </span>
-                        </div>
-                        <div className="mb-2 flex items-center gap-2 text-sm text-gray-500">
-                            <Calendar size={16} />
-                            <span>
-                                Due:{' '}
-                                {new Date(task.createdAt).toLocaleString(
-                                    'en-EG',
-                                )}
-                            </span>
-                        </div>
-                    </div>
-                ))}
+                {orders.length > 0
+                    ? orders?.map((task) => (
+                          <div
+                              key={task?.id}
+                              className="rounded-lg border border-gray-300 p-4 transition-all duration-200 hover:shadow-md"
+                          >
+                              <div className="mb-2 flex items-start justify-between">
+                                  <div>
+                                      <h3 className="font-medium capitalize text-gray-800">
+                                          {task?.service}
+                                      </h3>
+                                      <p className="text-sm capitalize text-gray-500">
+                                          Client: {task?.customer?.name}
+                                      </p>
+                                  </div>
+                                  <span
+                                      className={`rounded-full px-2 py-1 text-sm font-medium capitalize ${
+                                          task?.status === 'in progress'
+                                              ? 'bg-blue-100 text-blue-800'
+                                              : task?.status === 'pending'
+                                                ? 'bg-yellow-100 text-yellow-800'
+                                                : task?.status === 'completed'
+                                                  ? 'bg-green-100 text-green-800'
+                                                  : 'bg-red-100 text-red-800'
+                                      }`}
+                                  >
+                                      {task?.status}
+                                  </span>
+                              </div>
+                              <div className="mb-2 flex items-center gap-2 text-sm text-gray-500">
+                                  <Calendar size={16} />
+                                  <span>
+                                      Due:{' '}
+                                      {new Date(task?.createdAt).toLocaleString(
+                                          'en-EG',
+                                      )}
+                                  </span>
+                              </div>
+                          </div>
+                      ))
+                    : 'No Active Orders'}
             </div>
         </div>
     )
@@ -207,12 +209,14 @@ const TestimonialList = ({ reviews, navigate }) => {
                 </button>
             </div>
             <div className="space-y-4">
-                {reviews?.map((testimonial) => (
-                    <TestimonialCard
-                        key={testimonial.id}
-                        testimonial={testimonial} // Passing the entire testimonial object as a prop
-                    />
-                ))}
+                {reviews.length > 0
+                    ? reviews?.map((testimonial) => (
+                          <TestimonialCard
+                              key={testimonial.id}
+                              testimonial={testimonial} // Passing the entire testimonial object as a prop
+                          />
+                      ))
+                    : 'No Reviews'}
             </div>
         </div>
     )
