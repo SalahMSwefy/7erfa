@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import {
     Search,
     LayoutDashboard,
-    ShoppingCart,
     UserCircle,
     LogOut,
     BookHeart,
+    ListOrdered,
 } from 'lucide-react'
 
 import { motion, AnimatePresence } from 'framer-motion'
@@ -45,7 +45,7 @@ function WorkerDashboard() {
             },
             {
                 title: 'Orders',
-                icon: <ShoppingCart size={20} />,
+                icon: <ListOrdered size={20} />,
                 page: '/worker-dashboard/orders',
             },
             {

@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Search, LayoutDashboard, UserCircle, LogOut } from 'lucide-react'
+import {
+    Search,
+    LayoutDashboard,
+    UserCircle,
+    LogOut,
+    ListOrdered,
+} from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
@@ -41,7 +47,7 @@ function CustomerDashboard() {
             },
             {
                 title: 'Orders',
-                icon: <UserCircle size={20} />,
+                icon: <ListOrdered size={20} />,
                 page: '/customer-dashboard/orders',
             },
             {

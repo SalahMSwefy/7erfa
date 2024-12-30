@@ -20,7 +20,7 @@ const CustomerOrders = () => {
         }
         fetchData()
     }, [])
-
+    console.log(orders)
     const getStatusColor = (status) => {
         switch (status) {
             case 'completed':
@@ -41,7 +41,7 @@ const CustomerOrders = () => {
             filterStatus === 'all' ||
             order.status === filterStatus.toLowerCase()
         const matchesSearch =
-            order.worker.name
+            order.worker?.name
                 .toLowerCase()
                 .includes(searchTerm.toLowerCase()) ||
             order.service.toLowerCase().includes(searchTerm.toLowerCase())
@@ -140,7 +140,7 @@ const CustomerOrders = () => {
                                         #{i + 1}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                        {order.worker.name}
+                                        {order.worker?.name}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500">
                                         {order.service}

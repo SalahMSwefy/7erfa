@@ -12,9 +12,10 @@ const Login = () => {
     useEffect(() => {
         const token = localStorage.getItem('token')
         const user = JSON.parse(localStorage.getItem('user'))
-        if (token) {
-            if (user.role === 'worker') navigate('/worker-dashboard')
-            else navigate('/customer-dashboard')
+        if (token && user?.role) {
+            if (user.role === 'worker')
+                navigate('/worker-dashboard', { replace: true })
+            else navigate('/customer-dashboard', { replace: true })
         }
     }, [navigate])
 
