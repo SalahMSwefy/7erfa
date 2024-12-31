@@ -119,7 +119,7 @@ const ProfilePage = () => {
                 <div className="mb-6 flex items-center space-x-6">
                     <div className="relative">
                         <img
-                            src={`${VITE_API_URL}/public/${user.image}`}
+                            src={`${VITE_API_URL}/uploads/${user.image}`}
                             alt="Profile"
                             className="h-32 w-32 rounded-full"
                         />
