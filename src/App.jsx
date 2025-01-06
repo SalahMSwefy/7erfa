@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
-import PrivateRoute from './context/PrivateRoute'
 import { Suspense, lazy } from 'react'
 import FullScreenLoader from './ui/FullScreenLoader'
 
@@ -26,10 +25,6 @@ import CustomerOrders from './components/Customer/CustomerOrders'
 import CustomerProfilePage from './components/Customer/ProfilePage'
 import SearchWorkersPage from './components/Customer/SearchWorkersPage'
 import WorkerPage from './components/Customer/WorkerPage'
-
-const isAuthenticated = () => {
-    return Boolean(localStorage.getItem('token'))
-}
 
 const router = createBrowserRouter([
     {
@@ -82,11 +77,9 @@ const router = createBrowserRouter([
     {
         path: '/worker-dashboard',
         element: (
-            <PrivateRoute isAuthenticated={isAuthenticated()}>
-                <Suspense fallback={<FullScreenLoader />}>
-                    <WorkerDashboard />
-                </Suspense>
-            </PrivateRoute>
+            <Suspense fallback={<FullScreenLoader />}>
+                <WorkerDashboard />
+            </Suspense>
         ),
         children: [
             {
@@ -114,11 +107,9 @@ const router = createBrowserRouter([
     {
         path: '/customer-dashboard',
         element: (
-            <PrivateRoute isAuthenticated={isAuthenticated()}>
-                <Suspense fallback={<FullScreenLoader />}>
-                    <CustomerDashboard />
-                </Suspense>
-            </PrivateRoute>
+            <Suspense fallback={<FullScreenLoader />}>
+                <CustomerDashboard />
+            </Suspense>
         ),
         children: [
             {

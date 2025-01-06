@@ -138,7 +138,7 @@ const CustomerOrders = () => {
                                     <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                                         #{i + 1}
                                     </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500">
                                         {order.worker?.name}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500">

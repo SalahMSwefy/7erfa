@@ -145,7 +145,7 @@ const SearchWorkersPage = () => {
                             alt={worker.name}
                         />
                         <div className="flex-1">
-                            <h3 className="mt-4 text-xl font-semibold text-gray-800">
+                            <h3 className="mt-4 text-xl font-semibold capitalize text-gray-800">
                                 {worker.name}
                             </h3>
                             <p className="text-sm text-gray-500">

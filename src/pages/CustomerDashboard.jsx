@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 const VITE_API_URL = import.meta.env.VITE_API_URL
 
@@ -18,6 +18,9 @@ function CustomerDashboard() {
     const [loading, setLoading] = useState(true)
     const { logout, user } = useAuth()
     const navigate = useNavigate()
+    const isAuth = Boolean(
+        localStorage.getItem('token') && localStorage.getItem('user'),
+    )
 
     useEffect(() => {
         setCurrentPage(location.pathname)
@@ -145,7 +148,7 @@ function CustomerDashboard() {
                             className="bg-s flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-500"
                             onClick={handleLogout}
                         >
-                            <LogOut className="text-stone-500" />
+                            <LogOut size={18} className="text-stone-500" />
                         </motion.button>
                     </div>
                 </div>
@@ -179,7 +182,7 @@ function CustomerDashboard() {
         )
     }
 
-    return (
+    return isAuth ? (
         <div className="min-h-screen bg-gray-50">
             <Sidebar />
             <div className="ml-64">
@@ -189,6 +192,8 @@ function CustomerDashboard() {
                 </main>
             </div>
         </div>
+    ) : (
+        <Navigate to="/login" replace />
     )
 }
 

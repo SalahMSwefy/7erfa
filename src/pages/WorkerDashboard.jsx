@@ -9,14 +9,19 @@ import {
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
-import { useLocation, useNavigate, Outlet } from 'react-router-dom'
+import { useLocation, useNavigate, Outlet, Navigate } from 'react-router-dom'
+
+const VITE_API_URL = import.meta.env.VITE_API_URL
 
 function WorkerDashboard() {
     const location = useLocation()
     const [currentPage, setCurrentPage] = useState(location.pathname)
     const [loading, setLoading] = useState(true)
-    const { logout } = useAuth()
+    const { logout, user } = useAuth()
     const navigate = useNavigate()
+    const isAuth = Boolean(
+        localStorage.getItem('token') && localStorage.getItem('user'),
+    )
 
     useEffect(() => {
         setCurrentPage(location.pathname)
@@ -132,7 +137,7 @@ function WorkerDashboard() {
                     <div className="flex items-center justify-end gap-4">
                         <motion.img
                             whileHover={{ scale: 1.1 }}
-                            src="https://via.placeholder.com/40"
+                            src={`${VITE_API_URL}/uploads/${user.image}`}
                             alt="Profile"
                             className="h-8 w-8 cursor-pointer rounded-full border-2 border-blue-500"
                             onClick={() =>
@@ -144,7 +149,7 @@ function WorkerDashboard() {
                             className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-500 bg-gray-100"
                             onClick={handleLogout}
                         >
-                            <LogOut className="text-stone-500" />
+                            <LogOut size={18} className="text-stone-500" />
                         </motion.button>
                     </div>
                 </div>
@@ -178,7 +183,7 @@ function WorkerDashboard() {
         )
     }
 
-    return (
+    return isAuth ? (
         <div className="min-h-screen bg-gray-50">
             <Sidebar />
             <div className="ml-64">
@@ -188,6 +193,8 @@ function WorkerDashboard() {
                 </main>
             </div>
         </div>
+    ) : (
+        <Navigate to="/login" replace />
     )
 }
 

@@ -12,18 +12,12 @@ const Login = () => {
     useEffect(() => {
         const token = localStorage.getItem('token')
         const user = JSON.parse(localStorage.getItem('user'))
-        const timeoutId = setTimeout(() => {
-            if (token && user?.role) {
-                if (user.role === 'worker') {
-                    navigate('/worker-dashboard', { replace: true })
-                } else {
-                    navigate('/customer-dashboard', { replace: true })
-                }
+        if (token && user) {
+            if (user.role === 'worker') {
+                navigate('/worker-dashboard', { replace: true })
+            } else {
+                navigate('/customer-dashboard', { replace: true })
             }
-        }, 1000)
-
-        return () => {
-            clearTimeout(timeoutId)
         }
     }, [navigate])
 

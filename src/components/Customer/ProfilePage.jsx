@@ -120,7 +120,7 @@ const ProfilePage = () => {
                         />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-800">
+                        <h2 className="text-2xl font-bold capitalize text-gray-800">
                             {user.name}
                         </h2>
                         <p className="text-gray-600">{user.email}</p>
