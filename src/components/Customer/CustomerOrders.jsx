@@ -20,7 +20,6 @@ const CustomerOrders = () => {
         }
         fetchData()
     }, [])
-    console.log(orders)
     const getStatusColor = (status) => {
         switch (status) {
             case 'completed':

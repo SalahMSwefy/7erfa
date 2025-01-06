@@ -6,6 +6,8 @@ import { getOrders } from '../../services/apis'
 import { Link } from 'react-router-dom'
 import { encrypt } from '../../services/cryptoUtils'
 
+const VITE_API_URL = import.meta.env.VITE_API_URL
+
 const DashboardPage = () => {
     const { user, workers } = useAuth()
     const [orders, setOrders] = useState([])
@@ -79,7 +81,7 @@ const DashboardPage = () => {
                             className="flex w-full items-center justify-between gap-4 rounded-lg bg-white p-6 shadow-md hover:shadow-lg"
                         >
                             <img
-                                src={groupedWorkers[skill]?.image || ''}
+                                src={`${VITE_API_URL}/uploads/${groupedWorkers[skill]?.image}`}
                                 alt={skill}
                                 className="mr-4 h-16 w-16 rounded-full border border-gray-300 object-cover"
                             />
