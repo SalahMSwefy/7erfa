@@ -5,18 +5,20 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext' // Import AuthContext
 
 const Login = () => {
-    const { login: loginContext } = useAuth() // Use context
+    const { login: loginContext } = useAuth()
     const navigate = useNavigate()
     const [error, setError] = useState({})
 
     useEffect(() => {
         const token = localStorage.getItem('token')
         const user = JSON.parse(localStorage.getItem('user'))
-        if (token && user?.role) {
-            if (user.role === 'worker')
-                navigate('/worker-dashboard', { replace: true })
-            else navigate('/customer-dashboard', { replace: true })
-        }
+        setTimeout(() => {
+            if (token && user?.role) {
+                if (user.role === 'worker')
+                    navigate('/worker-dashboard', { replace: true })
+                else navigate('/customer-dashboard', { replace: true })
+            }
+        }, 1000)
     }, [navigate])
 
     const mutation = useMutation({
@@ -27,7 +29,6 @@ const Login = () => {
             if (data?.error) {
                 setError({ general: data.error })
             } else {
-                // Save token and user data using AuthContext
                 const {
                     token,
                     data: { user },
