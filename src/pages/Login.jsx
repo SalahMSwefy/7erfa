@@ -89,7 +89,7 @@ const Login = () => {
                                 id="email"
                                 type="email"
                                 name="email"
-                                placeholder="mail@loopple.com"
+                                placeholder="Enter your Email"
                                 className="mb-7 mr-2 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300"
                                 required
                                 aria-label="Email Address"
@@ -104,7 +104,7 @@ const Login = () => {
                                 id="password"
                                 name="password"
                                 type="password"
-                                placeholder="Enter a password"
+                                placeholder="Enter a Password"
                                 className="mb-7 mr-2 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300"
                                 required
                                 aria-label="Password"

@@ -44,6 +44,7 @@ const Register = () => {
         event.preventDefault()
         const formData = new FormData(event.target)
         const data = Object.fromEntries(formData)
+        console.log(data)
         const validationErrors = {}
         console.log(validationErrors)
 
@@ -59,6 +60,15 @@ const Register = () => {
         if (!isValidPhoneNumber(data.phoneNumber, users)) {
             validationErrors.phoneNumber =
                 'Invalid phone number or phone number already exists'
+        }
+        if (data.yearsOfExperience < 0) {
+            validationErrors.yearsOfExperience =
+                'Years of experience must be a 0 or positive number'
+        }
+
+        if (data.hourlyRate < 0) {
+            validationErrors.hourlyRate =
+                'Your hourly gain must be a positive number'
         }
 
         if (Object.keys(validationErrors).length > 0) {
@@ -293,7 +303,7 @@ const Register = () => {
                                             value="Worker"
                                             className="text-stone-900 hover:bg-orange-50"
                                         >
-                                            Worker
+                                            Construction Worker
                                         </option>
                                     </select>
                                 </>
@@ -312,6 +322,11 @@ const Register = () => {
                                 className="mb-5 flex w-full items-center rounded-2xl bg-stone-200 px-4 py-2 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300"
                                 required
                             />
+                            {errors?.yearsOfExperience && (
+                                <p className="-mt-4 text-center text-sm text-red-500">
+                                    {errors.yearsOfExperience}
+                                </p>
+                            )}
 
                             <label
                                 htmlFor="hourlyRate"
@@ -327,6 +342,11 @@ const Register = () => {
                                 className="mb-5 flex w-full items-center rounded-2xl bg-stone-200 px-4 py-2 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300"
                                 required
                             />
+                            {errors?.hourlyRate && (
+                                <p className="-mt-4 text-center text-sm text-red-500">
+                                    {errors.hourlyRate}
+                                </p>
+                            )}
 
                             <label
                                 htmlFor="bio"

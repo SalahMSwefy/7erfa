@@ -59,6 +59,7 @@ const ProfilePage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const validationErrors = {}
+        console.log(validationErrors)
 
         if (
             !isValidEmail(newData.email, users) &&
@@ -75,6 +76,15 @@ const ProfilePage = () => {
                 'Invalid phone number or phone number already exists'
         }
 
+        if (newData.yearsOfExperience < 0) {
+            validationErrors.yearsOfExperience =
+                'Years of experience must be a 0 or positive number'
+        }
+
+        if (newData.hourlyRate < 0) {
+            validationErrors.hourlyRate =
+                'Your hourly gain must be a positive number'
+        }
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors)
             return
@@ -216,7 +226,7 @@ const ProfilePage = () => {
                             </div>
 
                             {/* Hourly Rate */}
-                            <div>
+                            <div className="flex flex-col">
                                 <label className="mb-1 block text-sm font-medium text-gray-700">
                                     Hourly Rate
                                 </label>
@@ -226,12 +236,17 @@ const ProfilePage = () => {
                                     name="hourlyRate"
                                     value={newData.hourlyRate}
                                     onChange={handleInputChange}
-                                    className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.phoneNumber ? 'border border-red-500' : ''}`}
                                 />
+                                {errors?.hourlyRate && (
+                                    <span className="mt-2 text-center text-sm text-red-500">
+                                        {errors.hourlyRate}
+                                    </span>
+                                )}
                             </div>
 
                             {/* Years of Experience */}
-                            <div>
+                            <div className="flex flex-col">
                                 <label className="mb-1 block text-sm font-medium text-gray-700">
                                     Years of Experience
                                 </label>
@@ -241,8 +256,13 @@ const ProfilePage = () => {
                                     name="yearsOfExperience"
                                     value={newData.yearsOfExperience}
                                     onChange={handleInputChange}
-                                    className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.phoneNumber ? 'border border-red-500' : ''}`}
                                 />
+                                {errors?.yearsOfExperience && (
+                                    <span className="mt-2 text-center text-sm text-red-500">
+                                        {errors.yearsOfExperience}
+                                    </span>
+                                )}
                             </div>
                         </div>
 
