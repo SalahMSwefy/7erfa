@@ -49,7 +49,7 @@ const DashboardPage = () => {
         >
             <div className="mb-6 flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">
+                    <h1 className="text-3xl font-bold text-gray-800">
                         Welcome back, {user.name}! 👋
                     </h1>
                     <p className="mt-1 text-gray-600">

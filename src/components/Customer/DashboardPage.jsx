@@ -53,7 +53,7 @@ const DashboardPage = () => {
                 transition={{ duration: 0.3 }}
             >
                 <div>
-                    <h1 className="text-4xl font-extrabold capitalize text-gray-800">
+                    <h1 className="text-3xl font-extrabold capitalize text-gray-800">
                         Welcome back, {user.name} 👋
                     </h1>
                     <p className="mt-2 text-lg text-gray-600">
