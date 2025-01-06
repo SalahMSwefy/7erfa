@@ -37,12 +37,11 @@ export const AuthProvider = ({ children }) => {
 
     // Save token and user data on login
     const login = (token, userData) => {
-        // console.log(token, userData)
+        setToken(token)
+        setUser(userData)
         localStorage.setItem('token', token)
         userData = JSON.stringify(userData)
         localStorage.setItem('user', userData)
-        setToken(token)
-        setUser(userData)
     }
 
     // Clear data on logout
