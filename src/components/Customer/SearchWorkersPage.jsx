@@ -4,6 +4,8 @@ import { useAuth } from '../../context/AuthContext'
 import { Link } from 'react-router-dom' // Import Link
 import { encrypt } from '../../services/cryptoUtils'
 
+const VITE_API_URL = import.meta.env.VITE_API_URL
+
 const SearchWorkersPage = () => {
     const { workers } = useAuth()
 
@@ -139,7 +141,7 @@ const SearchWorkersPage = () => {
                     >
                         <img
                             className="h-24 w-24 rounded-full border-2 border-gray-300 object-cover"
-                            src={`/${worker.image}`}
+                            src={`${VITE_API_URL}/uploads/${worker.image}`}
                             alt={worker.name}
                         />
                         <div className="flex-1">

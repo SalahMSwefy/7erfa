@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react'
+const VITE_API_URL = import.meta.env.VITE_API_URL
 
 const TestimonialCard = ({ testimonial }) => {
     // Destructure the testimonial object
@@ -28,11 +29,7 @@ const TestimonialCard = ({ testimonial }) => {
             <div className="mb-4 flex items-center">
                 {/* Profile Image */}
                 <img
-                    src={
-                        customer?.image
-                            ? `/${customer?.image}`
-                            : 'https://via.placeholder.com/50'
-                    }
+                    src={`${VITE_API_URL}/uploads/${customer.image}`}
                     alt="Profile"
                     className="mr-4 h-12 w-12 rounded-full"
                 />

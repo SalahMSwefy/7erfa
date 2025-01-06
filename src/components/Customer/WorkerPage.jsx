@@ -6,6 +6,8 @@ import { createReview, getReviews, makeOrder } from '../../services/apis'
 import TestimonialCard from '../../ui/TestimonialCard'
 import { CalendarArrowUp, Star } from 'lucide-react'
 
+const VITE_API_URL = import.meta.env.VITE_API_URL
+
 const WorkerPage = () => {
     const { workerId } = useParams()
     const { workers } = useAuth()
@@ -216,7 +218,7 @@ const WorkerPage = () => {
             <div className="mt-6 flex flex-col items-center gap-8 lg:flex-row">
                 <img
                     className="h-32 w-32 rounded-full border border-gray-300 object-cover lg:h-48 lg:w-48"
-                    src={`/${worker.image}`}
+                    src={`${VITE_API_URL}/uploads/${worker.image}`}
                     alt={worker.name}
                 />
                 <div className="flex-1">
