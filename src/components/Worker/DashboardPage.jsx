@@ -213,7 +213,7 @@ const TestimonialList = ({ reviews, navigate }) => {
                     ? reviews?.map((testimonial) => (
                           <TestimonialCard
                               key={testimonial.id}
-                              testimonial={testimonial} // Passing the entire testimonial object as a prop
+                              testimonial={testimonial}
                           />
                       ))
                     : 'No Reviews'}
