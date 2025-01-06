@@ -10,11 +10,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
+const VITE_API_URL = import.meta.env.VITE_API_URL
+
 function CustomerDashboard() {
     const location = useLocation()
     const [currentPage, setCurrentPage] = useState(location.pathname)
     const [loading, setLoading] = useState(true)
-    const { logout } = useAuth()
+    const { logout, user } = useAuth()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -129,7 +131,7 @@ function CustomerDashboard() {
                     <div className="flex items-center gap-4">
                         <motion.img
                             whileHover={{ scale: 1.1 }}
-                            src="https://via.placeholder.com/40"
+                            src={`${VITE_API_URL}/uploads/${user.image}`}
                             alt="Profile"
                             className="h-8 w-8 rounded-full border-2 border-blue-500"
                             onClick={() =>
