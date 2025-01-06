@@ -29,18 +29,20 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const storedToken = localStorage.getItem('token')
         const storedUser = JSON.parse(localStorage.getItem('user'))
-        if (storedToken) setToken(storedToken)
-        if (storedUser) setUser(storedUser)
+        if (storedToken && storedUser) {
+            setToken(storedToken)
+            setUser(storedUser)
+        }
     }, [])
 
     // Save token and user data on login
     const login = (token, userData) => {
         // console.log(token, userData)
-        setToken(token)
-        setUser(userData)
         localStorage.setItem('token', token)
         userData = JSON.stringify(userData)
         localStorage.setItem('user', userData)
+        setToken(token)
+        setUser(userData)
     }
 
     // Clear data on logout
