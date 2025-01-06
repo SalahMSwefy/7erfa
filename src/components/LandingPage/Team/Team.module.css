@@ -3,7 +3,7 @@
     color: #ffc71b;
     font-size: 2.5rem;
     margin-bottom: 60px;
-    font-family: "Bruno Ace SC", sans-serif;
+    font-family: 'Bruno Ace SC', sans-serif;
     text-transform: uppercase;
     letter-spacing: 3px;
     background: linear-gradient(135deg, #ff7b00, #ffa500);
@@ -30,7 +30,6 @@
     padding: 20px;
     overflow: hidden;
 }
-
 
 .cardWrapper {
     width: 100%;
@@ -78,8 +77,6 @@
     transition: 0.5s;
     transform: scale(1.1);
 }
-
-
 
 /**** Social Icons *****/
 .socialIcons {
@@ -165,13 +162,13 @@
     padding-top: 10px;
     text-align: center;
     text-transform: capitalize;
+    font-size: 1.2rem;
 }
 
 .details .jobTitle {
     color: #777;
     padding-bottom: 20px;
 }
-
 
 @media (min-width: 1024px) {
     .team {

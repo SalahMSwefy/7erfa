@@ -1,253 +1,262 @@
 .services {
-  position: relative;
-  padding: 80px 40px;
-  background: linear-gradient(135deg, #ffffff, #f8f9fa);
-  min-height: 90vh;
-  overflow: hidden;
+    position: relative;
+    padding: 80px 40px;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    min-height: 90vh;
+    overflow: hidden;
 }
 
 .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center,
-      transparent 0%,
-      rgba(0, 0, 0, 0.08) 100%);
-  z-index: 1;
-  backdrop-filter: blur(10px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at center,
+        transparent 0%,
+        rgba(0, 0, 0, 0.08) 100%
+    );
+    z-index: 1;
+    backdrop-filter: blur(10px);
 }
 
 .content {
-  position: relative;
-  z-index: 2;
-  max-width: 1200px;
-  margin: 0 auto;
-  animation: fadeIn 1.5s ease-out;
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 1.5s ease-out;
 }
 
 .content h2 {
-  text-align: center;
-  color: #ffc71b;
-  font-size: 2.5rem;
-  margin-bottom: 60px;
-  font-family: "Bruno Ace SC", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  background: linear-gradient(135deg, #ff7b00, #ffa500);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: slideInTop 1s ease-out, glow 3s ease-in-out infinite;
+    text-align: center;
+    color: #ffc71b;
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    font-family: 'Bruno Ace SC', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, #ff7b00, #ffa500);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation:
+        slideInTop 1s ease-out,
+        glow 3s ease-in-out infinite;
 }
 
 .servicesGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
-  padding: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .serviceCard {
-  border-radius: 24px;
-  padding: 35px;
-  text-align: center;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-  animation: fadeInUp 0.8s ease-out forwards;
-  opacity: 0;
-  position: relative;
-  overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 24px;
+    padding: 35px;
+    text-align: center;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
 }
 
 .serviceCard::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg,
-      rgba(255, 123, 0, 0.1),
-      rgba(255, 165, 0, 0.1));
-  transform: translateY(100%);
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 0;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 123, 0, 0.1),
+        rgba(255, 165, 0, 0.1)
+    );
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
 }
 
 .serviceCard img,
 .serviceCard svg {
-  width: 72px;
-  height: 72px;
-  margin-bottom: 25px;
-  color: #e27c00 !important;
-  stroke: #e27c00 !important;
-  fill: #e27c00 !important;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  z-index: 1;
-  filter: drop-shadow(0 4px 8px rgba(255, 123, 0, 0.2));
+    width: 72px;
+    height: 72px;
+    margin-bottom: 25px;
+    color: #e27c00 !important;
+    stroke: #e27c00 !important;
+    fill: #e27c00 !important;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 4px 8px rgba(255, 123, 0, 0.2));
 }
 
 .serviceCard:hover img,
 .serviceCard:hover svg {
-  transform: scale(1.15) rotate(5deg);
-  color: #e27c00 !important;
-  stroke: #e27c00 !important;
-  fill: #e27c00 !important;
-  filter: drop-shadow(0 8px 16px rgba(255, 123, 0, 0.3));
+    transform: scale(1.15) rotate(5deg);
+    color: #e27c00 !important;
+    stroke: #e27c00 !important;
+    fill: #e27c00 !important;
+    filter: drop-shadow(0 8px 16px rgba(255, 123, 0, 0.3));
 }
 
 .serviceCard:nth-child(1) {
-  animation-delay: 0.2s;
+    animation-delay: 0.2s;
 }
 
 .serviceCard:nth-child(2) {
-  animation-delay: 0.4s;
+    animation-delay: 0.4s;
 }
 
 .serviceCard:nth-child(3) {
-  animation-delay: 0.6s;
+    animation-delay: 0.6s;
 }
 
 .serviceCard:nth-child(4) {
-  animation-delay: 0.8s;
+    animation-delay: 0.8s;
 }
 
 .serviceCard:hover {
-  transform: translateY(-15px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-  border-color: rgba(255, 123, 0, 0.2);
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    border-color: rgba(255, 123, 0, 0.2);
 }
 
 .serviceCard:hover::before {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
 .serviceCard h3 {
-  color: #2d2d2d;
-  font-size: 1.3rem;
-  margin-bottom: 18px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  position: relative;
-  z-index: 1;
-  transition: color 0.3s ease;
+    color: #2d2d2d;
+    font-size: 1.3rem;
+    margin-bottom: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
 }
 
 .serviceCard:hover h3 {
-  color: #000000;
+    color: #000000;
 }
 
 .serviceCard p {
-  color: #555555;
-  font-size: 1rem;
-  line-height: 1.7;
-  font-family: "Poppins", sans-serif;
-  position: relative;
-  z-index: 1;
-  transition: color 0.3s ease;
+    color: #555555;
+    font-size: 1rem;
+    line-height: 1.7;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
 }
 
 .serviceCard:hover p {
-  color: #000000;
+    color: #000000;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
+    from {
+        opacity: 0;
+    }
 
-  to {
-    opacity: 1;
-  }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes slideInTop {
-  from {
-    transform: translateY(-70px);
-    opacity: 0;
-  }
+    from {
+        transform: translateY(-70px);
+        opacity: 0;
+    }
 
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 @keyframes glow {
+    0%,
+    100% {
+        text-shadow: 0 0 10px rgba(255, 199, 27, 0.4);
+    }
 
-  0%,
-  100% {
-    text-shadow: 0 0 10px rgba(255, 199, 27, 0.4);
-  }
-
-  50% {
-    text-shadow: 0 0 25px rgba(255, 199, 27, 0.6);
-  }
+    50% {
+        text-shadow: 0 0 25px rgba(255, 199, 27, 0.6);
+    }
 }
 
 @media (max-width: 1024px) {
-  .content h2 {
-    font-size: 2.8rem;
-  }
+    .content h2 {
+        font-size: 2.8rem;
+    }
 
-  .serviceCard h3 {
-    font-size: 1.3rem;
-  }
+    .serviceCard h3 {
+        font-size: 1.3rem;
+    }
 }
 
 @media (max-width: 768px) {
-  .services {
-    padding: 80px 30px;
-  }
+    .services {
+        padding: 80px 30px;
+    }
 
-  .content h2 {
-    font-size: 2.2rem;
-  }
+    .content h2 {
+        font-size: 2.2rem;
+    }
 
-  .servicesGrid {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
+    .servicesGrid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
 }
 
 @media (max-width: 480px) {
-  .services {
-    padding: 60px 20px;
-  }
+    .services {
+        padding: 60px 20px;
+    }
 
-  .content h2 {
-    font-size: 1.9rem;
-  }
+    .content h2 {
+        font-size: 1.9rem;
+    }
 
-  .serviceCard {
-    padding: 25px;
-  }
+    .serviceCard {
+        padding: 25px;
+    }
 
-  .serviceCard h3 {
-    font-size: 1.2rem;
-  }
+    .serviceCard h3 {
+        font-size: 1.2rem;
+    }
 
-  .serviceCard p {
-    font-size: 0.9rem;
-  }
+    .serviceCard p {
+        font-size: 0.9rem;
+    }
 }

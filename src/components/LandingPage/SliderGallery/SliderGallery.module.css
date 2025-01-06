@@ -7,12 +7,12 @@
     overflow: hidden;
 }
 
-.sliderContainer>h2 {
+.sliderContainer > h2 {
     text-align: center;
     color: #ffc71b;
     font-size: 2.5rem;
     margin-bottom: 60px;
-    font-family: "Bruno Ace SC", sans-serif;
+    font-family: 'Bruno Ace SC', sans-serif;
     text-transform: uppercase;
     letter-spacing: 3px;
     background: linear-gradient(135deg, #ff7b00, #ffa500);
@@ -22,10 +22,9 @@
 }
 
 @media (max-width: 768px) {
-    .sliderContainer>h2 {
+    .sliderContainer > h2 {
         font-size: 2rem;
     }
-
 }
 
 /* The slider track */
@@ -40,11 +39,10 @@
     min-width: 100%;
     transition: all 0.5s ease-in-out;
     opacity: 0;
-
 }
 
 .slide img::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -53,12 +51,10 @@
     z-index: 1;
 }
 
-
 .slide img {
     width: 100%;
     height: auto;
     transition: all 0.5s ease-in-out;
-
 }
 
 .slide.active {
@@ -68,7 +64,7 @@
 
 .slideInfo {
     position: absolute;
-    bottom: -31px;
+    bottom: -40px;
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
@@ -82,12 +78,19 @@
     padding: 10px 100%;
     transition: all 0.5s ease-in-out;
 }
+.slideInfo p {
+    font-weight: 600;
+    font-size: 1rem;
+}
+.slideInfo h3 {
+    font-weight: 500;
+    font-size: 1.25rem;
+}
 
 @media screen and (max-width: 768px) {
     .slideInfo p {
         display: none;
     }
-
 }
 
 /* Arrow buttons */
@@ -122,7 +125,6 @@
     background-color: var(--color-brand--main);
     color: white;
 }
-
 
 .dots {
     display: flex;

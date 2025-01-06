@@ -1,5 +1,5 @@
-import Header from '../components/LandingPage/Header/Header'
-import Hero from '../components/LandingPage/Hero/Hero'
+import Header from '../components/LandingPage/Header'
+import Hero from '../components/LandingPage/Hero'
 import About from '../components/LandingPage/About/About'
 import Services from '../components/LandingPage/Services-section/Services'
 import SliderGallery from '../components/LandingPage/SliderGallery/SliderGallery'

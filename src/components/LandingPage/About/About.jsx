@@ -1,4 +1,4 @@
-import styles from "./About.module.css";
+import styles from './About.module.css'
 
 function About() {
     return (
@@ -11,7 +11,7 @@ function About() {
                     customers and skilled workers. Our platform ensures a
                     seamless connection that saves time, enhances reliability,
                     and drives satisfaction. Whether you&apos;re a customer
-                    looking for assistance or a worker seeking opportunities,{" "}
+                    looking for assistance or a worker seeking opportunities,
                     <span>7erfa</span> has you covered.
                 </p>
                 <button>
@@ -19,7 +19,7 @@ function About() {
                 </button>
             </div>
         </div>
-    );
+    )
 }
 
-export default About;
+export default About
