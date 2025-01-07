@@ -116,17 +116,19 @@ const ProfilePage = () => {
             className="mx-auto max-w-4xl space-y-6"
         >
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-800">Profile</h1>
+                <h1 className="text-xl font-bold text-gray-800 md:text-2xl">
+                    Profile
+                </h1>
                 <button
                     onClick={() => setIsEditing(!isEditing)}
-                    className="rounded-lg bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+                    className="rounded-xl bg-blue-600 px-2 py-1 text-sm font-medium text-white transition hover:bg-blue-700 md:px-4 md:py-2 md:text-base"
                 >
                     {isEditing ? 'Cancel' : 'Edit Profile'}
                 </button>
             </div>
 
             <div className="rounded-xl bg-white p-6 shadow-sm">
-                <div className="mb-6 flex items-center space-x-6">
+                <div className="mb-6 flex flex-col items-center gap-4 md:flex-row">
                     <div className="relative">
                         <img
                             src={`${VITE_API_URL}/uploads/${user.image}`}
@@ -134,8 +136,8 @@ const ProfilePage = () => {
                             className="h-32 w-32 rounded-full"
                         />
                     </div>
-                    <div>
-                        <h2 className="text-2xl font-bold text-gray-800">
+                    <div className="flex flex-col items-center justify-center md:block">
+                        <h2 className="text-xl font-bold capitalize text-gray-800 md:text-2xl">
                             {user.name}
                         </h2>
                         <p className="text-gray-600">{user.email}</p>
@@ -154,7 +156,7 @@ const ProfilePage = () => {
                         className="space-y-4"
                         encType="multipart/form-data"
                     >
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                             {/* Full Name */}
                             <div>
                                 <label className="mb-1 block text-sm font-medium text-gray-700">
@@ -199,7 +201,7 @@ const ProfilePage = () => {
                                     className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.email ? 'border border-red-500' : ''}`}
                                 />
                                 {errors?.email && (
-                                    <span className="mt-2 text-center text-sm text-red-500">
+                                    <span className="mt-2 text-center text-xs text-red-500 md:text-sm">
                                         {errors.email}
                                     </span>
                                 )}
@@ -219,7 +221,7 @@ const ProfilePage = () => {
                                     className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.phoneNumber ? 'border border-red-500' : ''}`}
                                 />
                                 {errors?.phoneNumber && (
-                                    <p className="mt-2 text-center text-sm text-red-500">
+                                    <p className="mt-2 text-center text-xs text-red-500 md:text-sm">
                                         {errors.phoneNumber}
                                     </p>
                                 )}
@@ -239,7 +241,7 @@ const ProfilePage = () => {
                                     className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.phoneNumber ? 'border border-red-500' : ''}`}
                                 />
                                 {errors?.hourlyRate && (
-                                    <span className="mt-2 text-center text-sm text-red-500">
+                                    <span className="mt-2 text-center text-xs text-red-500 md:text-sm">
                                         {errors.hourlyRate}
                                     </span>
                                 )}
@@ -259,7 +261,7 @@ const ProfilePage = () => {
                                     className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.phoneNumber ? 'border border-red-500' : ''}`}
                                 />
                                 {errors?.yearsOfExperience && (
-                                    <span className="mt-2 text-center text-sm text-red-500">
+                                    <span className="mt-2 text-center text-xs text-red-500 md:text-sm">
                                         {errors.yearsOfExperience}
                                     </span>
                                 )}
@@ -306,12 +308,12 @@ const ProfilePage = () => {
                     </Form>
                 ) : (
                     <div className="space-y-6">
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="flex flex-col gap-6 md:grid md:grid-cols-2">
                             <div>
-                                <h3 className="text-sm font-medium text-gray-500">
+                                <h3 className="text-sm font-medium text-gray-500 md:text-base lg:text-lg">
                                     Contact Information
                                 </h3>
-                                <div className="mt-2 space-y-2">
+                                <div className="mt-2 space-y-2 text-sm md:text-base lg:text-lg">
                                     <p className="text-gray-800">
                                         Phone: {user.phoneNumber}
                                     </p>
@@ -324,10 +326,10 @@ const ProfilePage = () => {
                                 </div>
                             </div>
                             <div>
-                                <h3 className="text-sm font-medium text-gray-500">
+                                <h3 className="text-sm font-medium text-gray-500 md:text-base lg:text-lg">
                                     Work Information
                                 </h3>
-                                <div className="mt-2 space-y-2">
+                                <div className="mt-2 space-y-2 text-sm md:text-base lg:text-lg">
                                     <p className="text-gray-800">
                                         Experience: {user.yearsOfExperience}{' '}
                                         Years
@@ -339,10 +341,12 @@ const ProfilePage = () => {
                             </div>
                         </div>
                         <div>
-                            <h3 className="text-sm font-medium text-gray-500">
+                            <h3 className="text-sm font-medium text-gray-500 md:text-base lg:text-lg">
                                 About
                             </h3>
-                            <p className="mt-2 text-gray-800">{user.bio}</p>
+                            <p className="mt-2 text-sm text-gray-800 md:text-base lg:text-lg">
+                                {user.bio}
+                            </p>
                         </div>
                     </div>
                 )}

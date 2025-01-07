@@ -101,7 +101,7 @@ const TestimonialPage = () => {
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Review
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 lg:table-cell">
                                     Date
                                 </th>
                             </tr>
@@ -129,7 +129,7 @@ const TestimonialPage = () => {
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                         {testimonial.review}
                                     </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                    <td className="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 lg:table-cell">
                                         {new Date(
                                             testimonial.createdAt,
                                         ).toLocaleString('en-EG')}

@@ -86,7 +86,7 @@ const CustomerOrders = () => {
                     <input
                         type="text"
                         placeholder="Search orders..."
-                        className="w-full rounded-lg border border-gray-200 py-2 pl-10 pr-4 focus:border-blue-500 focus:outline-none"
+                        className="w-full rounded-lg border border-gray-200 py-2 pl-4 focus:border-blue-500 focus:outline-none lg:pl-8 lg:pr-4"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -118,7 +118,7 @@ const CustomerOrders = () => {
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                                     Service
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 lg:table-cell">
                                     Details
                                 </th>
                                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
@@ -144,7 +144,7 @@ const CustomerOrders = () => {
                                     <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500">
                                         {order.service}
                                     </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                    <td className="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 lg:table-cell">
                                         {order.details}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 capitalize">

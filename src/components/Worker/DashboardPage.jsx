@@ -58,7 +58,7 @@ const DashboardPage = () => {
                 </div>
             </div>
             <WorkerStats user={user} orders={allOrders} />
-            <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="mt-6 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-2">
                 <WorkerTasks navigate={navigate} orders={orders} />
                 <TestimonialList reviews={reviews} navigate={navigate} />
             </div>
@@ -152,7 +152,7 @@ const WorkerTasks = ({ navigate, orders }) => {
                     ? orders?.map((task) => (
                           <div
                               key={task?.id}
-                              className="rounded-lg border border-gray-300 p-4 transition-all duration-200 hover:shadow-md"
+                              className="rounded-lg border border-gray-300 p-4 text-sm transition-all duration-200 hover:shadow-md md:text-lg"
                           >
                               <div className="mb-2 flex items-start justify-between">
                                   <div>
@@ -164,7 +164,7 @@ const WorkerTasks = ({ navigate, orders }) => {
                                       </p>
                                   </div>
                                   <span
-                                      className={`rounded-full px-2 py-1 text-sm font-medium capitalize ${
+                                      className={`flex rounded-full px-2 py-1 text-xs font-medium capitalize lg:text-sm ${
                                           task?.status === 'in progress'
                                               ? 'bg-blue-100 text-blue-800'
                                               : task?.status === 'pending'

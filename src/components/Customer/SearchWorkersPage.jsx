@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { Link } from 'react-router-dom' // Import Link
 import { encrypt } from '../../services/cryptoUtils'
@@ -9,7 +9,28 @@ const VITE_API_URL = import.meta.env.VITE_API_URL
 const SearchWorkersPage = () => {
     const { workers } = useAuth()
 
-    const workersPerPage = 9
+    const [workersPerPage, setWorkersPerPage] = useState(9)
+
+    useEffect(() => {
+        const handleResize = () => {
+            // Check if the screen width is less than 1024px
+            const isSmallScreen =
+                window.matchMedia('(max-width: 768px)').matches
+            setWorkersPerPage(isSmallScreen ? 8 : 9)
+        }
+
+        // Initial check on component mount
+        handleResize()
+
+        // Add event listener for window resize
+        window.addEventListener('resize', handleResize)
+
+        // Cleanup event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+
     const [currentPage, setCurrentPage] = useState(1)
 
     // Filter state
@@ -82,16 +103,16 @@ const SearchWorkersPage = () => {
 
     return (
         <motion.div
-            className="p-8"
+            className="w-full"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
         >
-            <h1 className="mb-8 text-4xl font-extrabold text-gray-800">
+            <h1 className="mb-8 text-2xl font-extrabold text-gray-800 lg:text-4xl">
                 Search Workers
             </h1>
-            <div className="mb-8 flex gap-4">
+            <div className="mb-8 grid gap-4 md:grid-cols-2 lg:flex lg:flex-row">
                 <input
                     type="text"
                     placeholder="Enter Worker Name"
@@ -106,6 +127,7 @@ const SearchWorkersPage = () => {
                     onChange={(e) => setCity(e.target.value)}
                     className="flex-1 rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
+
                 <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
@@ -132,7 +154,7 @@ const SearchWorkersPage = () => {
             </div>
 
             <h2 className="text-2xl font-semibold text-gray-800">Workers</h2>
-            <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {currentWorkers.map((worker) => (
                     <Link
                         key={worker._id}
@@ -140,7 +162,7 @@ const SearchWorkersPage = () => {
                         className="flex items-center justify-between gap-4 rounded-lg bg-white p-6 shadow-md hover:shadow-lg"
                     >
                         <img
-                            className="h-24 w-24 rounded-full border-2 border-gray-300 object-cover"
+                            className="h-16 w-16 rounded-full border-2 border-gray-300 object-cover lg:h-24 lg:w-24"
                             src={`${VITE_API_URL}/uploads/${worker.image}`}
                             alt={worker.name}
                         />
@@ -174,7 +196,7 @@ const SearchWorkersPage = () => {
                 <button
                     onClick={handlePrevPage}
                     disabled={currentPage === 1}
-                    className="rounded-lg bg-gray-300 px-4 py-2 text-xl font-semibold text-gray-700 hover:bg-gray-400 hover:text-white disabled:bg-gray-200"
+                    className="rounded-lg bg-gray-300 px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-400 hover:text-white disabled:bg-gray-200 sm:px-4 sm:py-2 sm:text-xl sm:font-semibold"
                 >
                     Previous
                 </button>
@@ -184,7 +206,7 @@ const SearchWorkersPage = () => {
                 <button
                     onClick={handleNextPage}
                     disabled={currentPage === totalPages}
-                    className="rounded-lg bg-gray-300 px-4 py-2 text-xl font-semibold text-gray-700 hover:bg-gray-400 hover:text-white disabled:bg-gray-200"
+                    className="rounded-lg bg-gray-300 px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-400 hover:text-white disabled:bg-gray-200 sm:px-4 sm:py-2 sm:text-xl sm:font-semibold"
                 >
                     Next
                 </button>

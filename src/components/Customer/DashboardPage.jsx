@@ -86,24 +86,26 @@ const DashboardPage = () => {
                                 className="mr-4 h-16 w-16 rounded-full border border-gray-300 object-cover"
                             />
                             <div className="flex-1">
-                                <h3 className="flex items-center justify-between text-lg font-semibold capitalize text-gray-800">
+                                <h3 className="flex items-center justify-between text-sm font-semibold capitalize text-gray-800 md:text-lg">
                                     {groupedWorkers[skill]?.name || 'No Worker'}
-                                    <p className="text-sm text-yellow-500">
+                                    <p className="text-xs text-yellow-500 md:text-sm">
                                         {groupedWorkers[skill]
-                                            ?.ratingsAverage || 'N/A'}{' '}
+                                            ?.ratingsAverage || 'N/A'}
                                         ⭐
                                     </p>
                                 </h3>
-                                <p className="text-sm text-gray-500">{skill}</p>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-xs text-gray-500 md:text-sm">
+                                    {skill}
+                                </p>
+                                <p className="text-xs text-gray-500 md:text-sm">
                                     City: {groupedWorkers[skill]?.city || 'N/A'}{' '}
                                 </p>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-xs text-gray-500 md:text-sm">
                                     Phone Num:{' '}
                                     {groupedWorkers[skill]?.phoneNumber ||
                                         'N/A'}{' '}
                                 </p>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-xs text-gray-500 md:text-sm">
                                     Experience:{' '}
                                     {groupedWorkers[skill]?.yearsOfExperience ||
                                         'N/A'}

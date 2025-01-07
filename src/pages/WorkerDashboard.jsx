@@ -34,6 +34,29 @@ function WorkerDashboard() {
 
     // Sidebar Component
     const Sidebar = () => {
+        const [minimized, setMinimized] = useState(false)
+
+        useEffect(() => {
+            const handleResize = () => {
+                // Check if the screen width is less than or equal to 1024px (tablet or mobile)
+                const isMobileOrTablet = window.matchMedia(
+                    '(max-width: 1023px)',
+                ).matches
+                setMinimized(isMobileOrTablet)
+            }
+
+            // Initial check on component mount
+            handleResize()
+
+            // Add event listener for window resize
+            window.addEventListener('resize', handleResize)
+
+            // Cleanup event listener on component unmount
+            return () => {
+                window.removeEventListener('resize', handleResize)
+            }
+        }, [])
+
         useEffect(() => {
             const storedToken = localStorage.getItem('token')
             const storedUser = JSON.parse(localStorage.getItem('user'))
@@ -69,7 +92,7 @@ function WorkerDashboard() {
                 initial={{ x: -50 }}
                 animate={{ x: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
-                className="fixed left-0 top-0 h-screen w-64 border-r border-gray-200 bg-white"
+                className="fixed left-0 top-0 h-screen w-fit border-r border-gray-200 bg-white transition-all lg:w-64"
             >
                 <div className="border-b border-gray-200 px-4 py-2">
                     <motion.div
@@ -89,7 +112,7 @@ function WorkerDashboard() {
                                         navigate('/worker-dashboard')
                                 }}
                             >
-                                7erfa
+                                {minimized || <span>7erfa</span>}
                             </button>
                         </div>
                     </motion.div>
@@ -101,7 +124,7 @@ function WorkerDashboard() {
                             key={item.page}
                             whileHover={{ scale: 1.02, x: 5 }}
                             whileTap={{ scale: 0.98 }}
-                            className={`mb-2 flex cursor-pointer items-center gap-3 rounded-lg p-3 text-gray-600 transition-all duration-200 hover:bg-gray-50 ${
+                            className={`mb-2 flex cursor-pointer items-center justify-center gap-1 rounded-lg p-3 text-gray-600 transition-all duration-200 hover:bg-gray-50 lg:justify-normal lg:gap-3 ${
                                 currentPage === item.page
                                     ? 'bg-blue-50 text-blue-600'
                                     : ''
@@ -112,7 +135,11 @@ function WorkerDashboard() {
                             }}
                         >
                             {item.icon}
-                            <span className="font-medium">{item.title}</span>
+                            {minimized || (
+                                <span className="font-medium">
+                                    {item.title}
+                                </span>
+                            )}
                         </motion.div>
                     ))}
                 </nav>
@@ -131,9 +158,9 @@ function WorkerDashboard() {
                 initial={{ y: -50 }}
                 animate={{ y: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
-                className="fixed left-64 right-0 top-0 z-10 h-16 border-b border-gray-200 bg-white"
+                className="fixed left-20 right-0 top-0 z-10 h-16 border-b border-gray-200 bg-white lg:left-64"
             >
-                <div className="flex h-full items-center justify-end px-4">
+                <div className="flex h-full items-center justify-end p-4">
                     <div className="flex items-center justify-end gap-4">
                         <motion.img
                             whileHover={{ scale: 1.1 }}
@@ -186,7 +213,7 @@ function WorkerDashboard() {
     return isAuth ? (
         <div className="min-h-screen bg-gray-50">
             <Sidebar />
-            <div className="ml-64">
+            <div className="ml-20 lg:ml-64">
                 <Header />
                 <main className="pt-16">
                     <div className="p-6">{renderPage()}</div>

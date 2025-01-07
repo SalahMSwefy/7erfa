@@ -23,7 +23,6 @@ const WorkerPage = () => {
     useEffect(() => {
         getReviews(decryptedWorkerId)
             .then((data) => {
-                console.log(data.data.data)
                 setReview(data.data.data)
             })
             .catch((error) => console.error('Error fetching reviews:', error))
@@ -61,24 +60,24 @@ const WorkerPage = () => {
     }
 
     return (
-        <div className="p-8">
-            <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-extrabold text-gray-800 lg:text-4xl">
+        <div className="lg:p-8">
+            <div className="flex flex-col items-center justify-between gap-3 md:flex-row">
+                <h1 className="text-lg font-extrabold text-gray-800 md:text-xl lg:text-3xl">
                     Hi I&apos;m {worker.name} 👋
                 </h1>
                 <div className="flex gap-4">
                     <button
-                        className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700"
+                        className="flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-blue-700 lg:gap-2 lg:px-4 lg:py-2 lg:text-base"
                         onClick={() => setIsOrderModalOpen(true)} // Open the modal
                     >
-                        <CalendarArrowUp size={20} className="fill-blue-500" />
+                        <CalendarArrowUp className="fill-blue-500" />
                         Make Order
                     </button>
                     <button
-                        className="flex items-center gap-2 rounded-lg bg-yellow-500 px-4 py-2 font-medium text-white transition hover:bg-yellow-600"
+                        className="flex items-center gap-1 rounded-lg bg-yellow-500 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-yellow-600 lg:gap-2 lg:px-4 lg:py-2 lg:text-base"
                         onClick={() => setIsReviewModalOpen(true)}
                     >
-                        <Star size={20} className="fill-yellow-500" />
+                        <Star className="fill-yellow-500" />
                         Make a Review
                     </button>
                 </div>
@@ -217,49 +216,49 @@ const WorkerPage = () => {
 
             <div className="mt-6 flex flex-col items-center gap-8 lg:flex-row">
                 <img
-                    className="h-32 w-32 rounded-full border border-gray-300 object-cover lg:h-48 lg:w-48"
+                    className="h-24 w-24 rounded-full border border-gray-300 object-cover md:h-32 md:w-32 lg:h-48 lg:w-48"
                     src={`${VITE_API_URL}/uploads/${worker.image}`}
                     alt={worker.name}
                 />
                 <div className="flex-1">
-                    <h2 className="flex items-center justify-between text-base font-semibold text-gray-800 lg:text-xl">
+                    <h2 className="flex items-center justify-between text-sm font-semibold text-gray-800 md:text-base lg:text-xl">
                         <span className="rounded-full bg-gray-200 px-4 py-2">
                             {worker.skill}
                         </span>
-                        <p className="rounded-full bg-yellow-100 px-4 py-2 text-base text-yellow-500 lg:text-lg">
+                        <p className="rounded-full bg-yellow-100 px-4 py-2 text-sm text-yellow-500 md:text-base lg:text-lg">
                             {worker.ratingsAverage} ⭐
                         </p>
                     </h2>
                     <div className="lg:grid-row-2 lg:grid">
-                        <h3 className="mt-4 text-base text-gray-700 lg:text-lg">
+                        <h3 className="mt-4 text-sm font-medium text-gray-700 md:text-base lg:text-lg">
                             Personal Information:
                         </h3>
                         <div className="ml-2 mt-2 flex flex-col gap-2 border border-gray-300 p-4">
-                            <p className="text-base text-gray-500 lg:text-lg">
+                            <p className="text-sm text-gray-700 md:text-base lg:text-lg">
                                 City: {worker.city}
                             </p>
-                            <p className="text-base text-gray-500 lg:text-lg">
+                            <p className="text-sm text-gray-700 md:text-base lg:text-lg">
                                 Email: {worker.email}
                             </p>
-                            <p className="text-base text-gray-500 lg:text-lg">
+                            <p className="text-sm text-gray-700 md:text-base lg:text-lg">
                                 Phone Number: {worker.phoneNumber}
                             </p>
                         </div>
-                        <h3 className="mt-4 text-base text-gray-700 lg:text-lg">
+                        <h3 className="mt-4 text-sm font-medium text-gray-700 md:text-base lg:text-lg">
                             Job information:
                         </h3>
                         <div className="ml-2 mt-2 flex flex-col gap-2 border border-gray-300 p-4">
-                            <p className="text-base text-gray-500 lg:text-lg">
+                            <p className="text-sm text-gray-700 md:text-base lg:text-lg">
                                 Experience: {worker.yearsOfExperience} Years
                             </p>
-                            <p className="text-base text-gray-500 lg:text-lg">
+                            <p className="text-sm text-gray-700 md:text-base lg:text-lg">
                                 Price: {worker.hourlyRate} $ / hour
                             </p>
                         </div>
                     </div>
-                    <p className="mt-4 flex flex-col text-base text-gray-700 lg:text-lg">
+                    <p className="mt-4 flex flex-col text-sm font-medium text-gray-700 md:text-base lg:text-lg">
                         About :{' '}
-                        <span className="ml-2 border border-gray-300 p-4 text-gray-700">
+                        <span className="ml-2 border border-gray-300 p-4 font-normal text-gray-700">
                             {worker.bio}
                         </span>
                     </p>
@@ -278,7 +277,7 @@ const TestimonialList = ({ reviews }) => {
                     Latest reviews
                 </h2>
             </div>
-            <div className="grid grid-cols-2 grid-rows-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:grid-rows-2">
                 {reviews.map((testimonial) => (
                     <TestimonialCard
                         key={testimonial.id}
