@@ -63,7 +63,7 @@ const Login = () => {
     }
 
     return (
-        <div className="mx-auto flex h-screen flex-col rounded-lg bg-orange-50 pt-12">
+        <div className="mx-auto flex h-screen flex-col rounded-lg bg-main-50">
             <div className="draggable my-auto flex h-full w-full justify-center md:gap-5 lg:justify-normal xl:gap-14">
                 <div className="flex w-full items-center justify-center lg:p-12">
                     <div className="flex items-center xl:p-10">
@@ -122,7 +122,7 @@ const Login = () => {
                                     <input
                                         type="checkbox"
                                         defaultChecked
-                                        className="h-5 w-5 rounded border-stone-500 text-orange-500 checked:bg-orange-500 focus:ring-orange-500"
+                                        className="h-5 w-5 rounded border-stone-500 text-main-500 checked:bg-main-500 focus:ring-main-500"
                                         aria-checked="true"
                                         aria-label="Keep me logged in"
                                     />
@@ -139,7 +139,7 @@ const Login = () => {
                             </div>
                             <button
                                 type="submit"
-                                className="mb-5 w-full rounded-2xl bg-orange-500 px-5 py-4 text-base font-bold leading-none text-white transition duration-300 hover:bg-orange-600 focus:ring-4 focus:ring-orange-600 md:w-96"
+                                className="mb-5 w-full rounded-2xl bg-main-600 px-5 py-4 text-base font-bold leading-none text-white transition duration-300 hover:bg-main-500 focus:ring-4 focus:ring-main-500 md:w-96"
                                 aria-label="Sign In"
                             >
                                 Sign In
