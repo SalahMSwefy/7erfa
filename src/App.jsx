@@ -9,6 +9,7 @@ const Login = lazy(() => import('./pages/Login'))
 const Register = lazy(() => import('./pages/Register'))
 const Error = lazy(() => import('./ui/Error'))
 const ForgotPassword = lazy(() => import('./pages/ForgetPassword'))
+const ResetPassword = lazy(() => import('/pages/ResetPassword'))
 
 // Lazy-loaded main dashboard pages
 const WorkerDashboard = lazy(() => import('./pages/WorkerDashboard'))
@@ -66,6 +67,19 @@ const router = createBrowserRouter([
         element: (
             <Suspense fallback={<FullScreenLoader />}>
                 <ForgotPassword />
+            </Suspense>
+        ),
+        errorElement: (
+            <Suspense fallback={<FullScreenLoader />}>
+                <Error />
+            </Suspense>
+        ),
+    },
+    {
+        path: '/resetPassword',
+        element: (
+            <Suspense fallback={<FullScreenLoader />}>
+                <ResetPassword />
             </Suspense>
         ),
         errorElement: (
