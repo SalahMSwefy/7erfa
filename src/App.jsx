@@ -9,7 +9,7 @@ const Login = lazy(() => import('./pages/Login'))
 const Register = lazy(() => import('./pages/Register'))
 const Error = lazy(() => import('./ui/Error'))
 const ForgotPassword = lazy(() => import('./pages/ForgetPassword'))
-const ResetPassword = lazy(() => import('/pages/ResetPassword'))
+const ResetPassword = lazy(() => import('./pages/ResetPassword'))
 
 // Lazy-loaded main dashboard pages
 const WorkerDashboard = lazy(() => import('./pages/WorkerDashboard'))
