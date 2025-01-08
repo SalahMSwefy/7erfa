@@ -78,7 +78,7 @@ const DashboardPage = () => {
                         <Link
                             key={skill}
                             to={`/customer-dashboard/worker/${encodeURIComponent(encrypt(groupedWorkers[skill].id))}`}
-                            className="flex w-full items-center justify-between gap-4 rounded-lg bg-white p-6 shadow-md hover:shadow-lg"
+                            className="flex w-full items-center justify-between gap-4 rounded-lg p-6 shadow-md hover:shadow-lg"
                         >
                             <img
                                 src={`${VITE_API_URL}/uploads/${groupedWorkers[skill]?.image}`}
@@ -160,7 +160,7 @@ const OrderStats = ({ orders }) => {
     ]
 
     return (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
             {stats.map((stat, index) => (
                 <div
                     key={index}
