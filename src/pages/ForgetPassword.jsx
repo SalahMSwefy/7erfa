@@ -1,6 +1,25 @@
-import { Form, Link } from 'react-router-dom'
+import { Form, Link, useNavigate } from 'react-router-dom'
+import { forgotPassword } from '../services/apis'
+import { useState } from 'react'
 
 const ForgotPassword = () => {
+    const navigate = useNavigate()
+    const [error, setError] = useState('')
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const data = {
+            email: e.target.email.value,
+        }
+        const response = await forgotPassword(data)
+        if (response.status === 'success') {
+            navigate('/login')
+            alert('Password reset link has been sent to your email')
+        } else {
+            setError(response.message)
+            return
+        }
+    }
     return (
         <div className="mx-auto flex h-screen flex-col rounded-lg bg-orange-50 pt-12">
             <div className="my-auto flex h-full w-full justify-center md:gap-5 lg:justify-normal xl:gap-14">
@@ -9,6 +28,7 @@ const ForgotPassword = () => {
                         <Form
                             method="POST"
                             className="flex h-full w-full flex-col rounded-3xl bg-orange-50 pb-6 text-center"
+                            onSubmit={handleSubmit}
                         >
                             <h3 className="mb-3 w-auto font-brand text-4xl font-extrabold text-stone-900">
                                 Forgot Password
@@ -31,7 +51,13 @@ const ForgotPassword = () => {
                                 className="mb-7 mr-2 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300"
                                 required
                             />
-
+                            {error && (
+                                <span className="-mt-4 mb-4 text-center text-base text-red-500">
+                                    {typeof error === 'string'
+                                        ? error
+                                        : 'Invalid email or password, please try again.'}
+                                </span>
+                            )}
                             <div className="mb-4 flex justify-center">
                                 <button
                                     type="submit"

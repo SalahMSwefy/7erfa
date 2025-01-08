@@ -53,10 +53,10 @@ const DashboardPage = () => {
                 transition={{ duration: 0.3 }}
             >
                 <div>
-                    <h1 className="text-3xl font-extrabold capitalize text-gray-800">
+                    <h1 className="text-3xl font-extrabold capitalize text-gray-800 dark:text-gray-100">
                         Welcome back, {user.name} 👋
                     </h1>
-                    <p className="mt-2 text-lg text-gray-600">
+                    <p className="mt-2 text-lg text-gray-600 dark:text-gray-300">
                         Here&apos;s an overview of your recent activities.
                     </p>
                 </div>
@@ -69,7 +69,7 @@ const DashboardPage = () => {
                 {skills.map((skill) => (
                     <motion.div
                         key={skill}
-                        className="flex items-center rounded-lg shadow-md transition-shadow duration-200 hover:shadow-lg"
+                        className="flex items-center rounded-lg bg-white shadow-md transition-shadow duration-200 hover:shadow-lg dark:bg-gray-800 dark:text-gray-100"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
@@ -86,26 +86,26 @@ const DashboardPage = () => {
                                 className="mr-4 h-16 w-16 rounded-full border border-gray-300 object-cover"
                             />
                             <div className="flex-1">
-                                <h3 className="flex items-center justify-between text-sm font-semibold capitalize text-gray-800 md:text-lg">
+                                <h3 className="flex items-center justify-between text-sm font-semibold capitalize text-gray-800 md:text-lg dark:text-gray-100">
                                     {groupedWorkers[skill]?.name || 'No Worker'}
-                                    <p className="text-xs text-yellow-500 md:text-sm">
+                                    <p className="rounded-2xl bg-gray-100 px-2 py-1 text-xs text-yellow-500 md:text-sm dark:bg-gray-500">
                                         {groupedWorkers[skill]
                                             ?.ratingsAverage || 'N/A'}
                                         ⭐
                                     </p>
                                 </h3>
-                                <p className="text-xs text-gray-500 md:text-sm">
+                                <p className="text-xs text-gray-500 md:text-sm dark:text-gray-300">
                                     {skill}
                                 </p>
-                                <p className="text-xs text-gray-500 md:text-sm">
+                                <p className="text-xs text-gray-500 md:text-sm dark:text-gray-300">
                                     City: {groupedWorkers[skill]?.city || 'N/A'}{' '}
                                 </p>
-                                <p className="text-xs text-gray-500 md:text-sm">
+                                <p className="text-xs text-gray-500 md:text-sm dark:text-gray-300">
                                     Phone Num:{' '}
                                     {groupedWorkers[skill]?.phoneNumber ||
                                         'N/A'}{' '}
                                 </p>
-                                <p className="text-xs text-gray-500 md:text-sm">
+                                <p className="text-xs text-gray-500 md:text-sm dark:text-gray-300">
                                     Experience:{' '}
                                     {groupedWorkers[skill]?.yearsOfExperience ||
                                         'N/A'}
@@ -137,25 +137,25 @@ const OrderStats = ({ orders }) => {
             title: 'Total Orders',
             value: orders?.length || '0',
             icon: <List size={20} />,
-            color: 'bg-gradient-to-r from-blue-500 to-blue-600',
+            color: 'bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500',
         },
         {
             title: 'Completed Orders',
             value: completedOrders,
             icon: <CheckCircle size={20} />,
-            color: 'bg-gradient-to-r from-green-500 to-green-600',
+            color: 'bg-gradient-to-r from-green-500 to-green-600 dark:from-green-400 dark:to-green-500',
         },
         {
             title: 'Active Orders',
             value: activeOrders,
             icon: <Clock size={20} />,
-            color: 'bg-gradient-to-r from-yellow-500 to-yellow-600',
+            color: 'bg-gradient-to-r from-yellow-500 to-yellow-600 dark:from-yellow-400 dark:to-yellow-500',
         },
         {
             title: 'Canceled Orders',
             value: canceledOrders,
             icon: <XCircle size={20} />,
-            color: 'bg-gradient-to-r from-red-500 to-red-600',
+            color: 'bg-gradient-to-r from-red-500 to-red-600 dark:from-red-400 dark:to-red-500',
         },
     ]
 
@@ -167,7 +167,7 @@ const OrderStats = ({ orders }) => {
                     className={`rounded-xl p-6 ${stat.color} transform shadow-lg transition-all duration-200 hover:scale-105`}
                 >
                     <div className="mb-4 flex items-center justify-between">
-                        <h3 className="text-sm font-medium text-white">
+                        <h3 className="text-sm font-medium text-white dark:text-gray-100">
                             {stat.title}
                         </h3>
                         <div className="rounded-lg bg-white/20 p-2">
@@ -175,7 +175,7 @@ const OrderStats = ({ orders }) => {
                         </div>
                     </div>
                     <div className="flex items-end justify-between">
-                        <p className="text-3xl font-bold text-white">
+                        <p className="text-3xl font-bold text-white dark:text-gray-100">
                             {stat.value}
                         </p>
                     </div>

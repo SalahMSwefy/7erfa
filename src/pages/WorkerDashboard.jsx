@@ -173,10 +173,13 @@ function WorkerDashboard() {
                         />
                         <motion.button
                             whileHover={{ scale: 1.1 }}
-                            className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-500 bg-gray-100"
+                            className="flex h-8 w-8 items-center justify-center rounded-full shadow-lg"
                             onClick={handleLogout}
                         >
-                            <LogOut size={18} className="text-stone-500" />
+                            <LogOut
+                                size={18}
+                                className="text-stone-400 hover:text-stone-700"
+                            />
                         </motion.button>
                     </div>
                 </div>

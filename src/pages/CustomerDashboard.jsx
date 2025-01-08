@@ -5,6 +5,8 @@ import {
     UserCircle,
     LogOut,
     ListOrdered,
+    Sun,
+    Moon,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
@@ -62,6 +64,7 @@ function CustomerDashboard() {
             if (storedToken === null || storedUser === null) navigate('/login')
             if (storedUser.role === 'worker') navigate('/worker-dashboard')
         }, [])
+
         const menuItems = [
             {
                 title: 'Dashboard',
@@ -90,16 +93,16 @@ function CustomerDashboard() {
                 initial={{ x: -50 }}
                 animate={{ x: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
-                className="fixed left-0 top-0 h-screen w-fit border-r border-gray-200 bg-white transition-all lg:w-64"
+                className="fixed left-0 top-0 h-screen w-fit border-r border-gray-200 bg-white transition-all lg:w-64 dark:border-gray-700 dark:bg-gray-800"
             >
-                <div className="border-b border-gray-200 p-4">
+                <div className="border-b border-gray-200 p-4 dark:border-gray-700">
                     <motion.div
                         whileHover={{ scale: 1.05 }}
                         className="flex items-center gap-2"
                     >
                         <div className="text-brand-light flex items-center gap-2.5">
                             <button
-                                className="text-brand-light text-brand-light flex items-center gap-2.5 font-brand text-3xl no-underline transition-colors duration-200 hover:text-orange-500"
+                                className="text-brand-light text-brand-light flex items-center gap-2.5 font-brand text-3xl no-underline transition-colors duration-200 hover:text-orange-500 dark:text-white dark:hover:text-orange-500"
                                 onClick={() => {
                                     if (currentPage !== '/customer-dashboard')
                                         navigate('/customer-dashboard')
@@ -116,15 +119,16 @@ function CustomerDashboard() {
                         </div>
                     </motion.div>
                 </div>
+
                 <nav className="lg:p-4">
                     {menuItems.map((item) => (
                         <motion.div
                             key={item.page}
                             whileHover={{ scale: 1.02, x: 5 }}
                             whileTap={{ scale: 0.98 }}
-                            className={`mb-2 flex cursor-pointer items-center justify-center rounded-lg p-3 text-gray-600 transition-all duration-200 hover:bg-gray-50 lg:justify-normal lg:gap-3 ${
+                            className={`mb-2 flex cursor-pointer items-center justify-center rounded-lg p-3 text-gray-600 transition-all duration-200 hover:bg-gray-50 lg:justify-normal lg:gap-3 dark:hover:bg-gray-600 dark:hover:text-gray-50 ${
                                 currentPage === item.page
-                                    ? 'bg-blue-50 text-blue-600'
+                                    ? 'bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-white'
                                     : ''
                             }`}
                             onClick={() => {
@@ -147,36 +151,69 @@ function CustomerDashboard() {
 
     // Header Component
     const Header = () => {
+        const [darkMode, setDarkMode] = useState(
+            localStorage.getItem('theme') === 'dark' || false,
+        )
+
+        useEffect(() => {
+            if (darkMode) {
+                document.documentElement.classList.add('dark')
+                localStorage.setItem('theme', 'dark')
+            } else {
+                document.documentElement.classList.remove('dark')
+                localStorage.setItem('theme', 'light')
+            }
+        }, [darkMode])
+
         function handleLogout() {
             logout()
             navigate('/login')
         }
+
         return (
             <motion.header
                 initial={{ y: -50 }}
                 animate={{ y: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
-                className="fixed left-20 right-0 top-0 z-10 h-16 border-b border-gray-200 bg-white lg:left-64"
+                className="fixed left-20 right-0 top-0 z-10 h-16 border-b border-gray-200 bg-white lg:left-64 dark:border-gray-700 dark:bg-gray-800"
             >
                 <div className="flex h-full items-center justify-end p-4">
                     <div className="flex items-center gap-4">
                         <motion.img
-                            whileHover={{ scale: 1.1 }}
+                            whileHover={{ scale: 1.2 }}
                             src={`${VITE_API_URL}/uploads/${user.image}`}
                             alt="Profile"
-                            className="h-8 w-8 rounded-full border-2 border-blue-500"
+                            className="h-8 w-8 rounded-full border-2 border-stone-500 dark:border-stone-300"
                             onClick={() =>
                                 navigate('/customer-dashboard/profile')
                             }
                         />
                         <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            src="https://via.placeholder.com/40"
-                            alt="Profile"
-                            className="bg-s flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-500"
+                            whileHover={{ scale: 1.2 }}
+                            className="flex h-8 w-8 items-center justify-center rounded-full shadow-lg"
+                            onClick={() => setDarkMode(!darkMode)}
+                        >
+                            {darkMode ? (
+                                <Sun
+                                    size={18}
+                                    className="text-stone-400 hover:text-stone-700 dark:text-white dark:hover:text-gray-400"
+                                />
+                            ) : (
+                                <Moon
+                                    size={18}
+                                    className="text-stone-400 hover:text-stone-700 dark:text-white dark:hover:text-gray-400"
+                                />
+                            )}
+                        </motion.button>
+                        <motion.button
+                            whileHover={{ scale: 1.2 }}
+                            className="flex h-8 w-8 items-center justify-center rounded-full shadow-lg"
                             onClick={handleLogout}
                         >
-                            <LogOut size={18} className="text-stone-500" />
+                            <LogOut
+                                size={18}
+                                className="text-stone-400 hover:text-stone-700 dark:text-white dark:hover:text-gray-400"
+                            />
                         </motion.button>
                     </div>
                 </div>
@@ -211,7 +248,7 @@ function CustomerDashboard() {
     }
 
     return isAuth ? (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-800">
             <Sidebar />
             <div className="ml-20 lg:ml-64">
                 <Header />
