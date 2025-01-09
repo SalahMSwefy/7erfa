@@ -109,7 +109,7 @@ const SearchWorkersPage = () => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
         >
-            <h1 className="mb-8 text-2xl font-extrabold text-gray-800 lg:text-4xl">
+            <h1 className="mb-8 text-2xl font-extrabold text-gray-800 dark:text-gray-100 lg:text-4xl">
                 Search Workers
             </h1>
             <div className="mb-8 grid gap-4 md:grid-cols-2 lg:flex lg:flex-row">
@@ -153,7 +153,9 @@ const SearchWorkersPage = () => {
                 </select>
             </div>
 
-            <h2 className="text-2xl font-semibold text-gray-800">Workers</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                Workers
+            </h2>
             <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {currentWorkers.map((worker) => (
                     <Link

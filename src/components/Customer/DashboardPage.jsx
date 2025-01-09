@@ -62,7 +62,7 @@ const DashboardPage = () => {
                 </div>
             </motion.div>
             <OrderStats orders={orders} />
-            <h3 className="block text-2xl font-semibold text-gray-800">
+            <h3 className="block text-2xl font-semibold text-gray-800 dark:text-gray-100">
                 Most Experience Workers
             </h3>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">

@@ -78,7 +78,9 @@ const CustomerOrders = () => {
             transition={{ duration: 0.3 }}
         >
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-800">My Orders</h1>
+                <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                    My Orders
+                </h1>
             </div>
 
             <div className="flex items-center gap-4">
