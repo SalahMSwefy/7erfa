@@ -144,7 +144,7 @@ const ProfilePage = () => {
                     >
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                             <div>
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                     Full Name
                                 </label>
                                 <input
@@ -158,7 +158,7 @@ const ProfilePage = () => {
                             </div>
 
                             <div>
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                     City
                                 </label>
                                 <input
@@ -172,7 +172,7 @@ const ProfilePage = () => {
                             </div>
 
                             <div className="flex flex-col">
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                     Email
                                 </label>
                                 <input
@@ -195,7 +195,7 @@ const ProfilePage = () => {
                             </div>
 
                             <div className="flex flex-col">
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                     Phone
                                 </label>
                                 <input
@@ -218,7 +218,7 @@ const ProfilePage = () => {
                             </div>
 
                             <div>
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                     Profile Picture
                                 </label>
                                 <input

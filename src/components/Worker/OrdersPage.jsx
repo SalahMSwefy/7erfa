@@ -63,7 +63,9 @@ const OrdersPage = () => {
             className="space-y-6"
         >
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-800">Orders</h1>
+                <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                    Orders
+                </h1>
             </div>
 
             <div className="flex items-center gap-4">
@@ -71,13 +73,13 @@ const OrdersPage = () => {
                     <input
                         type="text"
                         placeholder="Search orders..."
-                        className="w-full rounded-lg border border-gray-200 py-2 pl-5 pr-4 focus:border-blue-500 focus:outline-none"
+                        className="w-full rounded-lg border border-gray-200 py-2 pl-5 pr-4 focus:border-blue-500 focus:outline-none dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
                 <select
-                    className="rounded-lg border border-gray-200 px-4 py-2 focus:border-blue-500 focus:outline-none"
+                    className="rounded-lg border border-gray-200 px-4 py-2 focus:border-blue-500 focus:outline-none dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200"
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
                 >
@@ -92,41 +94,44 @@ const OrdersPage = () => {
             <div className="rounded-xl bg-white shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full">
-                        <thead className="bg-gray-50">
+                        <thead className="bg-gray-50 dark:bg-gray-700">
                             <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100">
                                     Order ID
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100">
                                     Customer
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100">
                                     Service
                                 </th>
-                                <th className="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 lg:table-cell">
+                                <th className="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100 lg:table-cell">
                                     Details
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100">
                                     Status
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100">
                                     Date
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-200 bg-white">
+                        <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-600 dark:bg-gray-700">
                             {filteredOrders.map((order, i) => (
-                                <tr key={order.id} className="hover:bg-gray-50">
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                                <tr
+                                    key={order.id}
+                                    className="hover:bg-gray-50 dark:hover:bg-gray-500"
+                                >
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                                         #{i + 1}
                                     </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500">
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500 dark:text-gray-100">
                                         {order.customer.name}
                                     </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500">
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500 dark:text-gray-100">
                                         {order.service}
                                     </td>
-                                    <td className="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 lg:table-cell">
+                                    <td className="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-100 lg:table-cell">
                                         {order.details}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4">
@@ -182,7 +187,7 @@ const OrdersPage = () => {
                                             )}
                                         </select>
                                     </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-100">
                                         {new Date(
                                             order.createdAt,
                                         ).toLocaleString('en-EG')}

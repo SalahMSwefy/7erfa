@@ -37,10 +37,10 @@ const TestimonialPage = () => {
 
     const renderStars = (rating) => {
         const fullStars = Array(rating).fill(
-            <Star className="fill-yellow-500 text-yellow-500" size={16} />,
+            <Star className="fill-yellow-500 text-yellow-500" size={20} />,
         )
         const emptyStars = Array(5 - rating).fill(
-            <Star className="fill-gray-300 text-gray-300" size={16} />,
+            <Star className="fill-gray-300 text-gray-300" size={20} />,
         )
         return [...fullStars, ...emptyStars]
     }
@@ -54,7 +54,9 @@ const TestimonialPage = () => {
             className="space-y-6"
         >
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-800">Reviews</h1>
+                <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                    Reviews
+                </h1>
             </div>
 
             <div className="flex items-center gap-4">
@@ -62,13 +64,13 @@ const TestimonialPage = () => {
                     <input
                         type="text"
                         placeholder="Search Reviews..."
-                        className="w-full rounded-lg border border-gray-200 py-2 pl-10 pr-4 focus:border-blue-500 focus:outline-none"
+                        className="w-full rounded-lg border border-gray-200 py-2 pl-10 pr-4 focus:border-blue-500 focus:outline-none dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
                 <select
-                    className="rounded-lg border border-gray-200 px-4 py-2 focus:border-blue-500 focus:outline-none"
+                    className="rounded-lg border border-gray-200 px-4 py-2 focus:border-blue-500 focus:outline-none dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200"
                     value={filterRating}
                     onChange={(e) => setFilterRating(e.target.value)}
                 >
@@ -84,41 +86,41 @@ const TestimonialPage = () => {
             <div className="rounded-xl bg-white shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full">
-                        <thead className="bg-gray-50">
+                        <thead className="bg-gray-50 dark:bg-gray-700">
                             <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100">
                                     Reviews ID
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100">
                                     Name
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100">
                                     City
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100">
                                     Rating
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100">
                                     Review
                                 </th>
-                                <th className="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 lg:table-cell">
+                                <th className="hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-100 lg:table-cell">
                                     Date
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-200 bg-white">
+                        <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-600 dark:bg-gray-700">
                             {filteredTestimonials.map((testimonial, i) => (
                                 <tr
                                     key={testimonial.id}
-                                    className="hover:bg-gray-50"
+                                    className="hover:bg-gray-50 dark:hover:bg-gray-500"
                                 >
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
                                         #{i + 1}
                                     </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500">
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm capitalize text-gray-500 dark:text-gray-100">
                                         {testimonial.customer.name}
                                     </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-100">
                                         {testimonial.customer.city}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4">
@@ -126,10 +128,10 @@ const TestimonialPage = () => {
                                             {renderStars(testimonial.rating)}
                                         </div>
                                     </td>
-                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                    <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-100">
                                         {testimonial.review}
                                     </td>
-                                    <td className="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 lg:table-cell">
+                                    <td className="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-100 lg:table-cell">
                                         {new Date(
                                             testimonial.createdAt,
                                         ).toLocaleString('en-EG')}

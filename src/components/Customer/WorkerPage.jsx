@@ -62,7 +62,7 @@ const WorkerPage = () => {
     return (
         <div className="lg:p-8">
             <div className="flex flex-col items-center justify-between gap-3 md:flex-row">
-                <h1 className="text-lg font-extrabold text-gray-800 md:text-xl lg:text-3xl">
+                <h1 className="text-lg font-extrabold text-gray-800 dark:text-gray-50 md:text-xl lg:text-3xl">
                     Hi I&apos;m {worker.name} 👋
                 </h1>
                 <div className="flex gap-4">
@@ -85,16 +85,16 @@ const WorkerPage = () => {
 
             {/* Order Modal */}
             {isOrderModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-                    <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
-                        <h2 className="text-xl font-semibold text-gray-800">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/50 dark:bg-gray-700/50">
+                    <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+                        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-50">
                             Create Order
                         </h2>
                         <form onSubmit={handleOrderSubmit} className="mt-4">
                             <div className="mb-4">
                                 <label
                                     htmlFor="orderTitle"
-                                    className="block text-sm font-medium text-gray-700"
+                                    className="block text-sm font-medium text-gray-700 dark:text-gray-50"
                                 >
                                     Problem Title
                                 </label>
@@ -102,7 +102,7 @@ const WorkerPage = () => {
                                     type="text"
                                     id="orderTitle"
                                     name="orderTitle"
-                                    className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2"
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 dark:bg-gray-700 dark:text-gray-100"
                                     placeholder="Enter the title of the problem"
                                     value={orderTitle}
                                     onChange={(e) =>
@@ -112,14 +112,14 @@ const WorkerPage = () => {
                                 />
                                 <label
                                     htmlFor="orderDetails"
-                                    className="mt-4 block text-sm font-medium text-gray-700"
+                                    className="mt-4 block text-sm font-medium text-gray-700 dark:text-gray-50"
                                 >
                                     Details
                                 </label>
                                 <textarea
                                     id="orderDetails"
                                     name="orderDetails"
-                                    className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2"
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 dark:bg-gray-700 dark:text-gray-100"
                                     placeholder="More details about the problem"
                                     value={orderDetails}
                                     onChange={(e) =>
@@ -131,14 +131,18 @@ const WorkerPage = () => {
                             <div className="mt-6 flex justify-between">
                                 <button
                                     type="submit" // Ensure this button type is submit
-                                    className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
+                                    className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 hover:text-gray-400"
                                 >
                                     Submit
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => setIsOrderModalOpen(false)}
-                                    className="rounded-md bg-gray-500 px-4 py-2 font-medium text-gray-50 hover:text-gray-700"
+                                    onClick={() => {
+                                        setOrderTitle('')
+                                        setOrderDetails('')
+                                        setIsOrderModalOpen(false)
+                                    }}
+                                    className="rounded-md bg-gray-500 px-4 py-2 font-medium text-gray-50 hover:text-gray-400"
                                 >
                                     Close
                                 </button>
@@ -150,23 +154,23 @@ const WorkerPage = () => {
 
             {/* Review Modal */}
             {isReviewModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-                    <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
-                        <h2 className="text-xl font-semibold text-gray-800">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800/50 dark:bg-gray-600/50">
+                    <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+                        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-50">
                             Leave a Review
                         </h2>
                         <form onSubmit={handleReviewSubmit} className="mt-4">
                             <div className="mb-4">
                                 <label
                                     htmlFor="reviewText"
-                                    className="block text-sm font-medium text-gray-700"
+                                    className="block text-base font-medium text-gray-700 dark:text-gray-50"
                                 >
                                     Review
                                 </label>
                                 <textarea
                                     id="reviewText"
                                     name="reviewText"
-                                    className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2"
+                                    className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 dark:bg-gray-700 dark:text-gray-100"
                                     placeholder="Share your experience"
                                     value={reviewText}
                                     onChange={(e) =>
@@ -176,7 +180,7 @@ const WorkerPage = () => {
                                 />
                                 <label
                                     htmlFor="rating"
-                                    className="mt-4 block text-sm font-medium text-gray-700"
+                                    className="mt-4 block text-base font-medium text-gray-700 dark:text-gray-50"
                                 >
                                     Rating
                                 </label>
@@ -197,14 +201,17 @@ const WorkerPage = () => {
                             <div className="mt-6 flex justify-between">
                                 <button
                                     type="submit"
-                                    className="rounded-md bg-green-600 px-4 py-2 font-medium text-white hover:bg-green-700"
+                                    className="rounded-md bg-green-600 px-4 py-2 font-medium text-white hover:bg-green-700 hover:text-gray-200"
                                 >
                                     Submit
                                 </button>
                                 <button
                                     type="button"
-                                    onClick={() => setIsReviewModalOpen(false)}
-                                    className="rounded-md bg-gray-500 px-4 py-2 font-medium text-gray-50 hover:text-gray-700"
+                                    onClick={() => {
+                                        setRating(0)
+                                        setIsReviewModalOpen(false)
+                                    }}
+                                    className="rounded-md bg-gray-500 px-4 py-2 font-medium text-gray-50 hover:text-gray-400"
                                 >
                                     Close
                                 </button>
@@ -230,35 +237,35 @@ const WorkerPage = () => {
                         </p>
                     </h2>
                     <div className="lg:grid-row-2 lg:grid">
-                        <h3 className="mt-4 text-sm font-medium text-gray-700 md:text-base lg:text-lg">
+                        <h3 className="mt-4 text-sm font-medium text-gray-700 dark:text-gray-50 md:text-base lg:text-lg">
                             Personal Information:
                         </h3>
-                        <div className="ml-2 mt-2 flex flex-col gap-2 border border-gray-300 p-4">
-                            <p className="text-sm text-gray-700 md:text-base lg:text-lg">
+                        <div className="ml-2 mt-2 flex flex-col gap-2 rounded-lg border border-gray-300 p-4">
+                            <p className="text-sm text-gray-700 dark:text-gray-100 md:text-base lg:text-lg">
                                 City: {worker.city}
                             </p>
-                            <p className="text-sm text-gray-700 md:text-base lg:text-lg">
+                            <p className="text-sm text-gray-700 dark:text-gray-100 md:text-base lg:text-lg">
                                 Email: {worker.email}
                             </p>
-                            <p className="text-sm text-gray-700 md:text-base lg:text-lg">
+                            <p className="text-sm text-gray-700 dark:text-gray-100 md:text-base lg:text-lg">
                                 Phone Number: {worker.phoneNumber}
                             </p>
                         </div>
-                        <h3 className="mt-4 text-sm font-medium text-gray-700 md:text-base lg:text-lg">
+                        <h3 className="mt-4 text-sm font-medium text-gray-700 dark:text-gray-50 md:text-base lg:text-lg">
                             Job information:
                         </h3>
-                        <div className="ml-2 mt-2 flex flex-col gap-2 border border-gray-300 p-4">
-                            <p className="text-sm text-gray-700 md:text-base lg:text-lg">
+                        <div className="ml-2 mt-2 flex flex-col gap-2 rounded-lg border border-gray-300 p-4">
+                            <p className="text-sm text-gray-700 dark:text-gray-100 md:text-base lg:text-lg">
                                 Experience: {worker.yearsOfExperience} Years
                             </p>
-                            <p className="text-sm text-gray-700 md:text-base lg:text-lg">
+                            <p className="text-sm text-gray-700 dark:text-gray-100 md:text-base lg:text-lg">
                                 Price: {worker.hourlyRate} $ / hour
                             </p>
                         </div>
                     </div>
-                    <p className="mt-4 flex flex-col text-sm font-medium text-gray-700 md:text-base lg:text-lg">
+                    <p className="mt-4 flex flex-col text-sm font-medium text-gray-700 dark:text-gray-50 md:text-base lg:text-lg">
                         About :{' '}
-                        <span className="ml-2 border border-gray-300 p-4 font-normal text-gray-700">
+                        <span className="ml-2 rounded-lg border border-gray-300 p-4 font-normal text-gray-700 dark:text-gray-100">
                             {worker.bio}
                         </span>
                     </p>

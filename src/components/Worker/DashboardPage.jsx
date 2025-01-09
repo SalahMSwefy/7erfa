@@ -49,10 +49,10 @@ const DashboardPage = () => {
         >
             <div className="mb-6 flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-800">
+                    <h1 className="text-3xl font-bold text-gray-800 dark:text-white">
                         Welcome back, {user.name}! 👋
                     </h1>
-                    <p className="mt-1 text-gray-600">
+                    <p className="mt-1 text-gray-600 dark:text-gray-300">
                         Here&apos;s what&apos;s happening with your tasks today.
                     </p>
                 </div>
@@ -84,26 +84,26 @@ const WorkerStats = ({ user, orders }) => {
             title: 'Completed Orders',
             value: completedOrders,
             icon: <CircleCheck size={20} />,
-            color: 'bg-gradient-to-r from-green-500 to-green-600',
+            color: 'bg-gradient-to-r from-green-500 to-green-600 dark:from-green-400 dark:to-green-500',
         },
         {
             title: 'Active Orders',
             value: activeOrders,
             icon: <Clock size={20} />,
-            color: 'bg-gradient-to-r from-blue-500 to-blue-600',
+            color: 'bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500',
         },
         {
             title: 'Canceled Orders',
             value: canceledOrders,
             icon: <X size={20} />,
-            color: 'bg-gradient-to-r from-red-500 to-red-600',
+            color: 'bg-gradient-to-r from-red-500 to-red-600 dark:from-red-400 dark:to-red-500',
         },
 
         {
             title: 'Rating',
             value: user.ratingsAverage,
             icon: <Star size={20} className="fill-yellow-500" />,
-            color: 'bg-gradient-to-r from-orange-500 to-orange-600',
+            color: 'bg-gradient-to-r from-orange-500 to-orange-600 dark:from-orange-400 dark:to-orange-500',
         },
     ]
 
@@ -135,13 +135,13 @@ const WorkerStats = ({ user, orders }) => {
 
 const WorkerTasks = ({ navigate, orders }) => {
     return (
-        <div className="rounded-xl bg-white p-6 shadow-sm">
+        <div className="rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800">
             <div className="mb-6 flex items-center justify-between">
-                <h2 className="text-lg font-bold text-gray-800">
+                <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100">
                     Active Orders
                 </h2>
                 <button
-                    className="text-sm font-medium text-blue-600 hover:text-blue-700"
+                    className="text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-500"
                     onClick={() => navigate('/worker-dashboard/orders')}
                 >
                     View All
@@ -156,10 +156,10 @@ const WorkerTasks = ({ navigate, orders }) => {
                           >
                               <div className="mb-2 flex items-start justify-between">
                                   <div>
-                                      <h3 className="font-medium capitalize text-gray-800">
+                                      <h3 className="font-medium capitalize text-gray-800 dark:text-gray-100">
                                           {task?.service}
                                       </h3>
-                                      <p className="text-sm capitalize text-gray-500">
+                                      <p className="text-sm capitalize text-gray-500 dark:text-gray-300">
                                           Client: {task?.customer?.name}
                                       </p>
                                   </div>
@@ -177,7 +177,7 @@ const WorkerTasks = ({ navigate, orders }) => {
                                       {task?.status}
                                   </span>
                               </div>
-                              <div className="mb-2 flex items-center gap-2 text-sm text-gray-500">
+                              <div className="mb-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-300">
                                   <Calendar size={16} />
                                   <span>
                                       Due:{' '}
@@ -196,13 +196,13 @@ const WorkerTasks = ({ navigate, orders }) => {
 
 const TestimonialList = ({ reviews, navigate }) => {
     return (
-        <div className="rounded-xl bg-white p-6 shadow-sm">
+        <div className="rounded-xl bg-white p-6 shadow-sm dark:bg-gray-800">
             <div className="mb-6 flex items-center justify-between">
-                <h2 className="text-lg font-bold text-gray-800">
+                <h2 className="text-lg font-bold text-gray-800 dark:text-gray-50">
                     Latest Reviews
                 </h2>
                 <button
-                    className="text-sm font-medium text-blue-600 hover:text-blue-700"
+                    className="text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-500"
                     onClick={() => navigate('/worker-dashboard/reviews')}
                 >
                     View All

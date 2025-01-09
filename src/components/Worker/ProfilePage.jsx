@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { isValidEmail, isValidPhoneNumber } from '../../services/helper'
 import { updateMe, uploadPictureWorker } from '../../services/apis'
-
 import { Form } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
@@ -116,7 +115,7 @@ const ProfilePage = () => {
             className="mx-auto max-w-4xl space-y-6"
         >
             <div className="flex items-center justify-between">
-                <h1 className="text-xl font-bold text-gray-800 md:text-2xl">
+                <h1 className="text-xl font-bold text-gray-800 dark:text-white md:text-2xl">
                     Profile
                 </h1>
                 <button
@@ -127,20 +126,22 @@ const ProfilePage = () => {
                 </button>
             </div>
 
-            <div className="rounded-xl bg-white p-6 shadow-sm">
+            <div className="rounded-xl bg-white p-6 shadow-sm dark:border dark:border-gray-700 dark:bg-gray-800">
                 <div className="mb-6 flex flex-col items-center gap-4 md:flex-row">
                     <div className="relative">
                         <img
                             src={`${VITE_API_URL}/uploads/${user.image}`}
                             alt="Profile"
-                            className="h-32 w-32 rounded-full"
+                            className="h-32 w-32 rounded-full dark:border dark:border-gray-100"
                         />
                     </div>
                     <div className="flex flex-col items-center justify-center md:block">
-                        <h2 className="text-xl font-bold capitalize text-gray-800 md:text-2xl">
+                        <h2 className="text-xl font-bold capitalize text-gray-800 dark:text-gray-100 md:text-2xl">
                             {user.name}
                         </h2>
-                        <p className="text-gray-600">{user.email}</p>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            {user.email}
+                        </p>
                         <div className="mt-2 flex gap-2">
                             <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
                                 {user.skill}
@@ -159,7 +160,7 @@ const ProfilePage = () => {
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                             {/* Full Name */}
                             <div>
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                     Full Name
                                 </label>
                                 <input
@@ -168,13 +169,13 @@ const ProfilePage = () => {
                                     name="name"
                                     value={newData.name}
                                     onChange={handleInputChange}
-                                    className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                                    className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100"
                                 />
                             </div>
 
                             {/* City */}
                             <div>
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                     City
                                 </label>
                                 <input
@@ -183,13 +184,13 @@ const ProfilePage = () => {
                                     name="city"
                                     value={newData.city}
                                     onChange={handleInputChange}
-                                    className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                                    className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100"
                                 />
                             </div>
 
                             {/* Email */}
                             <div className="flex flex-col">
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                     Email
                                 </label>
                                 <input
@@ -198,7 +199,7 @@ const ProfilePage = () => {
                                     name="email"
                                     value={newData.email}
                                     onChange={handleInputChange}
-                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.email ? 'border border-red-500' : ''}`}
+                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100 ${errors.email ? 'border border-red-500' : ''}`}
                                 />
                                 {errors?.email && (
                                     <span className="mt-2 text-center text-xs text-red-500 md:text-sm">
@@ -209,7 +210,7 @@ const ProfilePage = () => {
 
                             {/* Phone */}
                             <div className="flex flex-col">
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                     Phone
                                 </label>
                                 <input
@@ -218,7 +219,7 @@ const ProfilePage = () => {
                                     name="phoneNumber"
                                     value={newData.phoneNumber}
                                     onChange={handleInputChange}
-                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.phoneNumber ? 'border border-red-500' : ''}`}
+                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100 ${errors.phoneNumber ? 'border border-red-500' : ''}`}
                                 />
                                 {errors?.phoneNumber && (
                                     <p className="mt-2 text-center text-xs text-red-500 md:text-sm">
@@ -229,7 +230,7 @@ const ProfilePage = () => {
 
                             {/* Hourly Rate */}
                             <div className="flex flex-col">
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                     Hourly Rate
                                 </label>
                                 <input
@@ -238,7 +239,7 @@ const ProfilePage = () => {
                                     name="hourlyRate"
                                     value={newData.hourlyRate}
                                     onChange={handleInputChange}
-                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.phoneNumber ? 'border border-red-500' : ''}`}
+                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100 ${errors.phoneNumber ? 'border border-red-500' : ''}`}
                                 />
                                 {errors?.hourlyRate && (
                                     <span className="mt-2 text-center text-xs text-red-500 md:text-sm">
@@ -249,7 +250,7 @@ const ProfilePage = () => {
 
                             {/* Years of Experience */}
                             <div className="flex flex-col">
-                                <label className="mb-1 block text-sm font-medium text-gray-700">
+                                <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                     Years of Experience
                                 </label>
                                 <input
@@ -258,7 +259,7 @@ const ProfilePage = () => {
                                     name="yearsOfExperience"
                                     value={newData.yearsOfExperience}
                                     onChange={handleInputChange}
-                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none ${errors.phoneNumber ? 'border border-red-500' : ''}`}
+                                    className={`w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100 ${errors.phoneNumber ? 'border border-red-500' : ''}`}
                                 />
                                 {errors?.yearsOfExperience && (
                                     <span className="mt-2 text-center text-xs text-red-500 md:text-sm">
@@ -270,7 +271,7 @@ const ProfilePage = () => {
 
                         {/* Bio */}
                         <div>
-                            <label className="mb-1 block text-sm font-medium text-gray-700">
+                            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                 Bio
                             </label>
                             <textarea
@@ -279,11 +280,11 @@ const ProfilePage = () => {
                                 value={newData.bio}
                                 onChange={handleInputChange}
                                 rows="2"
-                                className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                                className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100"
                             />
                         </div>
                         <div>
-                            <label className="mb-1 block text-sm font-medium text-gray-700">
+                            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-50">
                                 Profile Picture
                             </label>
                             <input
@@ -292,7 +293,7 @@ const ProfilePage = () => {
                                 type="file"
                                 name="photo"
                                 accept="image/*"
-                                className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none"
+                                className="w-full rounded-lg border border-gray-200 p-2 focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100"
                             />
                         </div>
 
@@ -300,7 +301,7 @@ const ProfilePage = () => {
                         <div className="flex justify-end space-x-4">
                             <button
                                 type="submit"
-                                className="rounded-lg bg-blue-600 px-6 py-2 text-white transition hover:bg-blue-700"
+                                className="rounded-lg bg-blue-600 px-6 py-2 font-medium text-white transition hover:bg-blue-700"
                             >
                                 Save Changes
                             </button>
@@ -310,41 +311,41 @@ const ProfilePage = () => {
                     <div className="space-y-6">
                         <div className="flex flex-col gap-6 md:grid md:grid-cols-2">
                             <div>
-                                <h3 className="text-sm font-medium text-gray-500 md:text-base lg:text-lg">
+                                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-200 md:text-base lg:text-lg">
                                     Contact Information
                                 </h3>
                                 <div className="mt-2 space-y-2 text-sm md:text-base lg:text-lg">
-                                    <p className="text-gray-800">
+                                    <p className="text-gray-800 dark:text-gray-300">
                                         Phone: {user.phoneNumber}
                                     </p>
-                                    <p className="text-gray-800">
+                                    <p className="text-gray-800 dark:text-gray-300">
                                         Email: {user.email}
                                     </p>
-                                    <p className="text-gray-800">
+                                    <p className="text-gray-800 dark:text-gray-300">
                                         City: {user.city}
                                     </p>
                                 </div>
                             </div>
                             <div>
-                                <h3 className="text-sm font-medium text-gray-500 md:text-base lg:text-lg">
+                                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-200 md:text-base lg:text-lg">
                                     Work Information
                                 </h3>
                                 <div className="mt-2 space-y-2 text-sm md:text-base lg:text-lg">
-                                    <p className="text-gray-800">
+                                    <p className="text-gray-800 dark:text-gray-300">
                                         Experience: {user.yearsOfExperience}{' '}
                                         Years
                                     </p>
-                                    <p className="text-gray-800">
+                                    <p className="text-gray-800 dark:text-gray-300">
                                         Hourly Rate: {user.hourlyRate} $
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <h3 className="text-sm font-medium text-gray-500 md:text-base lg:text-lg">
+                            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-200 md:text-base lg:text-lg">
                                 About
                             </h3>
-                            <p className="mt-2 text-sm text-gray-800 md:text-base lg:text-lg">
+                            <p className="mt-2 text-sm text-gray-800 dark:text-gray-300 md:text-base lg:text-lg">
                                 {user.bio}
                             </p>
                         </div>
