@@ -68,18 +68,16 @@ const OrdersPage = () => {
                 </h1>
             </div>
 
-            <div className="flex items-center gap-4">
-                <div className="relative flex-1">
-                    <input
-                        type="text"
-                        placeholder="Search orders..."
-                        className="w-full rounded-lg border border-gray-200 py-2 pl-5 pr-4 focus:border-blue-500 focus:outline-none dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center">
+                <input
+                    type="text"
+                    placeholder="Search orders..."
+                    className="w-full flex-1 rounded-lg border border-gray-200 py-2 pl-5 pr-4 focus:border-blue-500 focus:outline-none dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
                 <select
-                    className="rounded-lg border border-gray-200 px-4 py-2 focus:border-blue-500 focus:outline-none dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200"
+                    className="w-full rounded-lg border border-gray-200 px-4 py-2 focus:border-blue-500 focus:outline-none dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200 sm:w-auto"
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
                 >

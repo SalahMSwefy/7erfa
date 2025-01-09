@@ -94,14 +94,14 @@ function WorkerDashboard() {
                 initial={{ x: -50 }}
                 animate={{ x: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
-                className="fixed left-0 top-0 h-screen w-fit border-r border-gray-200 bg-white transition-all dark:border-gray-700 dark:bg-gray-800 lg:w-64"
+                className="fixed left-0 top-0 z-20 h-screen w-fit border-r border-gray-200 bg-white transition-all dark:border-gray-700 dark:bg-gray-800 lg:w-64"
             >
-                <div className="border-b border-gray-200 px-4 py-2 dark:border-gray-700">
+                <div className="h-16 border-b border-gray-200 px-4 py-2 dark:border-gray-700">
                     <motion.div
                         whileHover={{ scale: 1.05 }}
                         className="flex items-center gap-2"
                     >
-                        <div className="text-brand-light flex items-center gap-2.5">
+                        <div className="text-brand-light flex items-center">
                             <img
                                 src="/logos/logo.gif"
                                 alt="Logo"
@@ -126,7 +126,7 @@ function WorkerDashboard() {
                             key={item.page}
                             whileHover={{ scale: 1.02, x: 5 }}
                             whileTap={{ scale: 0.98 }}
-                            className={`m-1 mb-2 flex cursor-pointer items-center justify-center gap-1 rounded-lg p-3 text-gray-600 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-50 lg:justify-normal lg:gap-3 ${
+                            className={`m-1 flex cursor-pointer items-center justify-center gap-1 rounded-lg p-3 text-gray-600 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-50 lg:justify-normal lg:gap-3 ${
                                 currentPage === item.page
                                     ? 'bg-blue-50 text-blue-600 dark:bg-gray-500 dark:text-white'
                                     : ''
