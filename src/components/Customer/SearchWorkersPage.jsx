@@ -118,20 +118,20 @@ const SearchWorkersPage = () => {
                     placeholder="Enter Worker Name"
                     value={workerName}
                     onChange={(e) => setWorkerName(e.target.value)}
-                    className="flex-1 rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-1 rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200"
                 />
                 <input
                     type="text"
                     placeholder="Enter City"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="flex-1 rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-1 rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200"
                 />
 
                 <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="flex-3 rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-3 rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200"
                 >
                     <option value="all">All</option>
                     <option value="mechanical">Mechanical</option>
@@ -144,7 +144,7 @@ const SearchWorkersPage = () => {
                 <select
                     value={sortOption}
                     onChange={(e) => setSortOption(e.target.value)}
-                    className="flex-3 rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex-3 rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-200"
                 >
                     <option value="none">Sort by</option>
                     <option value="rating">Rating</option>
@@ -159,7 +159,7 @@ const SearchWorkersPage = () => {
                     <Link
                         key={worker._id}
                         to={`/customer-dashboard/worker/${encodeURIComponent(encrypt(worker._id))}`}
-                        className="flex items-center justify-between gap-4 rounded-lg bg-white p-6 shadow-md hover:shadow-lg"
+                        className="flex items-center justify-between gap-4 rounded-lg bg-white p-6 shadow-md hover:shadow-lg dark:bg-gray-800 dark:text-gray-100"
                     >
                         <img
                             className="h-16 w-16 rounded-full border-2 border-gray-300 object-cover lg:h-24 lg:w-24"
@@ -167,7 +167,7 @@ const SearchWorkersPage = () => {
                             alt={worker.name}
                         />
                         <div className="flex-1">
-                            <h3 className="mt-4 text-xl font-semibold capitalize text-gray-800">
+                            <h3 className="mt-4 text-xl font-semibold capitalize text-gray-800 dark:text-gray-100">
                                 {worker.name}
                             </h3>
                             <p className="text-sm text-gray-500">

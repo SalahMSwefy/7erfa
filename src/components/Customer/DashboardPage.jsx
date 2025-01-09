@@ -88,7 +88,7 @@ const DashboardPage = () => {
                             <div className="flex-1">
                                 <h3 className="flex items-center justify-between text-sm font-semibold capitalize text-gray-800 md:text-lg dark:text-gray-100">
                                     {groupedWorkers[skill]?.name || 'No Worker'}
-                                    <p className="rounded-2xl bg-gray-100 px-2 py-1 text-xs text-yellow-500 md:text-sm dark:bg-gray-500">
+                                    <p className="rounded-2xl bg-gray-100 px-2 py-1 text-xs text-yellow-500 md:text-sm dark:bg-gray-600">
                                         {groupedWorkers[skill]
                                             ?.ratingsAverage || 'N/A'}
                                         ⭐
