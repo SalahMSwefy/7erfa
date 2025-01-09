@@ -12,6 +12,7 @@ const ForgotPassword = () => {
             email: e.target.email.value,
         }
         const response = await forgotPassword(data)
+        console.log(response)
         if (response.status === 'success') {
             navigate('/login')
             alert('Password reset link has been sent to your email')

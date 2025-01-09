@@ -93,7 +93,7 @@ function CustomerDashboard() {
                 initial={{ x: -50 }}
                 animate={{ x: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
-                className="fixed left-0 top-0 h-screen w-fit border-r border-gray-200 bg-white transition-all lg:w-64 dark:border-gray-700 dark:bg-gray-800"
+                className="fixed left-0 top-0 h-screen w-fit border-r border-gray-200 bg-white transition-all dark:border-gray-700 dark:bg-gray-800 lg:w-64"
             >
                 <div className="border-b border-gray-200 p-4 dark:border-gray-700">
                     <motion.div
@@ -126,7 +126,7 @@ function CustomerDashboard() {
                             key={item.page}
                             whileHover={{ scale: 1.02, x: 5 }}
                             whileTap={{ scale: 0.98 }}
-                            className={`mb-2 flex cursor-pointer items-center justify-center rounded-lg p-3 text-gray-600 transition-all duration-200 hover:bg-gray-50 lg:justify-normal lg:gap-3 dark:hover:bg-gray-600 dark:hover:text-gray-50 ${
+                            className={`mb-2 flex cursor-pointer items-center justify-center rounded-lg p-3 text-gray-600 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:text-gray-50 lg:justify-normal lg:gap-3 ${
                                 currentPage === item.page
                                     ? 'bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-white'
                                     : ''
@@ -175,7 +175,7 @@ function CustomerDashboard() {
                 initial={{ y: -50 }}
                 animate={{ y: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
-                className="fixed left-20 right-0 top-0 z-10 h-16 border-b border-gray-200 bg-white lg:left-64 dark:border-gray-700 dark:bg-gray-800"
+                className="fixed left-20 right-0 top-0 z-10 h-16 border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 lg:left-64"
             >
                 <div className="flex h-full items-center justify-end p-4">
                     <div className="flex items-center gap-4">
@@ -190,30 +190,17 @@ function CustomerDashboard() {
                         />
                         <motion.button
                             whileHover={{ scale: 1.2 }}
-                            className="flex h-8 w-8 items-center justify-center rounded-full shadow-lg"
+                            className="flex h-8 w-8 items-center justify-center rounded-full text-stone-400 shadow-lg hover:text-stone-700 dark:hover:text-white"
                             onClick={() => setDarkMode(!darkMode)}
                         >
-                            {darkMode ? (
-                                <Sun
-                                    size={18}
-                                    className="text-stone-400 hover:text-stone-700 dark:text-white dark:hover:text-gray-400"
-                                />
-                            ) : (
-                                <Moon
-                                    size={18}
-                                    className="text-stone-400 hover:text-stone-700 dark:text-white dark:hover:text-gray-400"
-                                />
-                            )}
+                            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
                         </motion.button>
                         <motion.button
                             whileHover={{ scale: 1.2 }}
-                            className="flex h-8 w-8 items-center justify-center rounded-full shadow-lg"
+                            className="flex h-8 w-8 items-center justify-center rounded-full text-stone-400 shadow-lg hover:text-stone-700 dark:hover:text-white"
                             onClick={handleLogout}
                         >
-                            <LogOut
-                                size={18}
-                                className="text-stone-400 hover:text-stone-700 dark:text-white dark:hover:text-gray-400"
-                            />
+                            <LogOut size={18} />
                         </motion.button>
                     </div>
                 </div>

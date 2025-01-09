@@ -71,6 +71,7 @@ const DashboardPage = () => {
                         key={skill}
                         className="flex items-center rounded-lg bg-white shadow-md transition-shadow duration-200 hover:shadow-lg dark:bg-gray-800 dark:text-gray-100"
                         initial={{ opacity: 0, y: 20 }}
+                        whileHover={{ scale: 1.05 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3 }}
@@ -80,32 +81,33 @@ const DashboardPage = () => {
                             to={`/customer-dashboard/worker/${encodeURIComponent(encrypt(groupedWorkers[skill].id))}`}
                             className="flex w-full items-center justify-between gap-4 rounded-lg p-6 shadow-md hover:shadow-lg"
                         >
-                            <img
+                            <motion.img
+                                whileHover={{ scale: 1.2 }}
                                 src={`${VITE_API_URL}/uploads/${groupedWorkers[skill]?.image}`}
                                 alt={skill}
-                                className="mr-4 h-16 w-16 rounded-full border border-gray-300 object-cover"
+                                className="mr-4 h-16 w-16 rounded-full border border-gray-300 object-cover dark:border-white"
                             />
                             <div className="flex-1">
-                                <h3 className="flex items-center justify-between text-sm font-semibold capitalize text-gray-800 md:text-lg dark:text-gray-100">
+                                <h3 className="flex items-center justify-between text-sm font-semibold capitalize text-gray-800 dark:text-gray-100 md:text-lg">
                                     {groupedWorkers[skill]?.name || 'No Worker'}
-                                    <p className="rounded-2xl bg-gray-100 px-2 py-1 text-xs text-yellow-500 md:text-sm dark:bg-gray-600">
+                                    <p className="rounded-2xl bg-gray-100 px-2 py-1 text-xs text-yellow-500 dark:bg-gray-600 md:text-sm">
                                         {groupedWorkers[skill]
                                             ?.ratingsAverage || 'N/A'}
                                         ⭐
                                     </p>
                                 </h3>
-                                <p className="text-xs text-gray-500 md:text-sm dark:text-gray-300">
+                                <p className="text-xs text-gray-500 dark:text-gray-300 md:text-sm">
                                     {skill}
                                 </p>
-                                <p className="text-xs text-gray-500 md:text-sm dark:text-gray-300">
+                                <p className="text-xs text-gray-500 dark:text-gray-300 md:text-sm">
                                     City: {groupedWorkers[skill]?.city || 'N/A'}{' '}
                                 </p>
-                                <p className="text-xs text-gray-500 md:text-sm dark:text-gray-300">
+                                <p className="text-xs text-gray-500 dark:text-gray-300 md:text-sm">
                                     Phone Num:{' '}
                                     {groupedWorkers[skill]?.phoneNumber ||
                                         'N/A'}{' '}
                                 </p>
-                                <p className="text-xs text-gray-500 md:text-sm dark:text-gray-300">
+                                <p className="text-xs text-gray-500 dark:text-gray-300 md:text-sm">
                                     Experience:{' '}
                                     {groupedWorkers[skill]?.yearsOfExperience ||
                                         'N/A'}

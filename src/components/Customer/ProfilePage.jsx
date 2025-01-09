@@ -101,7 +101,7 @@ const ProfilePage = () => {
             className="mx-auto max-w-4xl space-y-6"
         >
             <div className="flex items-center justify-between">
-                <h1 className="text-xl font-bold text-gray-800 md:text-2xl">
+                <h1 className="text-xl font-bold text-gray-800 dark:text-white md:text-2xl">
                     Profile
                 </h1>
                 <button
@@ -112,20 +112,22 @@ const ProfilePage = () => {
                 </button>
             </div>
 
-            <div className="rounded-xl bg-white p-6 shadow-sm">
+            <div className="rounded-xl bg-white p-6 shadow-sm dark:border dark:border-gray-700 dark:bg-gray-800">
                 <div className="mb-6 flex flex-col items-center gap-4 space-x-6 md:flex-row">
                     <div className="relative space-x-6">
                         <img
                             src={`${VITE_API_URL}/uploads/${user.image}`}
                             alt="Profile"
-                            className="h-32 w-32 rounded-full"
+                            className="h-32 w-32 rounded-full dark:border dark:border-gray-100"
                         />
                     </div>
                     <div className="flex flex-col items-center justify-center md:block">
-                        <h2 className="text-xl font-bold capitalize text-gray-800 md:text-2xl">
+                        <h2 className="text-xl font-bold capitalize text-gray-800 dark:text-gray-100 md:text-2xl">
                             {user.name}
                         </h2>
-                        <p className="text-gray-600">{user.email}</p>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            {user.email}
+                        </p>
                         <div className="mt-2 flex gap-2">
                             <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">
                                 Customer
@@ -151,7 +153,7 @@ const ProfilePage = () => {
                                     name="name"
                                     value={newData.name}
                                     onChange={handleInputChange}
-                                    className="w-full rounded-lg border border-gray-200 p-2 text-sm focus:border-blue-500 focus:outline-none md:text-base"
+                                    className="w-full rounded-lg border border-gray-200 p-2 text-sm focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100 md:text-base"
                                 />
                             </div>
 
@@ -165,7 +167,7 @@ const ProfilePage = () => {
                                     name="city"
                                     value={newData.city}
                                     onChange={handleInputChange}
-                                    className="w-full rounded-lg border border-gray-200 p-2 text-sm focus:border-blue-500 focus:outline-none md:text-base"
+                                    className="w-full rounded-lg border border-gray-200 p-2 text-sm focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100 md:text-base"
                                 />
                             </div>
 
@@ -179,7 +181,7 @@ const ProfilePage = () => {
                                     name="email"
                                     value={newData.email}
                                     onChange={handleInputChange}
-                                    className={`w-full rounded-lg border border-gray-200 p-2 text-sm focus:border-blue-500 focus:outline-none md:text-base ${
+                                    className={`w-full rounded-lg border border-gray-200 p-2 text-sm focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100 md:text-base ${
                                         errors.email
                                             ? 'border border-red-500'
                                             : ''
@@ -202,7 +204,7 @@ const ProfilePage = () => {
                                     name="phoneNumber"
                                     value={newData.phoneNumber}
                                     onChange={handleInputChange}
-                                    className={`w-full rounded-lg border border-gray-200 p-2 text-sm focus:border-blue-500 focus:outline-none md:text-base ${
+                                    className={`w-full rounded-lg border border-gray-200 p-2 text-sm focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100 md:text-base ${
                                         errors.phoneNumber
                                             ? 'border border-red-500'
                                             : ''
@@ -225,7 +227,7 @@ const ProfilePage = () => {
                                     type="file"
                                     name="photo"
                                     accept="image/*"
-                                    className="w-full rounded-lg border border-gray-200 p-2 text-sm focus:border-blue-500 focus:outline-none md:text-base"
+                                    className="w-full rounded-lg border border-gray-200 p-2 text-sm focus:border-blue-500 focus:outline-none dark:bg-gray-700 dark:text-gray-100 md:text-base"
                                 />
                             </div>
                         </div>
@@ -233,7 +235,7 @@ const ProfilePage = () => {
                         <div className="flex justify-end space-x-4">
                             <button
                                 type="submit"
-                                className="rounded-lg bg-blue-600 px-6 py-2 text-white transition hover:bg-blue-700"
+                                className="rounded-lg bg-blue-600 px-6 py-2 font-medium text-white transition hover:bg-blue-700"
                             >
                                 Save Changes
                             </button>
@@ -243,23 +245,23 @@ const ProfilePage = () => {
                     <div>
                         <div className="flex flex-col gap-6">
                             <div>
-                                <h3 className="text-sm font-medium text-gray-800 md:text-base lg:text-lg">
+                                <h3 className="text-sm font-medium text-gray-800 dark:text-gray-200 md:text-base lg:text-lg">
                                     Contact Information
                                 </h3>
                                 <div className="mt-2 space-y-2 text-sm md:text-base lg:text-lg">
-                                    <p className="text-gray-500">
+                                    <p className="text-gray-500 dark:text-gray-300">
                                         <span className="font-medium">
                                             Phone:
                                         </span>{' '}
                                         {user.phoneNumber}
                                     </p>
-                                    <p className="text-gray-500">
+                                    <p className="text-gray-500 dark:text-gray-300">
                                         <span className="font-medium">
                                             Email:
                                         </span>{' '}
                                         {user.email}
                                     </p>
-                                    <p className="text-gray-500">
+                                    <p className="text-gray-500 dark:text-gray-300">
                                         <span className="font-medium">
                                             City:
                                         </span>{' '}

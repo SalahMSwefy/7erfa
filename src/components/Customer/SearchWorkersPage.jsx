@@ -161,7 +161,8 @@ const SearchWorkersPage = () => {
                         to={`/customer-dashboard/worker/${encodeURIComponent(encrypt(worker._id))}`}
                         className="flex items-center justify-between gap-4 rounded-lg bg-white p-6 shadow-md hover:shadow-lg dark:bg-gray-800 dark:text-gray-100"
                     >
-                        <img
+                        <motion.img
+                            whileHover={{ scale: 1.1 }}
                             className="h-16 w-16 rounded-full border-2 border-gray-300 object-cover lg:h-24 lg:w-24"
                             src={`${VITE_API_URL}/uploads/${worker.image}`}
                             alt={worker.name}
@@ -170,16 +171,16 @@ const SearchWorkersPage = () => {
                             <h3 className="mt-4 text-xl font-semibold capitalize text-gray-800 dark:text-gray-100">
                                 {worker.name}
                             </h3>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-300">
                                 {worker.skill}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-300">
                                 City: {worker.city || 'N/A'}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-300">
                                 Phone Num: {worker.phoneNumber || 'N/A'}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-300">
                                 Experience: {worker.yearsOfExperience || 'N/A'}{' '}
                                 Years
                             </p>
