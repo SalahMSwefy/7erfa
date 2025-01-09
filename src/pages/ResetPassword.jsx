@@ -1,64 +1,97 @@
-import { Form } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Form, useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { Moon, Sun } from 'lucide-react'
 
 const ResetPassword = () => {
+    const navigate = useNavigate()
+    const [darkMode, setDarkMode] = useState(
+        localStorage.getItem('theme') === 'dark' || false,
+    )
+
+    useEffect(() => {
+        if (darkMode) {
+            document.documentElement.classList.add('dark')
+            localStorage.setItem('theme', 'dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+            localStorage.setItem('theme', 'light')
+        }
+    }, [darkMode])
     return (
-        <div className="mx-auto flex h-screen flex-col rounded-lg bg-orange-50 pt-12">
-            <div className="my-auto flex h-full w-full justify-center md:gap-5 lg:justify-normal xl:gap-14">
-                <div className="flex w-full items-center justify-center lg:p-12">
-                    <div className="flex items-center px-4 xl:p-10">
-                        <Form
-                            method="POST"
-                            className="flex h-full w-full flex-col rounded-3xl bg-orange-50 pb-6 text-center"
-                        >
-                            <h3 className="mb-3 w-[511px] font-brand text-4xl font-extrabold text-stone-900">
-                                Reset Password
-                            </h3>
-                            <p className="mb-4 text-stone-500">
-                                Enter your new password below
-                            </p>
-
-                            <label
-                                htmlFor="password"
-                                className="mb-2 text-start text-sm font-semibold text-stone-950"
-                            >
-                                New Password
-                            </label>
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                placeholder="Enter a new password"
-                                className="mb-7 mr-2 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300"
-                                required
-                            />
-
-                            <label
-                                htmlFor="passwordConfirm"
-                                className="mb-2 text-start text-sm font-semibold text-stone-950"
-                            >
-                                Confirm Password
-                            </label>
-                            <input
-                                id="passwordConfirm"
-                                name="passwordConfirm"
-                                type="password"
-                                placeholder="Confirm your new password"
-                                className="mb-7 mr-2 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300"
-                                required
-                            />
-
-                            <div className="mb-4 flex justify-center">
-                                <button
-                                    type="submit"
-                                    className="mb-5 w-full rounded-2xl bg-orange-500 px-6 py-5 text-sm font-bold leading-none text-white transition duration-300 hover:bg-orange-600 focus:ring-4 focus:ring-orange-600 md:w-96"
-                                >
-                                    Reset Password
-                                </button>
-                            </div>
-                        </Form>
-                    </div>
-                </div>
+        <div className="flex min-h-screen w-full flex-col items-center gap-20 bg-main-50 dark:bg-gray-800 lg:gap-40">
+            <div className="flex h-16 w-full items-center justify-between border-b p-2 shadow-sm dark:border-gray-600">
+                <button
+                    className="flex items-center gap-2.5 font-brand text-3xl text-black no-underline transition-colors duration-200 hover:text-main-600 dark:text-white dark:hover:text-main-600"
+                    onClick={() => {
+                        navigate('/')
+                    }}
+                >
+                    <img
+                        src="/logos/logo.gif"
+                        alt="Logo"
+                        className="h-12 w-12 rounded-full object-cover object-center"
+                    />
+                    <span>7erfa</span>
+                </button>
+                <motion.button
+                    whileHover={{ scale: 1.2 }}
+                    className="flex h-8 w-8 items-center justify-center rounded-full text-stone-400 shadow-lg hover:text-stone-700 dark:hover:text-white"
+                    onClick={() => setDarkMode(!darkMode)}
+                >
+                    {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+                </motion.button>
             </div>
+            <Form
+                method="POST"
+                className="inset-0 flex flex-col rounded-3xl bg-white p-10 text-center shadow-2xl dark:bg-gray-800 md:w-[450px]"
+            >
+                <h3 className="mb-3 font-brand text-2xl font-extrabold text-stone-900 dark:text-stone-100 md:text-4xl">
+                    Reset Password
+                </h3>
+                <p className="mb-4 text-xs text-stone-500 dark:text-stone-300 md:text-base">
+                    Enter your new password below
+                </p>
+
+                <label
+                    htmlFor="password"
+                    className="mb-2 text-start text-sm font-semibold text-stone-900 dark:text-stone-100"
+                >
+                    New Password
+                </label>
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="Enter a new password"
+                    className="mb-7 mr-2 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300 dark:bg-gray-700 dark:text-stone-100"
+                    required
+                />
+
+                <label
+                    htmlFor="passwordConfirm"
+                    className="mb-2 text-start text-sm font-semibold text-stone-900 dark:text-stone-100"
+                >
+                    Confirm Password
+                </label>
+                <input
+                    id="passwordConfirm"
+                    name="passwordConfirm"
+                    type="password"
+                    placeholder="Confirm your new password"
+                    className="mb-7 mr-2 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300 dark:bg-gray-700 dark:text-stone-100"
+                    required
+                />
+
+                <div className="mb-4 flex justify-center">
+                    <button
+                        type="submit"
+                        className="mb-5 w-full rounded-2xl bg-orange-500 px-6 py-5 text-sm font-bold leading-none text-white transition duration-300 hover:bg-orange-600 focus:ring-4 focus:ring-orange-600 md:w-96"
+                    >
+                        Reset Password
+                    </button>
+                </div>
+            </Form>
         </div>
     )
 }
