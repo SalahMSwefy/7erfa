@@ -126,7 +126,7 @@ function WorkerDashboard() {
                             key={item.page}
                             whileHover={{ scale: 1.02, x: 5 }}
                             whileTap={{ scale: 0.98 }}
-                            className={`mb-2 flex cursor-pointer items-center justify-center gap-1 rounded-lg p-3 text-gray-600 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-50 lg:justify-normal lg:gap-3 ${
+                            className={`m-1 mb-2 flex cursor-pointer items-center justify-center gap-1 rounded-lg p-3 text-gray-600 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-50 lg:justify-normal lg:gap-3 ${
                                 currentPage === item.page
                                     ? 'bg-blue-50 text-blue-600 dark:bg-gray-500 dark:text-white'
                                     : ''

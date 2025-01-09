@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { Link } from 'react-router-dom' // Import Link
 import { encrypt } from '../../services/cryptoUtils'
+import { StarIcon } from 'lucide-react'
 
 const VITE_API_URL = import.meta.env.VITE_API_URL
 
@@ -14,8 +15,9 @@ const SearchWorkersPage = () => {
     useEffect(() => {
         const handleResize = () => {
             // Check if the screen width is less than 1024px
-            const isSmallScreen =
-                window.matchMedia('(max-width: 768px)').matches
+            const isSmallScreen = window.matchMedia(
+                '(max-width: 1024px)',
+            ).matches
             setWorkersPerPage(isSmallScreen ? 8 : 9)
         }
 
@@ -109,10 +111,10 @@ const SearchWorkersPage = () => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
         >
-            <h1 className="mb-8 text-2xl font-extrabold text-gray-800 dark:text-gray-100 lg:text-4xl">
+            <h1 className="mb-6 text-2xl font-extrabold text-gray-800 dark:text-gray-100 lg:text-4xl">
                 Search Workers
             </h1>
-            <div className="mb-8 grid gap-4 md:grid-cols-2 lg:flex lg:flex-row">
+            <div className="mb-6 grid gap-4 md:grid-cols-2 xl:flex xl:flex-row">
                 <input
                     type="text"
                     placeholder="Enter Worker Name"
@@ -156,12 +158,12 @@ const SearchWorkersPage = () => {
             <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100">
                 Workers
             </h2>
-            <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {currentWorkers.map((worker) => (
                     <Link
                         key={worker._id}
                         to={`/customer-dashboard/worker/${encodeURIComponent(encrypt(worker._id))}`}
-                        className="flex items-center justify-between gap-4 rounded-lg bg-white p-6 shadow-md hover:shadow-lg dark:bg-gray-800 dark:text-gray-100"
+                        className="flex items-center justify-between gap-4 rounded-lg bg-white p-6 shadow-md hover:shadow-lg dark:border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                     >
                         <motion.img
                             whileHover={{ scale: 1.1 }}
@@ -170,24 +172,29 @@ const SearchWorkersPage = () => {
                             alt={worker.name}
                         />
                         <div className="flex-1">
-                            <h3 className="mt-4 text-xl font-semibold capitalize text-gray-800 dark:text-gray-100">
-                                {worker.name}
-                            </h3>
+                            <div className="flex items-center justify-between font-semibold capitalize text-gray-800 dark:text-gray-100">
+                                <h3 className="text-base xl:text-xl">
+                                    {worker.name}
+                                </h3>
+                                <p className="flex items-center gap-1 text-sm text-yellow-500">
+                                    {worker.ratingsAverage}
+                                    <StarIcon
+                                        size={14}
+                                        className="fill-yellow-500"
+                                    />
+                                </p>
+                            </div>
                             <p className="text-sm text-gray-500 dark:text-gray-300">
                                 {worker.skill}
                             </p>
                             <p className="text-sm text-gray-500 dark:text-gray-300">
-                                City: {worker.city || 'N/A'}
+                                City: {worker.city}
                             </p>
                             <p className="text-sm text-gray-500 dark:text-gray-300">
-                                Phone Num: {worker.phoneNumber || 'N/A'}
+                                Phone Num: {worker.phoneNumber}
                             </p>
                             <p className="text-sm text-gray-500 dark:text-gray-300">
-                                Experience: {worker.yearsOfExperience || 'N/A'}{' '}
-                                Years
-                            </p>
-                            <p className="text-sm text-yellow-500">
-                                Rating: {worker.ratingsAverage || 'N/A'} ⭐
+                                Experience: {worker.yearsOfExperience} Years
                             </p>
                         </div>
                     </Link>
@@ -203,7 +210,7 @@ const SearchWorkersPage = () => {
                 >
                     Previous
                 </button>
-                <div className="text-sm text-gray-600">
+                <div className="text-sm font-medium text-gray-600 dark:text-gray-300">
                     Page {currentPage} of {totalPages}
                 </div>
                 <button

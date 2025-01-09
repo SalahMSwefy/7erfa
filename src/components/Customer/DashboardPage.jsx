@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useAuth } from '../../context/AuthContext'
-import { CheckCircle, Clock, List, XCircle } from 'lucide-react'
+import { CheckCircle, Clock, List, StarIcon, XCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { getOrders } from '../../services/apis'
 import { Link } from 'react-router-dom'
@@ -74,26 +74,27 @@ const DashboardPage = () => {
                         whileHover={{ scale: 1.05 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.3 }}
                     >
                         <Link
                             key={skill}
                             to={`/customer-dashboard/worker/${encodeURIComponent(encrypt(groupedWorkers[skill].id))}`}
-                            className="flex w-full items-center justify-between gap-4 rounded-lg p-6 shadow-md hover:shadow-lg"
+                            className="flex w-full items-center justify-between rounded-lg p-6 shadow-md hover:shadow-lg dark:border dark:border-gray-600 sm:gap-4"
                         >
                             <motion.img
                                 whileHover={{ scale: 1.2 }}
                                 src={`${VITE_API_URL}/uploads/${groupedWorkers[skill]?.image}`}
                                 alt={skill}
-                                className="mr-4 h-16 w-16 rounded-full border border-gray-300 object-cover dark:border-white"
+                                className="mr-4 h-16 w-16 rounded-full border border-gray-300 object-cover dark:border-white lg:h-20 lg:w-20"
                             />
                             <div className="flex-1">
-                                <h3 className="flex items-center justify-between text-sm font-semibold capitalize text-gray-800 dark:text-gray-100 md:text-lg">
+                                <h3 className="flex items-center justify-between text-sm font-semibold capitalize text-gray-800 dark:text-gray-100 lg:text-lg">
                                     {groupedWorkers[skill]?.name || 'No Worker'}
-                                    <p className="rounded-2xl bg-gray-100 px-2 py-1 text-xs text-yellow-500 dark:bg-gray-600 md:text-sm">
-                                        {groupedWorkers[skill]
-                                            ?.ratingsAverage || 'N/A'}
-                                        ⭐
+                                    <p className="flex items-center justify-between gap-0.5 rounded-2xl bg-gray-100 px-1 py-0.5 text-xs text-yellow-500 dark:bg-gray-600 lg:px-2 lg:py-1 lg:text-sm">
+                                        {groupedWorkers[skill]?.ratingsAverage}
+                                        <StarIcon
+                                            size={12}
+                                            className="fill-yellow-500"
+                                        />
                                     </p>
                                 </h3>
                                 <p className="text-xs text-gray-500 dark:text-gray-300 md:text-sm">
@@ -103,7 +104,7 @@ const DashboardPage = () => {
                                     City: {groupedWorkers[skill]?.city || 'N/A'}{' '}
                                 </p>
                                 <p className="text-xs text-gray-500 dark:text-gray-300 md:text-sm">
-                                    Phone Num:{' '}
+                                    Phone:{' '}
                                     {groupedWorkers[skill]?.phoneNumber ||
                                         'N/A'}{' '}
                                 </p>
