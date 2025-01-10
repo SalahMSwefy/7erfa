@@ -78,7 +78,7 @@ const Login = () => {
     }
 
     return (
-        <div className="flex min-h-screen w-full flex-col items-center gap-20 bg-main-50 dark:bg-gray-800 lg:gap-40">
+        <div className="flex min-h-screen w-full flex-col items-center gap-20 bg-white dark:bg-gray-800 lg:gap-40">
             <div className="flex h-16 w-full items-center justify-between border-b p-2 shadow-sm dark:border-gray-600">
                 <button
                     className="flex items-center gap-2.5 font-brand text-3xl text-black no-underline transition-colors duration-200 hover:text-main-600 dark:text-white dark:hover:text-main-600"
@@ -102,7 +102,7 @@ const Login = () => {
                 </motion.button>
             </div>
             <Form
-                className="inset-0 flex flex-col rounded-3xl bg-white p-4 py-8 text-center shadow-2xl dark:bg-gray-800 md:w-[450px]"
+                className="inset-0 flex flex-col rounded-3xl bg-white p-8 text-center shadow-xl dark:bg-gray-800 md:w-[450px]"
                 aria-label="Login Form"
                 method="post"
                 onSubmit={handleSubmit}
@@ -124,7 +124,7 @@ const Login = () => {
                     type="email"
                     name="email"
                     placeholder="Enter your Email"
-                    className="mb-7 mr-2 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300 dark:bg-gray-700 dark:text-stone-100"
+                    className="mb-6 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300 dark:bg-gray-700 dark:text-stone-100"
                     required
                     aria-label="Email Address"
                 />
@@ -139,7 +139,7 @@ const Login = () => {
                     name="password"
                     type="password"
                     placeholder="Enter a Password"
-                    className="mb-7 mr-2 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300 dark:bg-gray-700 dark:text-stone-100"
+                    className="mb-6 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300 dark:bg-gray-700 dark:text-stone-100"
                     required
                     aria-label="Password"
                 />
@@ -151,7 +151,7 @@ const Login = () => {
                     </span>
                 )}
 
-                <div className="mb-4 flex flex-row items-center justify-between gap-4">
+                <div className="flex flex-row items-center justify-between gap-4">
                     <label className="flex items-center justify-between gap-2">
                         <input
                             type="checkbox"
@@ -165,18 +165,20 @@ const Login = () => {
                     </label>
                     <Link
                         to="/forgetPassword"
-                        className="mr-4 text-sm font-medium text-stone-900 hover:underline focus:underline dark:text-stone-100"
+                        className="text-sm font-medium text-stone-900 hover:underline focus:underline dark:text-stone-100"
                     >
                         Forget password?
                     </Link>
                 </div>
-                <button
-                    type="submit"
-                    className="mb-5 rounded-2xl bg-main-600 px-5 py-4 text-base font-bold leading-none text-white transition duration-300 hover:bg-main-500 focus:ring-4 focus:ring-main-500"
-                    aria-label="Sign In"
-                >
-                    Sign In
-                </button>
+                <div className="my-4 flex justify-center">
+                    <button
+                        type="submit"
+                        className="w-2/3 rounded-2xl bg-main-600 px-5 py-4 text-base font-bold leading-none text-white transition duration-300 hover:bg-main-500 focus:ring-4 focus:ring-main-500"
+                        aria-label="Sign In"
+                    >
+                        Sign In
+                    </button>
+                </div>
                 <p className="text-base font-normal leading-relaxed text-stone-500 dark:text-stone-300">
                     Not registered yet?
                     <Link

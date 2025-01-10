@@ -37,7 +37,7 @@ const ForgotPassword = () => {
         }
     }
     return (
-        <div className="flex min-h-screen w-full flex-col items-center gap-20 bg-main-50 dark:bg-gray-800 lg:gap-40">
+        <div className="flex min-h-screen w-full flex-col items-center gap-20 bg-white dark:bg-gray-800 lg:gap-40">
             <div className="flex h-16 w-full items-center justify-between border-b p-2 shadow-sm dark:border-gray-600">
                 <button
                     className="flex items-center gap-2.5 font-brand text-3xl text-black no-underline transition-colors duration-200 hover:text-main-600 dark:text-white dark:hover:text-main-600"
@@ -65,7 +65,7 @@ const ForgotPassword = () => {
                 className="inset-0 flex flex-col rounded-3xl bg-white p-10 text-center shadow-2xl dark:bg-gray-800 md:w-[450px]"
                 onSubmit={handleSubmit}
             >
-                <h3 className="mb-3 w-auto font-brand text-2xl font-extrabold text-stone-900 dark:text-stone-100 md:text-4xl">
+                <h3 className="mb-3 w-auto font-brand text-2xl font-extrabold text-stone-900 dark:text-stone-100 md:text-3xl">
                     Forgot Password
                 </h3>
                 <p className="mb-4 text-sm text-stone-500 dark:text-stone-300">
@@ -96,7 +96,7 @@ const ForgotPassword = () => {
                 <div className="mb-4 flex justify-center">
                     <button
                         type="submit"
-                        className="mb-5 w-full rounded-2xl bg-orange-500 px-3 py-4 text-sm font-bold leading-none text-white transition duration-300 hover:bg-orange-600 focus:ring-4 focus:ring-orange-600"
+                        className="mb-5 w-1/2 rounded-2xl bg-orange-500 px-3 py-4 text-sm font-bold leading-none text-white transition duration-300 hover:bg-orange-600 focus:ring-4 focus:ring-orange-600"
                     >
                         Submit
                     </button>

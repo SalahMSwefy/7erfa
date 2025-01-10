@@ -19,7 +19,7 @@ const ResetPassword = () => {
         }
     }, [darkMode])
     return (
-        <div className="flex min-h-screen w-full flex-col items-center gap-20 bg-main-50 dark:bg-gray-800 lg:gap-40">
+        <div className="flex min-h-screen w-full flex-col items-center gap-20 bg-white dark:bg-gray-800 lg:gap-40">
             <div className="flex h-16 w-full items-center justify-between border-b p-2 shadow-sm dark:border-gray-600">
                 <button
                     className="flex items-center gap-2.5 font-brand text-3xl text-black no-underline transition-colors duration-200 hover:text-main-600 dark:text-white dark:hover:text-main-600"
@@ -83,10 +83,10 @@ const ResetPassword = () => {
                     required
                 />
 
-                <div className="mb-4 flex justify-center">
+                <div className="mb-2 flex justify-center">
                     <button
                         type="submit"
-                        className="mb-5 w-full rounded-2xl bg-orange-500 px-6 py-5 text-sm font-bold leading-none text-white transition duration-300 hover:bg-orange-600 focus:ring-4 focus:ring-orange-600 md:w-96"
+                        className="mb-5 w-2/3 rounded-2xl bg-orange-500 px-6 py-5 text-sm font-bold leading-none text-white transition duration-300 hover:bg-orange-600 focus:ring-4 focus:ring-orange-600"
                     >
                         Reset Password
                     </button>

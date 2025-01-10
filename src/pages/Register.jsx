@@ -95,7 +95,7 @@ const Register = () => {
     }
 
     return (
-        <div className="flex min-h-screen w-full flex-col items-center bg-main-50 dark:bg-gray-800">
+        <div className="flex min-h-screen w-full flex-col items-center bg-white dark:bg-gray-800">
             <div className="flex h-16 w-full items-center justify-between border-b p-2 shadow-sm dark:border-gray-600">
                 <button
                     className="flex items-center gap-2.5 font-brand text-3xl text-black no-underline transition-colors duration-200 hover:text-main-600 dark:text-white dark:hover:text-main-600"
@@ -120,12 +120,12 @@ const Register = () => {
             </div>
             <Form
                 onSubmit={handleSubmit}
-                className="inset-0 mt-4 flex flex-col rounded-3xl p-4 text-center"
+                className="inset-0 mt-4 flex w-full flex-col rounded-3xl p-4 text-center shadow-xl dark:bg-gray-800 md:w-[450px]"
             >
-                <h3 className="mb-3 w-auto font-brand text-3xl font-extrabold text-stone-900 dark:text-stone-100">
+                <h3 className="mb-3 w-auto font-brand text-2xl font-extrabold text-stone-900 dark:text-stone-100 md:text-3xl">
                     {role === 'worker' ? 'Worker' : 'Customer'} Registration
                 </h3>
-                <p className="mb-4 text-stone-500 dark:text-stone-300">
+                <p className="mb-4 text-sm text-stone-500 dark:text-stone-300 md:text-base">
                     Enter your details to create an account
                 </p>
                 {/* Radio Buttons for Role Selection */}
@@ -140,7 +140,7 @@ const Register = () => {
                             className="mr-2 hidden"
                         />
                         <span
-                            className={`${role === 'worker' ? 'bg-main-600' : ''} rounded-lg px-3 py-2 text-lg font-medium tracking-wide text-stone-900 dark:text-stone-100`}
+                            className={`${role === 'worker' ? 'bg-main-600' : ''} rounded-lg px-3 py-2 text-base font-medium tracking-wide text-stone-900 dark:text-stone-100 md:text-lg`}
                         >
                             Worker
                         </span>
