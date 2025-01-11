@@ -4,9 +4,22 @@ import About from '../components/LandingPage/About/About'
 import Services from '../components/LandingPage/Services-section/Services'
 import SliderGallery from '../components/LandingPage/SliderGallery/SliderGallery'
 import Team from '../components/LandingPage/Team/Team'
-import Footer from '../components/LandingPage/Footer/Footer'
+import Footer from '../components/LandingPage/Footer'
+import { useEffect } from 'react'
 
 function LandingPage() {
+    useEffect(() => {
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault()
+                const target = document.querySelector(this.getAttribute('href'))
+                window.scrollTo({
+                    top: target.offsetTop - 80 > 0 ? target.offsetTop - 80 : 0,
+                    behavior: 'smooth',
+                })
+            })
+        })
+    }, [])
     return (
         <>
             <Header />

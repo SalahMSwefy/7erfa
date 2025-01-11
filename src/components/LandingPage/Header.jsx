@@ -21,7 +21,7 @@ export default function Header() {
         <div
             className={`fixed left-0 right-0 top-0 z-50 flex h-20 items-center justify-between px-5 transition-all duration-300 ease-in-out lg:justify-around lg:px-0 ${
                 isScrolled
-                    ? 'bg-main-500/80 text-white shadow-lg'
+                    ? 'border-b border-main-50/10 bg-main-600 text-white shadow-lg'
                     : 'bg-transparent'
             }`}
         >
@@ -47,8 +47,8 @@ export function Logo({ toggleMenu }) {
         <div className="flex items-center gap-2 text-main-transparent">
             <img src="/logos/logo.gif" alt="Logo" className="h-14 w-14" />
             <a
-                href="#"
-                className="font-brand text-2xl font-medium transition-all duration-150 hover:scale-110 hover:text-white"
+                href="#hero"
+                className="font-brand text-3xl font-medium transition-all duration-150 hover:scale-110 hover:text-white"
                 onClick={toggleMenu}
             >
                 7erfa
@@ -100,9 +100,9 @@ function Buttons() {
 function Menu({ isMenuOpen, toggleMenu }) {
     return (
         isMenuOpen && (
-            <div className="absolute right-0 top-20 flex w-full justify-between divide-x-2 divide-main-50/10 bg-main-500/70 px-5 pb-4 pt-2 text-2xl font-semibold shadow-lg transition-all lg:hidden">
-                <ul className="mb-2 mt-4 flex flex-1 flex-col justify-between gap-5 divide-y-2 divide-main-50/10">
-                    <li>
+            <div className="absolute right-0 top-20 flex w-full justify-between divide-x-2 divide-main-50/10 bg-main-600 py-2 pl-3 text-2xl font-semibold shadow-lg transition-all lg:hidden">
+                <ul className="my-2 flex flex-1 flex-col justify-around divide-y-2 divide-main-50/10">
+                    <li className="p-2">
                         <a
                             href="#about"
                             onClick={toggleMenu}
@@ -111,7 +111,7 @@ function Menu({ isMenuOpen, toggleMenu }) {
                             About
                         </a>
                     </li>
-                    <li>
+                    <li className="p-2">
                         <a
                             href="#services"
                             onClick={toggleMenu}
@@ -120,7 +120,7 @@ function Menu({ isMenuOpen, toggleMenu }) {
                             Services
                         </a>
                     </li>
-                    <li>
+                    <li className="p-2">
                         <a
                             href="#categories"
                             onClick={toggleMenu}
@@ -129,7 +129,7 @@ function Menu({ isMenuOpen, toggleMenu }) {
                             Categories
                         </a>
                     </li>
-                    <li>
+                    <li className="p-2">
                         <a
                             href="#team"
                             onClick={toggleMenu}
@@ -140,18 +140,18 @@ function Menu({ isMenuOpen, toggleMenu }) {
                     </li>
                 </ul>
                 <br />
-                <div className="flex-2 flex flex-col items-center justify-center pl-2">
-                    <h1 className="mb-3 text-center text-2xl font-semibold uppercase text-white">
+                <div className="flex-2 flex flex-col items-center justify-center px-2 tracking-wide">
+                    <h1 className="mb-4 text-center text-2xl font-semibold uppercase text-white">
                         Join us now
                     </h1>
-                    <div className="flex items-center justify-between gap-5">
+                    <div className="flex w-full items-center justify-between gap-4">
                         <Link to="/login">
-                            <button className="cursor-pointer rounded-full bg-main-50 bg-transparent px-4 py-3 text-xl font-semibold text-main-600 transition-all">
+                            <button className="cursor-pointer rounded-full bg-main-50 px-4 py-2 text-base font-semibold text-main-600 transition-all">
                                 Log In
                             </button>
                         </Link>
                         <Link to="/register">
-                            <button className="cursor-pointer rounded-full bg-main-50 bg-transparent px-4 py-3 text-xl font-semibold text-main-600">
+                            <button className="cursor-pointer rounded-full bg-main-50 px-4 py-2 text-base font-semibold text-main-600">
                                 Sign Up
                             </button>
                         </Link>
