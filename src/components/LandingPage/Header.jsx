@@ -21,7 +21,7 @@ export default function Header() {
         <div
             className={`fixed left-0 right-0 top-0 z-50 flex h-20 items-center justify-between px-5 transition-all duration-300 ease-in-out lg:justify-around lg:px-0 ${
                 isScrolled
-                    ? 'border-b border-main-50/10 bg-main-600 text-white shadow-lg'
+                    ? 'bg-gradient-to-br from-main-600 to-main-500 text-white shadow-lg'
                     : 'bg-transparent'
             }`}
         >

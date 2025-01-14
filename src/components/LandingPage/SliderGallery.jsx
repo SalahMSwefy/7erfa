@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import styles from './SliderGallery.module.css'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const images = [
     {
@@ -24,7 +24,7 @@ const images = [
     },
     {
         url: '/categories/6.jpg',
-        title: 'Worker',
+        title: 'Construction Worker',
     },
 ]
 // [Mechanical, Electrical, Carpentry, Painting, Plumber, Worker]
@@ -60,11 +60,26 @@ const SliderGallery = () => {
     }, [])
 
     return (
-        <div className={styles.sliderContainer} id="categories">
-            <h2>Categories</h2>
+        <div
+            className="relative mx-auto my-10 hidden w-4/5 max-w-[1000px] overflow-hidden md:block lg:my-20"
+            id="categories"
+        >
+            <h2 className="mb-8 bg-gradient-to-r from-main-500 to-main-600 bg-clip-text text-center font-brand text-3xl uppercase tracking-wide text-main-500 md:text-5xl lg:mb-16">
+                Categories
+            </h2>
             <Slider images={images} currentIndex={currentIndex} />
-            <PrevArrow onClick={prevSlide} />
-            <NextArrow onClick={nextSlide} />
+            <div className="absolute top-1/2 flex w-full items-center justify-between px-4">
+                <ChevronLeft
+                    onClick={prevSlide}
+                    size={40}
+                    className="rounded-full bg-main-500/30 p-2 text-white hover:bg-main-500"
+                />
+                <ChevronRight
+                    onClick={nextSlide}
+                    size={40}
+                    className="rounded-full bg-main-500/30 p-2 text-white hover:bg-main-500"
+                />
+            </div>
             <Dots
                 images={images}
                 currentIndex={currentIndex}
@@ -78,18 +93,26 @@ export default SliderGallery
 
 function Slider({ images, currentIndex }) {
     return (
-        <div className={styles.slider}>
+        <div className="flex transition-transform">
             {images.map((image, index) => (
                 <div
                     key={index}
-                    className={`${styles.slide} ${
-                        index === currentIndex ? styles.active : ''
+                    className={`absolute min-w-full opacity-0 transition-opacity duration-1000 ${
+                        index === currentIndex ? 'relative opacity-100' : ''
                     }`}
                 >
-                    <img src={image.url} alt={`Slide ${index + 1}`} />
-                    <div className={styles.slideInfo}>
-                        <p>Category</p>
-                        <h3>{image.title}</h3>
+                    <img
+                        src={image.url}
+                        alt={`Slide ${index + 1}`}
+                        className="w-full"
+                    />
+                    <div className="absolute -bottom-2 flex w-full flex-col items-center justify-center bg-gradient-to-br from-main-600 to-main-500 py-4 text-white">
+                        <h4 className="text-xl font-normal text-white/50">
+                            Skill
+                        </h4>
+                        <h3 className="text-2xl font-medium tracking-wide">
+                            {image.title}
+                        </h3>
                     </div>
                 </div>
             ))}
@@ -97,56 +120,16 @@ function Slider({ images, currentIndex }) {
     )
 }
 
-function PrevArrow({ onClick }) {
-    return (
-        <button className={styles.prevArrow} onClick={onClick}>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                style={{ width: '24px', height: '24px' }}
-            >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 19l-7-7 7-7"
-                />
-            </svg>
-        </button>
-    )
-}
-
-function NextArrow({ onClick }) {
-    return (
-        <button className={styles.nextArrow} onClick={onClick}>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                style={{ width: '24px', height: '24px' }}
-            >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                />
-            </svg>
-        </button>
-    )
-}
-
 function Dots({ images, currentIndex, goToSlide }) {
     return (
-        <div className={styles.dots}>
+        <div className="mt-8 flex justify-center gap-2">
             {images.map((_, index) => (
                 <button
                     key={index}
-                    className={`${styles.dot} ${
-                        index === currentIndex ? styles.active : ''
+                    className={`h-3 w-3 rounded-full hover:bg-main-500 ${
+                        index === currentIndex
+                            ? 'bg-main-600'
+                            : 'bg-main-500/50'
                     }`}
                     onClick={() => goToSlide(index)}
                 />

@@ -25,6 +25,7 @@ export default {
             },
             animation: {
                 'focus-in-expand': 'focus-in-expand 3s ease-out infinite both',
+                pop: 'pop 0.5s ease-out',
             },
             keyframes: {
                 'focus-in-expand': {
@@ -37,6 +38,33 @@ export default {
                         filter: 'blur(0)',
                         opacity: '1',
                     },
+                },
+                'fade-in': {
+                    '0%': { opacity: '0', transform: 'scale(0.95)' },
+                    '100%': { opacity: '1', transform: 'scale(1)' },
+                },
+                'slide-in-top': {
+                    '0%': { transform: 'translateY(-70px)', opacity: '0' },
+                    '100%': { transform: 'translateY(0)', opacity: '1' },
+                },
+                'slide-in-left': {
+                    '0%': { transform: 'translateX(-70px)', opacity: '0' },
+                    '100%': { transform: 'translateX(0)', opacity: '1' },
+                },
+                float: {
+                    '0%, 100%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(-10px)' },
+                },
+                glow: {
+                    '0%, 100%': {
+                        textShadow: '0 0 5px rgba(255, 255, 255, 0.3)',
+                    },
+                    '50%': { textShadow: '0 0 20px rgba(255, 255, 255, 0.5)' },
+                },
+                pop: {
+                    '0%': { transform: 'scale(1)' },
+                    '50%': { transform: 'scale(1.1)' },
+                    '100%': { transform: 'scale(1)' },
                 },
             },
         },
