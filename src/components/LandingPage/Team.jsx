@@ -1,4 +1,5 @@
-import { FaFacebook, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
+import { FaFacebook, FaGithub, FaLinkedin } from 'react-icons/fa'
+import { FaXTwitter } from 'react-icons/fa6'
 
 const team = [
     {
@@ -55,7 +56,7 @@ const socialIcons = [
     },
     {
         platform: 'twitter',
-        icon: <FaTwitter size={40} />,
+        icon: <FaXTwitter size={40} />,
         delay: '200ms',
     },
     {
