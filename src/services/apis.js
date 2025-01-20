@@ -56,6 +56,17 @@ export async function forgotPassword(data) {
     return response.json()
 }
 
+export async function resetPassword(data, token) {
+    const response = await fetch(`${API_URL}/auth/resetPassword/${token}`, {
+        method: 'PATCH',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+    return response.json()
+}
+
 // update picture
 export async function uploadPictureWorker(data) {
     const response = await fetch(`${API_URL}/workers/update-profile-photo`, {

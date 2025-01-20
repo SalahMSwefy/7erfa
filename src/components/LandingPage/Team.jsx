@@ -102,7 +102,7 @@ function Member({ name, jobTitle, image, social }) {
                         <a
                             href={social[icon.platform]}
                             key={i + 1}
-                            className="relative block translate-y-24 text-stone-500 opacity-0 transition-all hover:text-white group-hover:translate-y-0 group-hover:opacity-100 group-hover:delay-300"
+                            className="relative block translate-y-24 text-stone-500 opacity-0 transition-all hover:text-white group-hover:translate-y-0 group-hover:opacity-100"
                         >
                             {icon.icon}
                         </a>

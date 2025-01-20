@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Form, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Moon, Sun } from 'lucide-react'
+import { resetPassword } from '../services/apis'
 
 const ResetPassword = () => {
     const token = useParams().token
@@ -9,8 +10,7 @@ const ResetPassword = () => {
     const [darkMode, setDarkMode] = useState(
         localStorage.getItem('theme') === 'dark' || false,
     )
-
-    console.log(token)
+    const [error, setError] = useState('')
 
     useEffect(() => {
         if (darkMode) {
@@ -21,6 +21,35 @@ const ResetPassword = () => {
             localStorage.setItem('theme', 'light')
         }
     }, [darkMode])
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        const password = e.target.password.value
+        const passwordConfirm = e.target.passwordConfirm.value
+
+        if (password !== passwordConfirm) {
+            setError('Passwords do not match')
+            return
+        }
+
+        const data = {
+            password,
+            passwordConfirm,
+        }
+
+        console.log(data)
+
+        // Call the resetPassword API
+        resetPassword(data, token)
+            .then((data) => {
+                console.log(data)
+                navigate('/login')
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
     return (
         <div className="flex min-h-screen w-full flex-col items-center gap-20 bg-white dark:bg-gray-800 lg:gap-40">
@@ -49,6 +78,7 @@ const ResetPassword = () => {
             <Form
                 method="POST"
                 className="inset-0 flex flex-col rounded-3xl bg-white p-10 text-center shadow-2xl dark:bg-gray-800 md:w-[450px]"
+                onSubmit={handleSubmit}
             >
                 <h3 className="mb-3 font-brand text-2xl font-extrabold text-stone-900 dark:text-stone-100 md:text-4xl">
                     Reset Password
@@ -86,6 +116,12 @@ const ResetPassword = () => {
                     className="mb-7 mr-2 flex w-full items-center rounded-2xl bg-stone-200 px-5 py-4 text-sm font-medium text-stone-900 outline-none placeholder:text-stone-400 focus:bg-stone-300 dark:bg-gray-700 dark:text-stone-100"
                     required
                 />
+
+                {error && (
+                    <span className="-mt-4 mb-4 text-center text-base text-red-500">
+                        Passwords do not match
+                    </span>
+                )}
 
                 <div className="mb-2 flex justify-center">
                     <button
