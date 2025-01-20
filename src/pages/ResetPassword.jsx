@@ -27,28 +27,27 @@ const ResetPassword = () => {
 
         const password = e.target.password.value
         const passwordConfirm = e.target.passwordConfirm.value
-
-        if (password !== passwordConfirm && password.length < 8) {
-            setError('Passwords do not match')
-            return
-        }
-
         const data = {
             password,
             passwordConfirm,
         }
-
         console.log(data)
 
-        // Call the resetPassword API
-        resetPassword(data, token)
-            .then((data) => {
-                console.log(data)
-                navigate('/login')
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        console.log(password === passwordConfirm && password.length >= 8)
+
+        if (password === passwordConfirm && password.length >= 8) {
+            resetPassword(data, token)
+                .then((data) => {
+                    console.log(data)
+                    navigate('/login')
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        } else {
+            setError('Passwords do not match')
+            return
+        }
     }
 
     return (
