@@ -28,7 +28,7 @@ const ResetPassword = () => {
         const password = e.target.password.value
         const passwordConfirm = e.target.passwordConfirm.value
 
-        if (password !== passwordConfirm) {
+        if (password !== passwordConfirm && password.length < 8) {
             setError('Passwords do not match')
             return
         }
