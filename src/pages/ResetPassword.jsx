@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
-import { Form, useNavigate } from 'react-router-dom'
+import { Form, useNavigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Moon, Sun } from 'lucide-react'
 
 const ResetPassword = () => {
+    const token = useParams().token
     const navigate = useNavigate()
     const [darkMode, setDarkMode] = useState(
         localStorage.getItem('theme') === 'dark' || false,
     )
+
+    console.log(token)
 
     useEffect(() => {
         if (darkMode) {
@@ -18,6 +21,7 @@ const ResetPassword = () => {
             localStorage.setItem('theme', 'light')
         }
     }, [darkMode])
+
     return (
         <div className="flex min-h-screen w-full flex-col items-center gap-20 bg-white dark:bg-gray-800 lg:gap-40">
             <div className="flex h-16 w-full items-center justify-between border-b p-2 shadow-sm dark:border-gray-600">

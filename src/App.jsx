@@ -76,7 +76,7 @@ const router = createBrowserRouter([
         ),
     },
     {
-        path: '/resetPassword',
+        path: '/resetPassword/:token',
         element: (
             <Suspense fallback={<FullScreenLoader />}>
                 <ResetPassword />

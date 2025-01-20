@@ -136,6 +136,23 @@ export async function getReviews(workerId) {
     return response.json()
 }
 
+export async function updateMyReview(workerId, data, reviewId) {
+    const response = await fetch(
+        `${API_URL}/workers/${workerId}/reviews/${reviewId}`,
+        {
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        },
+    )
+    return response.json()
+}
+
+// workers
+
 export async function getWorkers() {
     const response = await fetch(`${API_URL}/workers`)
     return response.json()

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { SquareX, SquareCheck, Star, ArchiveX } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { getOrders, updateOrderStatus } from '../../services/apis'
+import { Link } from 'react-router-dom'
+import { encrypt } from '../../services/cryptoUtils'
 
 const CustomerOrders = () => {
     const [orders, setOrders] = useState([])
@@ -20,6 +22,7 @@ const CustomerOrders = () => {
         }
         fetchData()
     }, [])
+
     const getStatusColor = (status) => {
         switch (status) {
             case 'completed':
@@ -66,8 +69,6 @@ const CustomerOrders = () => {
             setShowModal(false)
         }
     }
-
-    const handleMakeReview = () => {}
 
     return (
         <motion.div
@@ -188,17 +189,16 @@ const CustomerOrders = () => {
                                                 Canceled Order
                                             </span>
                                         ) : (
-                                            <button
+                                            <Link
                                                 className="flex items-center justify-center gap-2 text-blue-600 dark:text-blue-500"
-                                                onClick={() =>
-                                                    handleMakeReview(order.id)
-                                                }
+                                                to={`/customer-dashboard/worker/${encodeURIComponent(encrypt(order.worker._id))}`}
+                                                state={{ openReview: true }}
                                             >
                                                 <Star size={20} />
                                                 <span className="font-semibold">
                                                     Make Review
                                                 </span>
-                                            </button>
+                                            </Link>
                                         )}
                                     </td>
                                 </tr>
@@ -211,22 +211,22 @@ const CustomerOrders = () => {
             {/* Confirmation Modal */}
             {showModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="w-1/3 rounded-lg bg-white p-6">
-                        <h2 className="text-lg font-bold text-gray-800">
-                            Confirm Cancelation
+                    <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+                        <h2 className="text-lg font-bold text-gray-800 dark:text-gray-50">
+                            Confirm Cancellation
                         </h2>
-                        <p className="mt-2 text-gray-600">
+                        <p className="mt-2 text-gray-600 dark:text-gray-200">
                             Are you sure you want to cancel this order?
                         </p>
                         <div className="mt-4 flex justify-end space-x-4">
                             <button
-                                className="rounded bg-gray-200 px-4 py-2 text-gray-800 hover:bg-gray-300"
+                                className="rounded bg-gray-200 px-4 py-2 font-medium text-gray-800 hover:bg-gray-300"
                                 onClick={() => setShowModal(false)}
                             >
                                 No
                             </button>
                             <button
-                                className="rounded bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+                                className="rounded bg-red-600 px-4 py-2 font-medium text-white hover:bg-red-700"
                                 onClick={confirmCancelOrder}
                             >
                                 Yes, Cancel

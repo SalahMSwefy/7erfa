@@ -1,8 +1,13 @@
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { decrypt } from '../../services/cryptoUtils'
 import { useEffect, useState } from 'react'
-import { createReview, getReviews, makeOrder } from '../../services/apis'
+import {
+    createReview,
+    getReviews,
+    makeOrder,
+    updateMyReview,
+} from '../../services/apis'
 import TestimonialCard from '../../ui/TestimonialCard'
 import { CalendarArrowUp, Star } from 'lucide-react'
 
@@ -10,7 +15,7 @@ const VITE_API_URL = import.meta.env.VITE_API_URL
 
 const WorkerPage = () => {
     const { workerId } = useParams()
-    const { workers } = useAuth()
+    const { workers, user } = useAuth()
     const [isOrderModalOpen, setIsOrderModalOpen] = useState(false)
     const [isReviewModalOpen, setIsReviewModalOpen] = useState(false)
     const [orderTitle, setOrderTitle] = useState('')
@@ -18,8 +23,29 @@ const WorkerPage = () => {
     const [reviewText, setReviewText] = useState('')
     const [rating, setRating] = useState(0)
     const [reviews, setReview] = useState([])
-
     const decryptedWorkerId = decrypt(decodeURIComponent(workerId))
+    const location = useLocation()
+
+    const myReview = reviews.find((review) => review.customer._id === user._id)
+
+    useEffect(() => {
+        if (myReview) {
+            setRating(myReview.rating)
+            setReviewText(myReview.review)
+        }
+    }, [myReview])
+
+    useEffect(() => {
+        if (location.state?.openReview) {
+            setIsReviewModalOpen(true)
+            // Clear state after render to prevent re-triggering
+            window.history.replaceState(
+                { ...location.state, openReview: false },
+                '',
+            )
+        }
+    }, [location.state])
+
     useEffect(() => {
         getReviews(decryptedWorkerId)
             .then((data) => {
@@ -28,11 +54,13 @@ const WorkerPage = () => {
             .catch((error) => console.error('Error fetching reviews:', error))
     }, [decryptedWorkerId])
 
-    // Find the worker by ID
     const worker = workers.find((worker) => worker._id === decryptedWorkerId)
-
     if (!worker) {
-        return <div>Worker not found</div>
+        return (
+            <div className="text-center text-4xl font-medium capitalize dark:text-gray-50">
+                Worker not found 🚫
+            </div>
+        )
     }
 
     const handleOrderSubmit = (e) => {
@@ -49,36 +77,41 @@ const WorkerPage = () => {
         setIsOrderModalOpen(false)
     }
 
-    const handleReviewSubmit = () => {
+    const handleReviewSubmit = (e) => {
+        e.preventDefault()
         const reviewData = { review: reviewText, rating }
-        createReview(decryptedWorkerId, reviewData).catch((error) =>
-            console.error('Error submitting review:', error),
-        )
-        setReviewText('')
-        setRating(0)
+        if (myReview) {
+            updateMyReview(decryptedWorkerId, reviewData, myReview._id).catch(
+                (error) => console.error('Error updating review:', error),
+            )
+        } else {
+            createReview(decryptedWorkerId, reviewData).catch((error) =>
+                console.error('Error submitting review:', error),
+            )
+        }
         setIsReviewModalOpen(false)
     }
 
     return (
         <div className="lg:p-8">
-            <div className="flex flex-col items-center justify-between gap-3 md:flex-row">
-                <h1 className="text-lg font-extrabold text-gray-800 dark:text-gray-50 md:text-xl lg:text-3xl">
+            <div className="mb-2 flex flex-col items-center justify-between gap-3 md:flex-row">
+                <h1 className="text-lg font-extrabold text-gray-800 dark:text-gray-50 md:text-xl lg:text-2xl xl:text-3xl">
                     Hi I&apos;m {worker.name} 👋
                 </h1>
                 <div className="flex gap-4">
                     <button
-                        className="flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-blue-700 lg:gap-2 lg:px-4 lg:py-2 lg:text-base"
+                        className="flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-blue-700 xl:gap-2 xl:px-4 xl:py-2 xl:text-base"
                         onClick={() => setIsOrderModalOpen(true)} // Open the modal
                     >
                         <CalendarArrowUp className="fill-blue-500" />
                         Make Order
                     </button>
                     <button
-                        className="flex items-center gap-1 rounded-lg bg-yellow-500 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-yellow-600 lg:gap-2 lg:px-4 lg:py-2 lg:text-base"
+                        className="group flex items-center gap-1 rounded-lg bg-yellow-500 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-yellow-600 xl:gap-2 xl:px-4 xl:py-2 xl:text-base"
                         onClick={() => setIsReviewModalOpen(true)}
                     >
-                        <Star className="fill-yellow-500" />
-                        Make a Review
+                        <Star className="fill-yellow-500 group-hover:fill-white" />
+                        {myReview ? 'Edit Review' : 'Make a Review'}
                     </button>
                 </div>
             </div>
@@ -130,7 +163,7 @@ const WorkerPage = () => {
                             </div>
                             <div className="mt-6 flex justify-between">
                                 <button
-                                    type="submit" // Ensure this button type is submit
+                                    type="submit"
                                     className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 hover:text-gray-400"
                                 >
                                     Submit
@@ -208,7 +241,6 @@ const WorkerPage = () => {
                                 <button
                                     type="button"
                                     onClick={() => {
-                                        setRating(0)
                                         setIsReviewModalOpen(false)
                                     }}
                                     className="rounded-md bg-gray-500 px-4 py-2 font-medium text-gray-50 hover:text-gray-400"
@@ -221,13 +253,13 @@ const WorkerPage = () => {
                 </div>
             )}
 
-            <div className="mt-6 flex flex-col items-center gap-8 lg:flex-row">
+            <div className="mt-6 flex w-full flex-col items-center gap-8 lg:flex-row">
                 <img
                     className="h-24 w-24 rounded-full border border-gray-300 object-cover md:h-32 md:w-32 lg:h-48 lg:w-48"
                     src={`${VITE_API_URL}/uploads/${worker.image}`}
                     alt={worker.name}
                 />
-                <div className="flex-1">
+                <div className="w-full flex-1">
                     <h2 className="flex items-center justify-between text-sm font-semibold text-gray-800 md:text-base lg:text-xl">
                         <span className="rounded-full bg-gray-200 px-4 py-2">
                             {worker.skill}
@@ -280,7 +312,7 @@ const TestimonialList = ({ reviews }) => {
     return (
         <div className="rounded-xl p-6 shadow-sm">
             <div className="mb-6 flex items-center justify-between">
-                <h2 className="text-lg font-bold text-gray-800">
+                <h2 className="text-lg font-bold text-gray-800 dark:text-gray-50">
                     Latest reviews
                 </h2>
             </div>
